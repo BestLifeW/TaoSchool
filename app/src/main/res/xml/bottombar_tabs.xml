@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+    <tab
+        id="@+id/tab_home"
+        icon="@drawable/ic_favorite"
+        title="首页" />
+    <tab
+        id="@+id/tab_connecr"
+        icon="@drawable/ic_favorite"
+        title="附近" />
+    <tab
+        id="@+id/ic_add"
+        title="发布"
+        icon="@drawable/ic_add"
+         />
+    <tab
+        id="@+id/tab_friends"
+        icon="@drawable/ic_favorite"
+        title="点赞" />
+    <tab
+        id="@+id/tab_aboutme"
+        icon="@drawable/ic_favorite"
+        title="关于我" />
+</tabs>
