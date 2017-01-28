@@ -29,9 +29,7 @@ public class PersonFragment extends Fragment {
 
 
     public static PersonFragment newInstance() {
-        
         Bundle args = new Bundle();
-        
         PersonFragment fragment = new PersonFragment();
         fragment.setArguments(args);
         return fragment;

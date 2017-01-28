@@ -30,4 +30,10 @@ dependencies {
     //底部按钮开源项目
     compile 'com.squareup.okhttp3:okhttp:3.2.0'
     compile project(':mainnavigatetabbar')
+
+    //添加recyclerview框架
+    compile 'com.marshalchen.ultimaterecyclerview:library:0.7.0'
+
+    //添加log框架
+    compile 'com.orhanobut:logger:1.15'
 }

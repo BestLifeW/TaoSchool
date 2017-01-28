@@ -1,9 +1,9 @@
-package com.wtc.xmut.taoschool.ui.fragment.activity;
+package com.wtc.xmut.taoschool.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Toast;
 
 import com.startsmake.mainnavigatetabbar.widget.MainNavigateTabBar;
 import com.wtc.xmut.taoschool.R;
@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void onClickPublish(View v) {
-        Toast.makeText(this, "发布", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(this,PublishActivity.class);
+        startActivity(intent);
     }
 }

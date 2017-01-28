@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -11,30 +12,122 @@
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="#fff">
 
+            <!-- 头像-->
             <ImageView
+                android:id="@+id/imageView"
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
                 android:scaleType="fitXY" />
-
-            <TextView
-                android:id="@+id/tv_username"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/civ_userhead"
-                android:layout_centerInParent="true"
-                android:layout_marginTop="15dp"
-                android:text="王田朝"
-                android:textSize="16sp" />
 
             <com.wtc.xmut.taoschool.view.CircleImageView
                 android:id="@+id/civ_userhead"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentEnd="true"
                 android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="35dp" />
+                android:layout_marginEnd="30dp"
+                android:layout_marginTop="25dp"
+                android:src="@drawable/usericon" />
+
+            <TextView
+                android:id="@+id/tv_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignTop="@+id/civ_userhead"
+                android:layout_marginStart="25dp"
+                android:text="要去个美丽的地方"
+                android:textColor="#3c3c3c"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/tv_earn_how"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/civ_userhead"
+                android:layout_alignStart="@+id/tv_user_name"
+                android:text="在这里赚了645多少钱" />
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="120dp"
+                android:background="#f2f2f2" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/view"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:textColor="#3c3c3c"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="14" />
+                    <TextView
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="发布的" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:textColor="#3c3c3c"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="20" />
+                    <TextView
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="卖出的" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:textColor="#3c3c3c"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="10" />
+                    <TextView
+
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="被赞数" />
+                </LinearLayout>
+
+            </LinearLayout>
+
         </RelativeLayout>
         <!--这里开始菜单项-->
         <LinearLayout
@@ -84,7 +177,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginLeft="25dp"
-                android:background="#f2f2f2" />
+                android:background="@color/jiange" />
 
             <!--我卖出的-->
             <RelativeLayout
@@ -166,12 +259,6 @@
 
             </RelativeLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="25dp"
-                android:background="#f2f2f2" />
-
             <RelativeLayout
                 android:id="@+id/rl_setting_like"
                 android:layout_width="match_parent"
@@ -205,8 +292,14 @@
                     android:layout_marginEnd="11dp"
                     android:layout_marginRight="11dp"
                     android:src="@drawable/pond_arrow" />
-
             </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="25dp"
+                android:background="#f2f2f2" />
+
         </LinearLayout>
 
         <View

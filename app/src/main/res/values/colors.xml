@@ -3,7 +3,9 @@
     <color name="colorPrimary">#FFC107</color>
     <color name="colorPrimaryDark">#FFA000</color>
     <color name="colorAccent">#FFEB3B</color>
-
+    <color name="jiange">#f2f2f2</color>
+    <color name="gray_bg">#f4f4f4</color>
+    <color name="text_color">#3c3c3c</color>
         <!--<resources>-->
                 <!--<color name="primary">#FFC107</color>-->
                 <!--<color name="primary_dark">#FFA000</color>-->

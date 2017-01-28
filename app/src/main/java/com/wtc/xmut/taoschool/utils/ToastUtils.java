@@ -13,5 +13,8 @@ public class ToastUtils {
         Toast.makeText(context, content, Toast.LENGTH_SHORT).show();
     }
 
+    public static void showToast(Context context ,String content,int Int){
+        Toast.makeText(context, content, Int).show();
+    }
 
 }
