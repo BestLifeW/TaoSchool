@@ -9,6 +9,9 @@ import android.content.SharedPreferences;
 
 public class PrefUtils {
 
+
+    public static  final  String USER_NUMBER="USERNUMBER";
+
     /**
      *
      * @param context

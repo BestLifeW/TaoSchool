@@ -31,7 +31,6 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.iv_addpic:
-
                 break;
         }
     }
