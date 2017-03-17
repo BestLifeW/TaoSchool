@@ -18,12 +18,13 @@ public class ExampleUnitTest {
     @org.junit.Test
     public void addition_isCorrect() throws Exception {
 
-        UserService userService = new UserServiceImol();
-        //userService.login("lovec","123");
+        UserService userService  = new UserServiceImol();
         User user = new User();
-        user.setUsername("yuiohjkl");
+        user.setId(2);
         user.setPassword("123");
-        user.setName("王田朝");
-        userService.insertUser(user);
-    }
+        user.setUsername("要去个美丽的地方");
+        userService.UpdateUser(user);
+
+        }
+
 }

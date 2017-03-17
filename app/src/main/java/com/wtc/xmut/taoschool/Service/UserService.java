@@ -26,14 +26,16 @@ public interface UserService {
     List<User> findAll();
 
     //查询ID查询
-    User findUserById(Integer id);
+    User findUserById(Integer id) throws IOException;
 
     //查询是否存在同一个username
     User findUserByName(String username) throws IOException;
 
     //查询发布的商品总数
 
-
     //登录的方法
     User login(String username,String password) throws IOException;
+
+    boolean UpdateUser(User user) throws Exception;
+
 }

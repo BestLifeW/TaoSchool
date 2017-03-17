@@ -20,7 +20,6 @@ public class MyViewPagerAdapter extends FragmentPagerAdapter {
         super(childFragmentManager);
     }
 
-
     /**
      * @param fragment      添加Fragment
      * @param fragmentTitle Fragment的标题，即TabLayout中对应Tab的标题

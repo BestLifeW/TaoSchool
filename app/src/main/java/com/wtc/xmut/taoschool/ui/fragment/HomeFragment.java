@@ -13,10 +13,18 @@ import android.view.ViewGroup;
 
 import com.wtc.xmut.taoschool.R;
 import com.wtc.xmut.taoschool.adpater.MyViewPagerAdapter;
+import com.wtc.xmut.taoschool.api.ServerApi;
 import com.wtc.xmut.taoschool.ui.fragment.homeFragment_src.InquiryFragment;
 import com.wtc.xmut.taoschool.ui.fragment.homeFragment_src.PublishFragment;
+import com.wtc.xmut.taoschool.utils.NetWorkUtils;
+import com.wtc.xmut.taoschool.utils.OkHttpUtils;
 
-import static android.content.ContentValues.TAG;
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Response;
 
 
 /***
@@ -29,40 +37,77 @@ public class HomeFragment extends Fragment {
     private TabLayout mtablayout;
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
+    private final OkHttpClient okHttpClient;
+    private static final String TAG = "HomeFragment";
+
+    private boolean isConnect;
+
 
     public HomeFragment() {
-        Log.d(TAG,"HomeFragment");
+        Log.d(TAG, "HomeFragment");
         this.mContext = getActivity();
+        okHttpClient = new OkHttpClient();
     }
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.d(TAG,"onCreateView");
+        isConnect = NetWorkUtils.isNetworkAvailable(getActivity());
         view = inflater.inflate(R.layout.fragment_home, container, false);
         initView();
+        mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
+        final MyViewPagerAdapter viewPagerAdapter = new MyViewPagerAdapter(getChildFragmentManager());
+        mTabLayout = (TabLayout) view.findViewById(R.id.tabLayout);
+        mTabLayout.addTab(mTabLayout.newTab().setText("发布"));//给TabLayout添加Tab
+        mTabLayout.addTab(mTabLayout.newTab().setText("求购"));//给TabLayout添加Tab
+        OkHttpUtils.getDateAsync(ServerApi.ISCONNECT, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        loadDateFail(viewPagerAdapter);
+                    }
+                });
+            }
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        loadDateSuccess(viewPagerAdapter);
+                    }
+                });
+            }
+        });
+
         return view;
+    }
+
+    private void loadDateSuccess(MyViewPagerAdapter viewPagerAdapter) {
+        viewPagerAdapter.addFragment(PublishFragment.newInstance(), "发布");
+        viewPagerAdapter.addFragment(InquiryFragment.newInstance(), "求购");
+        mViewPager.setAdapter(viewPagerAdapter);//设置适配器
+        mTabLayout.setupWithViewPager(mViewPager);
+    }
+
+    private void loadDateFail(MyViewPagerAdapter viewPagerAdapter) {
+        viewPagerAdapter.addFragment(FailFragment.newInstance(), "发布");
+        viewPagerAdapter.addFragment(FailFragment.newInstance(), "求购");
+        mViewPager.setAdapter(viewPagerAdapter);//设置适配器
+        mTabLayout.setupWithViewPager(mViewPager);
     }
 
     private void initView() {
 
-        mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
-        MyViewPagerAdapter viewPagerAdapter = new MyViewPagerAdapter(getChildFragmentManager());
-        viewPagerAdapter.addFragment(PublishFragment.newInstance(), "发布");
-        viewPagerAdapter.addFragment(InquiryFragment.newInstance(),"求购");
-        mViewPager.setAdapter(viewPagerAdapter);//设置适配器
 
-        mTabLayout = (TabLayout) view.findViewById(R.id.tabLayout);
-        mTabLayout.addTab(mTabLayout.newTab().setText("发布"));//给TabLayout添加Tab
-        mTabLayout.addTab(mTabLayout.newTab().setText("求购"));//给TabLayout添加Tab
-        mTabLayout.setupWithViewPager(mViewPager);
+
     }
-
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-        Log.i(TAG, "onActivityCreated");
         super.onActivityCreated(savedInstanceState);
     }
+
 }

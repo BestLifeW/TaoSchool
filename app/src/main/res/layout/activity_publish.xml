@@ -36,6 +36,7 @@
             />
 
         <EditText
+            android:id="@+id/et_summary"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_marginTop="8dp"
@@ -67,6 +68,7 @@
         >
 
         <RelativeLayout
+            android:id="@+id/rl_money"
             android:gravity="center_vertical"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -108,7 +110,7 @@
                 android:id="@+id/tv_oldmoney"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="原价:￥750元"
+                android:text="原价:￥0元"
                 android:layout_alignBaseline="@+id/tv_money"
                 android:layout_alignBottom="@+id/tv_money"
                 android:layout_toEndOf="@+id/tv_money"
@@ -174,6 +176,6 @@
             android:background="@color/colorPrimary"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:id="@+id/button" />
+            android:id="@+id/btn_publish" />
     </LinearLayout>
 </RelativeLayout>

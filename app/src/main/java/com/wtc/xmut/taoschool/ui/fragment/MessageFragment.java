@@ -25,11 +25,8 @@ public class MessageFragment extends PreferenceFragment {
         addPreferencesFromResource(R.xml.demo);
     }
 
-
     public static MessageFragment newInstance() {
-
         Bundle args = new Bundle();
-
         MessageFragment fragment = new MessageFragment();
         fragment.setArguments(args);
         return fragment;

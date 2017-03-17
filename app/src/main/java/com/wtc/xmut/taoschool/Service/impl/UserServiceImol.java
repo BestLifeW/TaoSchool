@@ -35,8 +35,8 @@ public class UserServiceImol implements UserService {
         String str = null;
         RequestBody body = new FormBody.Builder()
                 .add("username", user.getUsername())
-                .add("password",user.getPassword())
-                .add("name",user.getName())
+                .add("password", user.getPassword())
+                .add("name", user.getName())
                 .build();
         Request request = new Request.Builder()
                 .url(ServerApi.USERADD)
@@ -71,20 +71,30 @@ public class UserServiceImol implements UserService {
     }
 
     @Override
-    public User findUserById(Integer id) {
-        return null;
+    public User findUserById(Integer id) throws IOException {
+        User user = null;
+        Request request = new Request.Builder()
+                .url(ServerApi.FINDUSERBYID + "/" + id)
+                .build();
+        Response response = null;
+        response = client.newCall(request).execute();
+        if (response.isSuccessful()) {
+            String str = null;
+            str = response.body().string();
+            user = gson.fromJson(str, User.class);
+            System.out.println("服务器响应为: " + user.toString());
+            return user;
+        } else {
+            return null;
+        }
     }
 
 
     @Override   //根据用户名称查找
     public User findUserByName(String username) throws IOException {
         User user = null;
-        RequestBody body = new FormBody.Builder()
-                .add("username", username)//添加键值对
-                .build();
         Request request = new Request.Builder()
-                .url(ServerApi.FINDUSER)
-                .post(body)
+                .url(ServerApi.FINDUSERBYNAME + "/" + username)
                 .build();
         Response response = null;
         response = client.newCall(request).execute();
@@ -122,8 +132,34 @@ public class UserServiceImol implements UserService {
         } else {
             return null;
         }
-
-
     }
 
+    @Override
+    public boolean UpdateUser(User user) throws Exception {
+        String str = null;
+        RequestBody body = new FormBody.Builder()
+                .add("id",user.getId()+"")
+                .add("username",user.getUsername())
+
+                .add("password", user.getPassword())
+                .build();
+        Request request = new Request.Builder()
+                .url(ServerApi.UPDATEUSER)
+                .post(body)
+                .build();
+        Response response = null;
+        try {
+            response = client.newCall(request).execute();
+            if (response.isSuccessful()) {
+                str = response.body().string();
+                if (str.contains("更新成功"))
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false; //返回空 说明连接失败
+
+    }
 }
+

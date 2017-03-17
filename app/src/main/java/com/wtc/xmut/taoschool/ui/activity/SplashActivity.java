@@ -1,14 +1,14 @@
 package com.wtc.xmut.taoschool.ui.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 
 import com.wtc.xmut.taoschool.R;
 import com.wtc.xmut.taoschool.utils.PrefUtils;
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends Activity {
 
     private String mUsernumber;
 

@@ -1,80 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    xmlns:fresco="http://schemas.android.com/tools"
     app:cardCornerRadius="2dp"
-    app:cardElevation="4dp"
+    app:cardElevation="2dp"
     app:layout_collapseParallaxMultiplier="0.5"
-    app:layout_scrollFlags="scroll">
+    app:layout_scrollFlags="scroll"
+    android:id="@+id/card_view"
+    >
 
     <RelativeLayout
-        android:padding="8dp"
         android:layout_width="match_parent"
-        android:layout_height="250dp">
+        android:layout_height="250dp"
+        android:padding="8dp">
 
-        <com.wtc.xmut.taoschool.view.CircleImageView
-            android:id="@+id/circleImageView"
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sld_usericon"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:src="@color/colorAccent" />
-
-        <ImageView
+            android:src="@color/colorAccent"
+            fresco:placeholderImage="@drawable/usericon" />
+        <!--
+            com.facebook.drawee.view.SimpleDraweeView
+            -->
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sld_shoppic"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            app:srcCompat="@color/colorAccent"
-            android:layout_below="@+id/circleImageView"
+            android:layout_alignEnd="@+id/tv_money"
+            android:layout_alignStart="@+id/sld_usericon"
+            android:layout_below="@+id/sld_usericon"
             android:layout_marginTop="8dp"
-            android:id="@+id/imageView2"
-            android:layout_alignStart="@+id/circleImageView"
-            android:layout_alignEnd="@+id/textView5" />
+            app:srcCompat="@color/colorAccent"
+            fresco:placeholderImage="@drawable/usericon" />
 
         <TextView
-            android:text="￥50"
+            android:id="@+id/tv_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView5"
-            android:typeface="sans"
-            android:textColor="@android:color/holo_red_light"
-            android:layout_alignBaseline="@+id/textView4"
-            android:layout_alignBottom="@+id/textView4"
+            android:layout_alignBaseline="@+id/tv_user_name"
+            android:layout_alignBottom="@+id/tv_user_name"
             android:layout_alignParentEnd="true"
-            android:textSize="16sp"
+            android:fontFamily="sans-serif"
+            android:text="￥50"
             android:textAllCaps="false"
+            android:textColor="@android:color/holo_red_light"
+            android:textSize="16sp"
             android:textStyle="normal|bold"
-            android:fontFamily="sans-serif" />
+            android:typeface="sans" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/tv_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/sld_usericon"
             android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/sld_usericon"
             android:text="要去个美丽的地方"
-            android:layout_alignTop="@+id/circleImageView"
-            android:layout_toEndOf="@+id/circleImageView"
             android:textColor="@color/bb_darkBackgroundColor" />
 
         <TextView
-            android:padding="8dp"
-            android:background="#85ffffff"
-            android:text="这个产品是什么呢“你们猜"
+            android:id="@+id/tv_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/sld_shoppic"
             android:layout_alignParentBottom="true"
-            android:layout_alignStart="@+id/imageView2"
-            android:id="@+id/textView6"
-            android:layout_alignEnd="@+id/imageView2" />
+            android:layout_alignStart="@+id/sld_shoppic"
+            android:background="#85999999"
+            android:padding="8dp"
+            android:maxLines="1"
+            android:text="这个产品是什么呢你们猜"
+            android:textColor="#fff" />
 
         <TextView
-            android:text="来自D栋128"
+            android:id="@+id/tv_fromwhere"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView7"
-            android:layout_alignBottom="@+id/circleImageView"
-            android:layout_alignStart="@+id/textView4" />
+            android:layout_alignBottom="@+id/sld_usericon"
+            android:layout_alignStart="@+id/tv_user_name"
+            android:text="来自D栋128" />
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>

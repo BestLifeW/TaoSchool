@@ -23,13 +23,9 @@ public class User {
 
     private Integer earnhow;
 
-    public Integer getEarnhow() {
-        return earnhow;
-    }
+    private Integer publishcount;
 
-    public void setEarnhow(Integer earnhow) {
-        this.earnhow = earnhow;
-    }
+    private Integer inquirycount;
 
     public Integer getId() {
         return id;
@@ -111,20 +107,27 @@ public class User {
         this.iconpath = iconpath == null ? null : iconpath.trim();
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", name='" + name + '\'' +
-                ", telephone=" + telephone +
-                ", college='" + college + '\'' +
-                ", floor='" + floor + '\'' +
-                ", dormitory='" + dormitory + '\'' +
-                ", likecount=" + likecount +
-                ", iconpath='" + iconpath + '\'' +
-                ", earnhow=" + earnhow +
-                '}';
+    public Integer getEarnhow() {
+        return earnhow;
+    }
+
+    public void setEarnhow(Integer earnhow) {
+        this.earnhow = earnhow;
+    }
+
+    public Integer getPublishcount() {
+        return publishcount;
+    }
+
+    public void setPublishcount(Integer publishcount) {
+        this.publishcount = publishcount;
+    }
+
+    public Integer getInquirycount() {
+        return inquirycount;
+    }
+
+    public void setInquirycount(Integer inquirycount) {
+        this.inquirycount = inquirycount;
     }
 }
