@@ -97,6 +97,7 @@ public class OkHttpUtils {
     public static void getDateAsync(String urlString , Callback callback){
         Request request = BuildRequest(urlString);
         OK_HTTP_CLIENT.newCall(request).enqueue(callback);
+
     }
 
 

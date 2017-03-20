@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import com.wtc.xmut.taoschool.R;
 import com.wtc.xmut.taoschool.adpater.MyViewPagerAdapter;
 import com.wtc.xmut.taoschool.api.ServerApi;
-import com.wtc.xmut.taoschool.ui.fragment.homeFragment_src.InquiryFragment;
+import com.wtc.xmut.taoschool.ui.fragment.homeFragment_src.inquiryFragment;
 import com.wtc.xmut.taoschool.ui.fragment.homeFragment_src.PublishFragment;
 import com.wtc.xmut.taoschool.utils.NetWorkUtils;
 import com.wtc.xmut.taoschool.utils.OkHttpUtils;
@@ -87,7 +87,7 @@ public class HomeFragment extends Fragment {
 
     private void loadDateSuccess(MyViewPagerAdapter viewPagerAdapter) {
         viewPagerAdapter.addFragment(PublishFragment.newInstance(), "发布");
-        viewPagerAdapter.addFragment(InquiryFragment.newInstance(), "求购");
+        viewPagerAdapter.addFragment(inquiryFragment.newInstance(), "求购");
         mViewPager.setAdapter(viewPagerAdapter);//设置适配器
         mTabLayout.setupWithViewPager(mViewPager);
     }

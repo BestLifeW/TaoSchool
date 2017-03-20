@@ -8,9 +8,9 @@ package com.wtc.xmut.taoschool.api;
 public class ServerApi {
 
     //private static final String Host = "http://123.56.223.17:8080"; //服务器地址
-    private static final String Host = "http://10.0.2.2:8080"; //手机测试地址
-    //private static final String Host = "http://192.168.1.110:8080";
-     //private static final String Host = "http://127.0.0.1:8080";  //Junit测试专用地址
+    //private static final String Host = "http://10.0.2.2:8080"; //手机测试地址
+    private static final String Host = "http://192.168.1.104:8080";
+    //private static final String Host = "http://127.0.0.1:8080";  //Junit测试专用地址
     private static final String SERVERHOST = Host + "/TaoSchool";
 
     //用户api
@@ -48,5 +48,16 @@ public class ServerApi {
 
     //判断网络连接
     public static final  String ISCONNECT = SERVERHOST + "/getConnect/getNet.do";
+
+
+
+    //点赞的API
+    public static final String USERLIKE = SERVERHOST+"/UserLike";
+
+
+    //
+    public static final String ADDLIKE = USERLIKE  +"/addUserlike.do";
+
+
 
 }

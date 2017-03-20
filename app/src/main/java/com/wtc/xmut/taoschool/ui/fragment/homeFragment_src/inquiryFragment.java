@@ -12,10 +12,10 @@ import com.wtc.xmut.taoschool.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class InquiryFragment extends Fragment {
+public class inquiryFragment extends Fragment {
 
 
-    public InquiryFragment() {
+    public inquiryFragment() {
         // Required empty public constructor
     }
 
@@ -27,11 +27,11 @@ public class InquiryFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_inquiry, container, false);
     }
 
-    public static InquiryFragment newInstance() {
+    public static inquiryFragment newInstance() {
 
         Bundle args = new Bundle();
 
-        InquiryFragment fragment = new InquiryFragment();
+        inquiryFragment fragment = new inquiryFragment();
         fragment.setArguments(args);
         return fragment;
     }

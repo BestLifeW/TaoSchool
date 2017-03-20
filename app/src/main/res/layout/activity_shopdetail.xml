@@ -2,18 +2,26 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/gray_bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
-    <android.support.v4.widget.NestedScrollView xmlns:fresco="http://schemas.android.com/tools"
+    <android.support.v4.widget.NestedScrollView
+        xmlns:fresco="http://schemas.android.com/tools"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/gray_bg"
         app:cardCornerRadius="2dp"
         app:cardElevation="2dp"
         app:layout_collapseParallaxMultiplier="0.5"
-        app:layout_scrollFlags="scroll">
+        app:layout_scrollFlags="scroll"
+        android:id="@+id/nestedScrollView">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -93,7 +101,44 @@
             android:layout_below="@+id/relativeLayout"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true" />
+
         </RelativeLayout>
+
+            <LinearLayout
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:background="#fff"
+                    android:layout_width="match_parent"
+
+                    android:layout_height="50dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:text="留言·"
+                        android:gravity="center_vertical"
+                        android:layout_height="match_parent"
+                        android:textStyle="bold"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_marginLeft="2dp"
+                        android:text="9"
+                        android:gravity="center_vertical"
+                        android:layout_height="match_parent"
+                        android:textStyle="bold"
+                        />
+                </LinearLayout>
+                <ListView
+                    android:id="@+id/lv_comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                </ListView>
+            </LinearLayout>
+
+        </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
     <RelativeLayout
@@ -102,7 +147,27 @@
         android:padding="5dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:background="#fff">
+        android:background="#fff"
+        android:id="@+id/relativeLayout2">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="30dp"
+            android:layout_height="23dp"
+            app:srcCompat="@drawable/contact_entry"
+            android:layout_marginStart="11dp"
+            android:layout_marginTop="5dp"
+            android:layout_alignParentStart="true" />
+        <TextView
+            android:textSize="8sp"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="留言"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/imageView2"
+            android:layout_toStartOf="@+id/iv_love"
+            android:id="@+id/textView3" />
         <Button
             android:id="@+id/btn_buy"
             android:text="确认购买"
@@ -113,5 +178,27 @@
             android:background="#f54f4f"
             android:layout_alignParentEnd="true" />
 
+        <ImageView
+            android:id="@+id/iv_love"
+            android:layout_width="30dp"
+            android:layout_height="23dp"
+            android:layout_alignTop="@+id/imageView2"
+            android:layout_marginStart="28dp"
+            android:layout_toEndOf="@+id/imageView2"
+            app:srcCompat="@drawable/love_gray" />
+
+        <TextView
+            android:textSize="8sp"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="点赞"
+            android:layout_alignBaseline="@+id/textView3"
+            android:layout_alignBottom="@+id/textView3"
+            android:layout_alignStart="@+id/iv_love"
+            android:layout_alignEnd="@+id/iv_love" />
     </RelativeLayout>
+
+
+
 </RelativeLayout>
