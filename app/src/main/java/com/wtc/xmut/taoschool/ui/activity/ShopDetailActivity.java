@@ -23,6 +23,7 @@ import com.wtc.xmut.taoschool.utils.SnackbarUtils;
 import com.wtc.xmut.taoschool.utils.ToastUtils;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -141,8 +142,21 @@ public class ShopDetailActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.iv_love)
-    public void onClick() {
+    public void onClick() throws Exception {
         //判断点赞情况
-        Toasty.custom(getApplicationContext(),"+1",R.drawable.love_red, Color.GRAY,Color.alpha(200),Toast.LENGTH_SHORT,true,true).show();
+        HashMap<String,String> map = new HashMap<>();
+        map.put("shopid",shop.getId()+"");
+        map.put("username",shop.getUsername());
+        OkHttpUtils.doPostAsync(ServerApi.ADDLIKE, map, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Toasty.error(getApplicationContext(),"服务器连接失败啦",Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Toasty.custom(getApplicationContext(),"+1",R.drawable.love_red, Color.GRAY,Color.alpha(200),Toast.LENGTH_SHORT,true,true).show();
+            }
+        });
     }
 }
