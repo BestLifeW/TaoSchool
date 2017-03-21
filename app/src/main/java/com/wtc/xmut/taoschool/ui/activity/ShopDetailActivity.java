@@ -3,13 +3,11 @@ package com.wtc.xmut.taoschool.ui.activity;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,44 +23,16 @@ import com.wtc.xmut.taoschool.utils.ToastUtils;
 import java.io.IOException;
 import java.util.HashMap;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import es.dmoral.toasty.Toasty;
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.OkHttpClient;
 import okhttp3.Response;
 
 public class ShopDetailActivity extends AppCompatActivity {
 
-    @BindView(R.id.sld_usericon)
-    SimpleDraweeView sldUsericon;
-    @BindView(R.id.tv_money)
-    TextView tvMoney;
-    @BindView(R.id.tv_user_name)
-    TextView tvUserName;
-    @BindView(R.id.tv_fromwhere)
-    TextView tvFromwhere;
-    @BindView(R.id.tv_shop_summary)
-    TextView tvShopSummary;
-    @BindView(R.id.relativeLayout)
-    RelativeLayout relativeLayout;
-    @BindView(R.id.sdv_shop_pic)
-    SimpleDraweeView sdvShopPic;
-    @BindView(R.id.lv_comment)
-    ListView lvComment;
-    @BindView(R.id.nestedScrollView)
-    NestedScrollView nestedScrollView;
-    @BindView(R.id.imageView2)
-    ImageView imageView2;
-    @BindView(R.id.textView3)
-    TextView textView3;
-    @BindView(R.id.btn_buy)
-    Button btnBuy;
-    @BindView(R.id.iv_love)
-    ImageView ivLove;
-    @BindView(R.id.relativeLayout2)
-    RelativeLayout relativeLayout2;
+
     private SimpleDraweeView mSld_usericon;
     private TextView mTv_money;
     private TextView mTv_user_name;
@@ -70,20 +40,21 @@ public class ShopDetailActivity extends AppCompatActivity {
     private TextView mTv_shop_summary;
     private SimpleDraweeView mSdv_shop_pic;
     private Button mBtn_buy;
-
+    private boolean isLove = false;
     private ShopExt shop;
     private static final String TAG = "ShopDetailActivity";
+    private ImageView mBtnLove;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopdetail);
         ButterKnife.bind(this);
-
         init();
-        int ShopId = (int) getIntent().getExtras().get("ShopId");
-        Log.i(TAG, "onCreate: ");
-        ToastUtils.showToast(getApplicationContext(), ShopId + "");
+        final int ShopId = (int) getIntent().getExtras().get("ShopId");
+        //ToastUtils.showToast(getApplicationContext(), ShopId + "");
+
+
         OkHttpUtils.getDateAsync(ServerApi.GETSHOPBYID + ShopId, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -93,6 +64,32 @@ public class ShopDetailActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 ParseJson(response.body().string());
+                isLoveShow(ShopId);
+            }
+        });
+
+
+
+    }
+
+    private void isLoveShow(int shopId) {
+        //进来判断是否有赞
+        OkHttpUtils.getDateAsync(ServerApi.ISLOVESHOW + shop.getUsername() + "/" + shopId, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                    if (response.body().string().contains("有赞")){
+                        Log.i(TAG, "onResponse: 有赞");
+                        mBtnLove.setImageResource(R.drawable.love_red);
+
+                    }else {
+                        Log.i(TAG, "onResponse: 没赞");
+                        mBtnLove.setImageResource(R.drawable.love_gray);
+                    }
             }
         });
     }
@@ -133,6 +130,54 @@ public class ShopDetailActivity extends AppCompatActivity {
         mTv_shop_summary = (TextView) findViewById(R.id.tv_shop_summary);
         mSdv_shop_pic = (SimpleDraweeView) findViewById(R.id.sdv_shop_pic);
         mBtn_buy = (Button) findViewById(R.id.btn_buy);
+        mBtnLove = (ImageView) findViewById(R.id.iv_love);
+        mBtnLove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //判断点赞情况
+                HashMap<String, String> map = new HashMap<>();
+                map.put("shopid", shop.getId() + "");
+                map.put("username", shop.getUsername());
+                try {
+                    addLove(map);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+
+    private void addLove(HashMap<String, String> map) throws Exception {
+        OkHttpUtils.doPostAsync(ServerApi.ISLOVE, map, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Toasty.error(getApplicationContext(), "服务器连接失败啦", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.body().string().contains("插入成功")) {
+                    ShopDetailActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mBtnLove.setImageResource(R.drawable.love_red);
+                            Toasty.custom(getApplicationContext(), "+1", R.drawable.love_red, Color.GRAY, Color.alpha(200), Toast.LENGTH_SHORT, true, true).show();
+                        }
+                    });
+                }else {
+                    ShopDetailActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mBtnLove.setImageResource(R.drawable.love_gray);
+                            Toasty.custom(getApplicationContext(), "-1", R.drawable.love_gray, Color.GRAY, Color.alpha(200), Toast.LENGTH_SHORT, true, true).show();
+                        }
+                    });
+                }
+
+
+            }
+        });
     }
 
     @Override
@@ -141,22 +186,7 @@ public class ShopDetailActivity extends AppCompatActivity {
 
     }
 
-    @OnClick(R.id.iv_love)
     public void onClick() throws Exception {
-        //判断点赞情况
-        HashMap<String,String> map = new HashMap<>();
-        map.put("shopid",shop.getId()+"");
-        map.put("username",shop.getUsername());
-        OkHttpUtils.doPostAsync(ServerApi.ADDLIKE, map, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Toasty.error(getApplicationContext(),"服务器连接失败啦",Toast.LENGTH_LONG).show();
-            }
 
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                Toasty.custom(getApplicationContext(),"+1",R.drawable.love_red, Color.GRAY,Color.alpha(200),Toast.LENGTH_SHORT,true,true).show();
-            }
-        });
     }
 }
