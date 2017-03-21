@@ -63,6 +63,6 @@ public class ServerApi {
 
 
     //判断有几个赞
-    public  static final String COUNTLOVEBYUSERNAME = USERLIKE + "/countUserLove";
+    public  static final String COUNTLOVEBYUSERNAME = USERLIKE + "/countUserLove/";
 
 }
