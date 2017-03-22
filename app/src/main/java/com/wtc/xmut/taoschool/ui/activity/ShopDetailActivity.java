@@ -77,18 +77,26 @@ public class ShopDetailActivity extends AppCompatActivity {
         OkHttpUtils.getDateAsync(ServerApi.ISLOVESHOW + shop.getUsername() + "/" + shopId, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-
             }
-
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                     if (response.body().string().contains("有赞")){
                         Log.i(TAG, "onResponse: 有赞");
-                        mBtnLove.setImageResource(R.drawable.love_red);
-
+                        ShopDetailActivity.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mBtnLove.setImageResource(R.drawable.love_red);
+                            }
+                        });
                     }else {
                         Log.i(TAG, "onResponse: 没赞");
-                        mBtnLove.setImageResource(R.drawable.love_gray);
+                        ShopDetailActivity.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mBtnLove.setImageResource(R.drawable.love_gray);
+                            }
+                        });
+
                     }
             }
         });

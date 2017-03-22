@@ -136,6 +136,11 @@ public class PersonFragment extends Fragment implements View.OnClickListener {
                 }else {
                     mTv_publish_count.setText(user.getPublishcount()+"");
                 }
+                if (user.getLikecount().equals("0")){
+                    mTv_like_count.setText("0");
+                }else {
+                    mTv_like_count.setText(user.getLikecount()+"");
+                }
                 Uri uri = Uri.parse(ServerApi.SHOWPIC+user.getIconpath());
                 mSdv_user_icon.setImageURI(uri);
                 Log.i(TAG, "handleMessage: "+ServerApi.SHOWPIC+user.getIconpath());
