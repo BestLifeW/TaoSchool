@@ -6,13 +6,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
 
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
     <android.support.v4.widget.NestedScrollView
         xmlns:fresco="http://schemas.android.com/tools"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/gray_bg"
         app:cardCornerRadius="2dp"
+        android:layout_marginTop="?attr/actionBarSize"
         app:cardElevation="2dp"
         app:layout_collapseParallaxMultiplier="0.5"
         app:layout_scrollFlags="scroll"
@@ -50,7 +63,7 @@
             android:layout_alignBottom="@+id/tv_user_name"
             android:layout_alignParentEnd="true"
             android:fontFamily="sans-serif"
-            android:text="￥50"
+            android:text="加载中..."
             android:textAllCaps="false"
             android:textColor="@android:color/holo_red_light"
             android:textSize="16sp"
@@ -64,7 +77,7 @@
             android:layout_alignTop="@+id/sld_usericon"
             android:layout_marginStart="10dp"
             android:layout_toEndOf="@+id/sld_usericon"
-            android:text="要去个美丽的地方"
+            android:text="加载中..."
             android:textColor="@color/bb_darkBackgroundColor" />
 
         <TextView
@@ -73,7 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/sld_usericon"
             android:layout_alignStart="@+id/tv_user_name"
-            android:text="来自D栋128" />
+            android:text="加载中..." />
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -89,7 +102,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="61dp"
                 android:lineSpacingMultiplier="1.2"
-                android:text="你们都是辣鸡你们都是辣鸡你们都是辣鸡你们都是辣鸡你们都是辣鸡你们都是辣鸡你们都是辣鸡"
+                android:text="加载中..."
                 android:textSize="14sp" />
         </RelativeLayout>
 

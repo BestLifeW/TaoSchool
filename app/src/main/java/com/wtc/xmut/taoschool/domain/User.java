@@ -130,4 +130,23 @@ public class User {
     public void setInquirycount(Integer inquirycount) {
         this.inquirycount = inquirycount;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", telephone=" + telephone +
+                ", college='" + college + '\'' +
+                ", floor='" + floor + '\'' +
+                ", dormitory='" + dormitory + '\'' +
+                ", likecount=" + likecount +
+                ", iconpath='" + iconpath + '\'' +
+                ", earnhow=" + earnhow +
+                ", publishcount=" + publishcount +
+                ", inquirycount=" + inquirycount +
+                '}';
+    }
 }

@@ -3,11 +3,13 @@ package com.wtc.xmut.taoschool.ui.fragment;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.wtc.xmut.taoschool.R;
@@ -28,6 +31,8 @@ import com.wtc.xmut.taoschool.utils.PrefUtils;
 import com.wtc.xmut.taoschool.utils.SnackbarUtils;
 
 import java.io.IOException;
+
+import es.dmoral.toasty.Toasty;
 
 
 public class PersonFragment extends Fragment implements View.OnClickListener {
@@ -50,6 +55,7 @@ public class PersonFragment extends Fragment implements View.OnClickListener {
     private ImageView mIv_user_icon;
     private SimpleDraweeView mSdv_user_icon;
     private RelativeLayout rl_person;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     public PersonFragment() {
         userService = new UserServiceImol();
@@ -78,6 +84,8 @@ public class PersonFragment extends Fragment implements View.OnClickListener {
         rl_setting_setting = (RelativeLayout) view.findViewById(R.id.rl_setting_setting);
         mSdv_user_icon = (SimpleDraweeView) view.findViewById(R.id.sdv_user_icon);
         rl_person = (RelativeLayout) view.findViewById(R.id.rl_person);
+        swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swipe_container);
+                //设置刷新时动画的颜色，可以设置4个
     }
 
     private void init() {
@@ -91,6 +99,25 @@ public class PersonFragment extends Fragment implements View.OnClickListener {
     private void initEvent() {
         rl_setting_setting.setOnClickListener(this);
         rl_person.setOnClickListener(this);
+        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light, android.R.color.holo_orange_light, android.R.color.holo_green_light);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+            @Override
+            public void onRefresh() {
+
+                new Handler().postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+
+
+                        initDate();
+                        swipeRefreshLayout.setRefreshing(false);
+                        Toasty.custom(getActivity(), "刷新成功", R.drawable.ic_favorite, Color.GRAY, Color.alpha(200), Toast.LENGTH_SHORT, true, true).show();
+                    }
+                }, 3000);
+            }
+        });
     }
 
     private void initDate() {
@@ -174,4 +201,11 @@ public class PersonFragment extends Fragment implements View.OnClickListener {
         Intent intent = new Intent(mContext,PersonActivity.class);
         startActivity(intent);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.i(TAG, "onResume: ");
+    }
+
 }

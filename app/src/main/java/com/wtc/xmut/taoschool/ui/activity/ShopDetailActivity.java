@@ -1,10 +1,13 @@
 package com.wtc.xmut.taoschool.ui.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -17,6 +20,7 @@ import com.wtc.xmut.taoschool.R;
 import com.wtc.xmut.taoschool.api.ServerApi;
 import com.wtc.xmut.taoschool.domain.ShopExt;
 import com.wtc.xmut.taoschool.utils.OkHttpUtils;
+import com.wtc.xmut.taoschool.utils.PrefUtils;
 import com.wtc.xmut.taoschool.utils.SnackbarUtils;
 import com.wtc.xmut.taoschool.utils.ToastUtils;
 
@@ -30,7 +34,7 @@ import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Response;
 
-public class ShopDetailActivity extends AppCompatActivity {
+public class ShopDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
 
     private SimpleDraweeView mSld_usericon;
@@ -44,16 +48,20 @@ public class ShopDetailActivity extends AppCompatActivity {
     private ShopExt shop;
     private static final String TAG = "ShopDetailActivity";
     private ImageView mBtnLove;
+    private String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopdetail);
         ButterKnife.bind(this);
+        username = PrefUtils.getString(getApplicationContext(), PrefUtils.USER_NUMBER,"");
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Log.i(TAG, "onCreate: "+username);
         init();
         final int ShopId = (int) getIntent().getExtras().get("ShopId");
-        //ToastUtils.showToast(getApplicationContext(), ShopId + "");
-
 
         OkHttpUtils.getDateAsync(ServerApi.GETSHOPBYID + ShopId, new Callback() {
             @Override
@@ -67,14 +75,11 @@ public class ShopDetailActivity extends AppCompatActivity {
                 isLoveShow(ShopId);
             }
         });
-
-
-
     }
 
     private void isLoveShow(int shopId) {
         //进来判断是否有赞
-        OkHttpUtils.getDateAsync(ServerApi.ISLOVESHOW + shop.getUsername() + "/" + shopId, new Callback() {
+        OkHttpUtils.getDateAsync(ServerApi.ISLOVESHOW + username + "/" + shopId, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
             }
@@ -121,7 +126,7 @@ public class ShopDetailActivity extends AppCompatActivity {
     private void initDate() {
         if (shop != null) {
             mTv_user_name.setText(shop.getName());
-            mTv_money.setText(shop.getPrice() + "");
+            mTv_money.setText("￥"+shop.getPrice() + "");
             mTv_shop_summary.setText(shop.getDescription());
             Uri shopuri = Uri.parse(ServerApi.SHOWPIC + shop.getPicture());
             Uri UserIconUri = Uri.parse(ServerApi.SHOWPIC + shop.getIconpath());
@@ -138,21 +143,11 @@ public class ShopDetailActivity extends AppCompatActivity {
         mTv_shop_summary = (TextView) findViewById(R.id.tv_shop_summary);
         mSdv_shop_pic = (SimpleDraweeView) findViewById(R.id.sdv_shop_pic);
         mBtn_buy = (Button) findViewById(R.id.btn_buy);
+        mBtn_buy.setOnClickListener(this);
+
         mBtnLove = (ImageView) findViewById(R.id.iv_love);
-        mBtnLove.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //判断点赞情况
-                HashMap<String, String> map = new HashMap<>();
-                map.put("shopid", shop.getId() + "");
-                map.put("username", shop.getUsername());
-                try {
-                    addLove(map);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        mBtnLove.setOnClickListener(this);
+
     }
 
 
@@ -196,5 +191,54 @@ public class ShopDetailActivity extends AppCompatActivity {
 
     public void onClick() throws Exception {
 
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()){
+            case R.id.iv_love:
+                addLike();
+                break;
+            case R.id.btn_buy:
+                enterOrder();
+        }
+
+    }
+
+    private void enterOrder() {
+        if (username==null){
+            SnackbarUtils.ShowSnackbar(getCurrentFocus(),"您还未登录");
+        }else {
+            Intent  intent = new Intent(getApplicationContext(),OrderActivity.class);
+            intent.putExtra("username",username);
+            intent.putExtra("shopid",shop.getId());
+            startActivity(intent);
+        }
+
+    }
+
+    private void addLike() {
+        //判断点赞情况
+        HashMap<String, String> map = new HashMap<>();
+        map.put("shopid", shop.getId() + "");
+        map.put("username", username);
+        Log.i(TAG, "onClick: "+map.toString());
+        try {
+            addLove(map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

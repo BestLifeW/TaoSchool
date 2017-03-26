@@ -2,6 +2,8 @@ package com.wtc.xmut.taoschool;
 
 import android.app.Application;
 import android.content.Context;
+import android.view.View;
+import android.widget.Button;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 
@@ -18,6 +20,5 @@ public class MyApplication extends Application {
         mContext = getApplicationContext();
         super.onCreate();
         Fresco.initialize(this);
-
     }
 }

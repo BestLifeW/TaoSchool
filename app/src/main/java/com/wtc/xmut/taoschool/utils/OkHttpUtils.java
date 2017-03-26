@@ -1,5 +1,7 @@
 package com.wtc.xmut.taoschool.utils;
 
+import android.util.Log;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -23,6 +25,8 @@ import okhttp3.ResponseBody;
 public class OkHttpUtils {
     private static final OkHttpClient OK_HTTP_CLIENT = new OkHttpClient();
 
+
+    private static final String TAG = "OkHttpUtils";
 
     /**
      * 返回request对象
@@ -123,6 +127,7 @@ public class OkHttpUtils {
             Set<Map.Entry<String, String>> entrySet = params.entrySet();
             for (Map.Entry<String, String> entry : entrySet) {
                 formBodyBuilder.add(entry.getKey(), entry.getValue());
+                Log.i(TAG, "doPostAsync: "+entry.getKey()+entry.getValue());
             }
         }
         Request request = new Request.Builder().url(url).post(formBodyBuilder.build()).build();
