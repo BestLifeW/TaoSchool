@@ -109,8 +109,6 @@ public class PersonFragment extends Fragment implements View.OnClickListener {
 
                     @Override
                     public void run() {
-
-
                         initDate();
                         swipeRefreshLayout.setRefreshing(false);
                         Toasty.custom(getActivity(), "刷新成功", R.drawable.ic_favorite, Color.GRAY, Color.alpha(200), Toast.LENGTH_SHORT, true, true).show();
