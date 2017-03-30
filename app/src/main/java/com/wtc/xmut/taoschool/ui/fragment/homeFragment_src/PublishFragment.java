@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.wtc.xmut.taoschool.R;
 import com.wtc.xmut.taoschool.Service.ShopService;
@@ -106,7 +107,7 @@ public class PublishFragment extends Fragment {
             public void onResponse(Call call, Response response) throws IOException {
                 String str = null;
                 str = response.body().string();
-                Gson gson = new Gson();
+                Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
                 shopList = gson.fromJson(str, new TypeToken<ArrayList<ShopExt>>() {
                 }.getType());
                 getActivity().runOnUiThread(new Runnable() {
@@ -114,7 +115,7 @@ public class PublishFragment extends Fragment {
                     public void run() {
 
                         mRecyclerView.setAdapter(new PublishAdapter(getActivity(),
-                                R.layout.main_item, shopList));
+                                R.layout.item_main, shopList));
                         SpacesItemDecoration decoration = new SpacesItemDecoration(20);
                         mRecyclerView.addItemDecoration(decoration);
                     }

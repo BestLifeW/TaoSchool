@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="1dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+        <android.support.v4.widget.CircleImageView
+            android:id="@+id/clv_userhead"
+            android:src="@drawable/usericon"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+</android.support.v7.widget.CardView>

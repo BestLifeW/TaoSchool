@@ -7,13 +7,24 @@ import android.support.v7.widget.CardView;
 import android.view.View;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
 import com.wtc.xmut.taoschool.R;
 import com.wtc.xmut.taoschool.api.ServerApi;
 import com.wtc.xmut.taoschool.domain.ShopExt;
 import com.wtc.xmut.taoschool.ui.activity.ShopDetailActivity;
+import com.wtc.xmut.taoschool.utils.TimeUtils;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 
+import java.lang.reflect.Type;
+import java.sql.Time;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,6 +35,7 @@ import java.util.List;
 public class PublishAdapter extends CommonAdapter<ShopExt> {
 
     private Context mcontext;
+    private long parse;
 
     public PublishAdapter(Context context, int layoutId, List<ShopExt> datas) {
         super(context, layoutId, datas);
@@ -49,9 +61,17 @@ public class PublishAdapter extends CommonAdapter<ShopExt> {
                 mcontext.startActivity(intent);
             }
         });
+        GsonBuilder builder = new GsonBuilder();
+
+
+
         holder.setText(R.id.tv_money, "￥" + shopExt.getPrice());
         holder.setText(R.id.tv_description, shopExt.getDescription());
         holder.setText(R.id.tv_user_name, shopExt.getName());
         holder.setText(R.id.tv_fromwhere, "來自" + shopExt.getCollege());
+        //时间转换工具
+        String date = TimeUtils.stampToDate(shopExt.getShoptime());
+
+        holder.setText(R.id.tv_shoptime, date);
     }
 }

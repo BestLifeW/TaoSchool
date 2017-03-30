@@ -17,7 +17,7 @@ public class ShopExt {
     private String college;
     private String iconpath;
     private String name;
-
+    private String shoptime;
     public String getName() {
         return name;
     }
@@ -104,5 +104,13 @@ public class ShopExt {
 
     public void setIconpath(String iconpath) {
         this.iconpath = iconpath;
+    }
+
+    public String getShoptime() {
+        return shoptime;
+    }
+
+    public void setShoptime(String shoptime) {
+        this.shoptime = shoptime;
     }
 }

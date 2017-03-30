@@ -1,5 +1,7 @@
 package com.wtc.xmut.taoschool.domain;
 
+import java.util.Date;
+
 public class Shop {
     private Integer id;
 
@@ -17,6 +19,7 @@ public class Shop {
 
     private String oldprice;
 
+    private Date shoptime;
     public Integer getId() {
         return id;
     }
@@ -81,6 +84,14 @@ public class Shop {
         this.oldprice = oldprice == null ? null : oldprice.trim();
     }
 
+    public Date getShoptime() {
+        return shoptime;
+    }
+
+    public void setShoptime(Date shoptime) {
+        this.shoptime = shoptime;
+    }
+
     @Override
     public String toString() {
         return "Shop{" +
@@ -92,6 +103,7 @@ public class Shop {
                 ", price='" + price + '\'' +
                 ", username='" + username + '\'' +
                 ", oldprice='" + oldprice + '\'' +
+                ", shoptime=" + shoptime +
                 '}';
     }
 }
