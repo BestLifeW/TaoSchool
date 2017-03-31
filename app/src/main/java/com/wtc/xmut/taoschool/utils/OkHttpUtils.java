@@ -2,20 +2,27 @@ package com.wtc.xmut.taoschool.utils;
 
 import android.util.Log;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
+import okhttp3.Cache;
+import okhttp3.CacheControl;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+
+import static com.wtc.xmut.taoschool.MyApplication.mContext;
 
 /**
  * 作者 By lovec on 2017/3/15 0015.22:25
@@ -23,8 +30,25 @@ import okhttp3.ResponseBody;
  */
 
 public class OkHttpUtils {
-    private static final OkHttpClient OK_HTTP_CLIENT = new OkHttpClient();
 
+    public static final MediaType MEDIA_TYPE_MARKDOWN = MediaType.parse("text/json; charset=utf-8");//设置MediaType
+    private static final OkHttpClient OK_HTTP_CLIENT;
+    private static final long cacheSize = 1024*1024*20;//缓存文件最大限制大小20M
+    private static String cachedirectory =mContext.getExternalCacheDir().getPath();  //设置缓存文件路径
+    private static Cache cache = new Cache(new File(cachedirectory), cacheSize);  //
+
+    static {
+
+
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        builder.connectTimeout(8, TimeUnit.SECONDS);  //设置连接超时时间
+        builder.writeTimeout(8, TimeUnit.SECONDS);//设置写入超时时间
+        builder.readTimeout(8, TimeUnit.SECONDS);//设置读取数据超时时间
+        builder.retryOnConnectionFailure(false);//设置不进行连接失败重试
+        builder.cache(cache);//这种缓存
+        OK_HTTP_CLIENT = builder.build();
+
+    }
 
     private static final String TAG = "OkHttpUtils";
 
@@ -111,7 +135,9 @@ public class OkHttpUtils {
 
     public static void getDateAsync(String urlString, Callback callback) {
         Request request = BuildRequest(urlString);
-        OK_HTTP_CLIENT.newCall(request).enqueue(callback);
+        OK_HTTP_CLIENT
+
+                .newCall(request).enqueue(callback);
 
     }
 

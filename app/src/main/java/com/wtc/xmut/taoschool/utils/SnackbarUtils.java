@@ -11,6 +11,8 @@ import android.view.View;
 public class SnackbarUtils {
 
     public static void ShowSnackbar(View view,String msg){
+        if (view!=null){
         Snackbar.make(view,msg,Snackbar.LENGTH_LONG).show();
+        }
     }
 }
