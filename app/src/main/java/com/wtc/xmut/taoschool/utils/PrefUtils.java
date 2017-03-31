@@ -13,7 +13,7 @@ public class PrefUtils {
     public static  final  String USER_NUMBER="USERNUMBER";
 
     /**
-     *
+     * 获取boolean数值
      * @param context
      * @param key
      * @param defValue
@@ -25,7 +25,7 @@ public class PrefUtils {
     }
 
     /**
-     *
+     * 设置boolean数值
      * @param context
      * @param key
      * @param Value
@@ -36,7 +36,7 @@ public class PrefUtils {
     }
 
     /**
-     *
+     * 获取string数值
      * @param context
      * @param key
      * @param defValue
