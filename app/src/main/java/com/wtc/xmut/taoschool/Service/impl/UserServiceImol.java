@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.wtc.xmut.taoschool.Service.UserService;
 import com.wtc.xmut.taoschool.api.ServerApi;
 import com.wtc.xmut.taoschool.domain.User;
+import com.wtc.xmut.taoschool.utils.XutilsUtils;
 
 import java.io.IOException;
 import java.util.List;
@@ -67,6 +68,7 @@ public class UserServiceImol implements UserService {
 
     @Override
     public List<User> findAll() {
+
         return null;
     }
 

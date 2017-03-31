@@ -19,20 +19,17 @@ import com.google.gson.Gson;
 import com.wtc.xmut.taoschool.R;
 import com.wtc.xmut.taoschool.api.ServerApi;
 import com.wtc.xmut.taoschool.domain.ShopExt;
-import com.wtc.xmut.taoschool.utils.OkHttpUtils;
 import com.wtc.xmut.taoschool.utils.PrefUtils;
 import com.wtc.xmut.taoschool.utils.SnackbarUtils;
-import com.wtc.xmut.taoschool.utils.ToastUtils;
 
-import java.io.IOException;
+import com.wtc.xmut.taoschool.utils.ToastUtils;
+import com.wtc.xmut.taoschool.utils.XutilsUtils;
+
+
 import java.util.HashMap;
 
 import butterknife.ButterKnife;
 import es.dmoral.toasty.Toasty;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Response;
 
 public class ShopDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -45,10 +42,11 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
     private SimpleDraweeView mSdv_shop_pic;
     private Button mBtn_buy;
     private boolean isLove = false;
-    private ShopExt shop;
+    private ShopExt shopExt;
     private static final String TAG = "ShopDetailActivity";
     private ImageView mBtnLove;
     private String username;
+    private XutilsUtils utils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,58 +57,43 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        Log.i(TAG, "onCreate: "+username);
-        init();
+        utils = XutilsUtils.getInstance();
         final int ShopId = (int) getIntent().getExtras().get("ShopId");
+        init();
 
-        OkHttpUtils.getDateAsync(ServerApi.GETSHOPBYID + ShopId, new Callback() {
+        utils.getCache(ServerApi.GETSHOPBYID + ShopId, null, true,60*1000*6, new XutilsUtils.XCallBack() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                SnackbarUtils.ShowSnackbar(getCurrentFocus(), "网络连接失败，请检查网络");
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                ParseJson(response.body().string());
+            public void onResponse(String result) {
+                ParseJson(result);
                 isLoveShow(ShopId);
+
             }
         });
+
     }
 
     private void isLoveShow(int shopId) {
         //进来判断是否有赞
-        OkHttpUtils.getDateAsync(ServerApi.ISLOVESHOW + username + "/" + shopId, new Callback() {
+        utils.get(ServerApi.ISLOVESHOW + username + "/" + shopId, null, new XutilsUtils.XCallBack() {
             @Override
-            public void onFailure(Call call, IOException e) {
-            }
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                    if (response.body().string().contains("有赞")){
-                        Log.i(TAG, "onResponse: 有赞");
-                        ShopDetailActivity.this.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                mBtnLove.setImageResource(R.drawable.love_red);
-                            }
-                        });
-                    }else {
-                        Log.i(TAG, "onResponse: 没赞");
-                        ShopDetailActivity.this.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                mBtnLove.setImageResource(R.drawable.love_gray);
-                            }
-                        });
-
-                    }
+            public void onResponse(String result) {
+                if (result.equals("1")) {
+                    mBtnLove.setImageResource(R.drawable.love_red);
+                } else if (result.equals("0")) {
+                    mBtnLove.setImageResource(R.drawable.love_gray);
+                }
             }
         });
     }
+//
+
+
 
     private void ParseJson(String json) {
+        Log.i(TAG, "ParseJson: "+json);
         Gson gson = new Gson();
-        shop = gson.fromJson(json, ShopExt.class);
-        // Log.i(TAG, "ParseJson: "+shop.toString());
+        shopExt = gson.fromJson(json, ShopExt.class);
+
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -124,12 +107,12 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void initDate() {
-        if (shop != null) {
-            mTv_user_name.setText(shop.getName());
-            mTv_money.setText("￥"+shop.getPrice() + "");
-            mTv_shop_summary.setText(shop.getDescription());
-            Uri shopuri = Uri.parse(ServerApi.SHOWPIC + shop.getPicture());
-            Uri UserIconUri = Uri.parse(ServerApi.SHOWPIC + shop.getIconpath());
+        if (shopExt != null) {
+            mTv_user_name.setText(shopExt.getName());
+            mTv_money.setText("￥"+ shopExt.getPrice() + "");
+            mTv_shop_summary.setText(shopExt.getDescription());
+            Uri shopuri = Uri.parse(ServerApi.SHOWPIC + shopExt.getPicture());
+            Uri UserIconUri = Uri.parse(ServerApi.SHOWPIC + shopExt.getIconpath());
             mSld_usericon.setImageURI(UserIconUri);
             mSdv_shop_pic.setImageURI(shopuri);
         }
@@ -152,6 +135,26 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
 
 
     private void addLove(HashMap<String, String> map) throws Exception {
+
+        utils.post(ServerApi.ISLOVE, map, new XutilsUtils.XCallBack() {
+            @Override
+            public void onResponse(String result) {
+                if (result.equals("插入成功")) {
+
+                    mBtnLove.setImageResource(R.drawable.love_red);
+                    Toasty.custom(getApplicationContext(), "+1", R.drawable.love_red, Color.GRAY, Color.alpha(200), Toast.LENGTH_SHORT, true, true).show();
+
+                }else {
+                 mBtnLove.setImageResource(R.drawable.love_gray);
+                 Toasty.custom(getApplicationContext(), "-1", R.drawable.love_gray, Color.GRAY, Color.alpha(200), Toast.LENGTH_SHORT, true, true).show();
+                }
+
+            }
+        });
+
+
+/*
+
         OkHttpUtils.doPostAsync(ServerApi.ISLOVE, map, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -160,27 +163,10 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                if (response.body().string().contains("插入成功")) {
-                    ShopDetailActivity.this.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            mBtnLove.setImageResource(R.drawable.love_red);
-                            Toasty.custom(getApplicationContext(), "+1", R.drawable.love_red, Color.GRAY, Color.alpha(200), Toast.LENGTH_SHORT, true, true).show();
-                        }
-                    });
-                }else {
-                    ShopDetailActivity.this.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            mBtnLove.setImageResource(R.drawable.love_gray);
-                            Toasty.custom(getApplicationContext(), "-1", R.drawable.love_gray, Color.GRAY, Color.alpha(200), Toast.LENGTH_SHORT, true, true).show();
-                        }
-                    });
-                }
 
 
             }
-        });
+        });*/
     }
 
     @Override
@@ -189,15 +175,12 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
 
     }
 
-    public void onClick() throws Exception {
-
-    }
-
     @Override
     public void onClick(View v) {
 
         switch (v.getId()){
             case R.id.iv_love:
+                ToastUtils.showToast(getApplicationContext(),"颠倒了");
                 addLike();
                 break;
             case R.id.btn_buy:
@@ -212,7 +195,7 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
         }else {
             Intent  intent = new Intent(getApplicationContext(),OrderActivity.class);
             intent.putExtra("username",username);
-            intent.putExtra("shopid",shop.getId());
+            intent.putExtra("shopid", shopExt.getId());
             startActivity(intent);
         }
 
@@ -221,9 +204,8 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
     private void addLike() {
         //判断点赞情况
         HashMap<String, String> map = new HashMap<>();
-        map.put("shopid", shop.getId() + "");
+        map.put("shopid", shopExt.getId() + "");
         map.put("username", username);
-        Log.i(TAG, "onClick: "+map.toString());
         try {
             addLove(map);
         } catch (Exception e) {

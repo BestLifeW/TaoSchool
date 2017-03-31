@@ -10,61 +10,61 @@ import android.content.SharedPreferences;
 public class PrefUtils {
 
 
-    public static  final  String USER_NUMBER="USERNUMBER";
+  public static  final  String USER_NUMBER="USERNUMBER";
 
-    /**
-     * 获取boolean数值
-     * @param context
-     * @param key
-     * @param defValue
-     * @return
-     */
-    public static boolean getBoolean(Context context,String key,boolean defValue ){
-        SharedPreferences sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);
-        return sp.getBoolean(key,defValue);
-    }
+  /**
+   * 获取boolean数值
+   * @param context
+   * @param key
+   * @param defValue
+   * @return
+   */
+  public static boolean getBoolean(Context context,String key,boolean defValue ){
+    SharedPreferences sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);
+    return sp.getBoolean(key,defValue);
+  }
 
-    /**
-     * 设置boolean数值
-     * @param context
-     * @param key
-     * @param Value
-     */
-    public static void setBoolean(Context context, String key, boolean Value ){
-        SharedPreferences sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);
-        sp.edit().putBoolean(key,Value).apply();
-    }
+  /**
+   * 设置boolean数值
+   * @param context
+   * @param key
+   * @param Value
+   */
+  public static void setBoolean(Context context, String key, boolean Value ){
+    SharedPreferences sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);
+    sp.edit().putBoolean(key,Value).apply();
+  }
 
-    /**
-     * 获取string数值
-     * @param context
-     * @param key
-     * @param defValue
-     * @return
-     */
+  /**
+   * 获取string数值
+   * @param context
+   * @param key
+   * @param defValue
+   * @return
+   */
 
-    public static String getString(Context context,String key,String defValue ){
-        SharedPreferences sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);
-        return sp.getString(key,defValue);
-    }
+  public static String getString(Context context,String key,String defValue ){
+    SharedPreferences sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);
+    return sp.getString(key,defValue);
+  }
 
-    /**
-     *
-     * @param context
-     * @param key
-     * @param Value
-     */
-    public static void setString(Context context,String key,String Value ){
-        SharedPreferences sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);
-        sp.edit().putString(key,Value).apply();
-    }
+  /**
+   *
+   * @param context
+   * @param key
+   * @param Value
+   */
+  public static void setString(Context context,String key,String Value ){
+    SharedPreferences sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);
+    sp.edit().putString(key,Value).apply();
+  }
 
-    public static int getInt(Context context,String key,int defValue ){
-        SharedPreferences sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);
-        return sp.getInt(key,defValue);
-    }
-    public static void setInt(Context context,String key,int Value ){
-        SharedPreferences sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);
-        sp.edit().putInt(key,Value).apply();
-    }
+  public static int getInt(Context context,String key,int defValue ){
+    SharedPreferences sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);
+    return sp.getInt(key,defValue);
+  }
+  public static void setInt(Context context,String key,int Value ){
+    SharedPreferences sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);
+    sp.edit().putInt(key,Value).apply();
+  }
 }

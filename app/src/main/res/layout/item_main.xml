@@ -115,7 +115,24 @@
             android:text="分享"
             android:layout_alignParentBottom="true"
             android:layout_alignEnd="@+id/sld_usericon" />
+        <ImageView
+            android:id="@+id/iv_comment"
+            android:layout_width="30dp"
+            android:layout_height="23dp"
+            app:srcCompat="@drawable/contact_entry"
+            android:layout_alignTop="@+id/textView6"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="55dp" />
+        <ImageView
+            android:id="@+id/iv_love"
+            android:layout_width="30dp"
+            android:layout_height="26dp"
 
+            android:layout_marginStart="8dp"
+            app:srcCompat="@drawable/love_gray"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/tv_money"
+            android:layout_alignTop="@+id/iv_comment" />
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>

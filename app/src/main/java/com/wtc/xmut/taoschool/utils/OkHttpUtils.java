@@ -1,5 +1,6 @@
 package com.wtc.xmut.taoschool.utils;
 
+import android.os.Environment;
 import android.util.Log;
 
 import java.io.File;
@@ -22,7 +23,6 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-import static com.wtc.xmut.taoschool.MyApplication.mContext;
 
 /**
  * 作者 By lovec on 2017/3/15 0015.22:25
@@ -34,7 +34,7 @@ public class OkHttpUtils {
     public static final MediaType MEDIA_TYPE_MARKDOWN = MediaType.parse("text/json; charset=utf-8");//设置MediaType
     private static final OkHttpClient OK_HTTP_CLIENT;
     private static final long cacheSize = 1024*1024*20;//缓存文件最大限制大小20M
-    private static String cachedirectory =mContext.getExternalCacheDir().getPath();  //设置缓存文件路径
+    private static String cachedirectory = Environment.getExternalStorageState();  //设置缓存文件路径
     private static Cache cache = new Cache(new File(cachedirectory), cacheSize);  //
 
     static {

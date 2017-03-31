@@ -22,6 +22,7 @@ import com.wtc.xmut.taoschool.adpater.PublishAdapter;
 import com.wtc.xmut.taoschool.api.ServerApi;
 import com.wtc.xmut.taoschool.domain.ShopExt;
 import com.wtc.xmut.taoschool.utils.SnackbarUtils;
+import com.wtc.xmut.taoschool.utils.XutilsUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class PublishFragment extends Fragment {
     private List<ShopExt> shopList;
     private static final String TAG = "PublishFragment";
     private SwipeRefreshLayout mSwipeRefreshWidget;
-
+    private XutilsUtils utils;
 
 
     public PublishFragment() {
@@ -66,6 +67,7 @@ public class PublishFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_publish, container, false);
         ButterKnife.bind(this, view);
         mSwipeRefreshWidget = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_widget);
+        utils = XutilsUtils.getInstance();
         try {
             init();
         } catch (IOException e) {
@@ -83,7 +85,21 @@ public class PublishFragment extends Fragment {
 
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        Request request = new Request.Builder()
+
+        utils.getCache(ServerApi.ALLSHOPANDUSER, null, true, 60 * 1000 * 6, new XutilsUtils.XCallBack() {
+            @Override
+            public void onResponse(String result) {
+                Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+                shopList = gson.fromJson(result, new TypeToken<ArrayList<ShopExt>>() {
+                }.getType());
+                mRecyclerView.setAdapter(new PublishAdapter(getActivity(),
+                        R.layout.item_main, shopList));
+                SpacesItemDecoration decoration = new SpacesItemDecoration(20);
+                mRecyclerView.addItemDecoration(decoration);
+            }
+        });
+
+        /*Request request = new Request.Builder()
                 .url(ServerApi.ALLSHOPANDUSER)
                 .build();
         OkHttpClient client = new OkHttpClient();
@@ -114,14 +130,11 @@ public class PublishFragment extends Fragment {
                     @Override
                     public void run() {
 
-                        mRecyclerView.setAdapter(new PublishAdapter(getActivity(),
-                                R.layout.item_main, shopList));
-                        SpacesItemDecoration decoration = new SpacesItemDecoration(20);
-                        mRecyclerView.addItemDecoration(decoration);
+
                     }
                 });
             }
-        });
+        });*/
     }
 
     private void initEvent() {
