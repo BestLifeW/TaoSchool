@@ -16,11 +16,15 @@ import android.widget.TextView;
 import com.wtc.xmut.taoschool.R;
 import com.wtc.xmut.taoschool.Service.UserService;
 import com.wtc.xmut.taoschool.Service.impl.UserServiceImol;
+import com.wtc.xmut.taoschool.api.ServerApi;
 import com.wtc.xmut.taoschool.domain.User;
 import com.wtc.xmut.taoschool.utils.SnackbarUtils;
+import com.wtc.xmut.taoschool.utils.XutilsUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,13 +55,14 @@ public class RegisterActivity extends AppCompatActivity {
     private UserService userService;
     private static final String TAG = "RegisterActivity";
     private String string;
+    private XutilsUtils utils;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        userService = new UserServiceImol();
+        utils = XutilsUtils.getInstance();
         ButterKnife.bind(this);
 
     }
@@ -89,46 +94,25 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     //注册的方法
-    private void insert(final User user) {
-        new Thread(new Runnable() {
+    private void insert(User user) {
+        HashMap<String,String> map = new HashMap();
+        map.put("username",user.getUsername());
+        map.put("password",user.getPassword());
+        map.put("name",user.getName());
+        utils.post(ServerApi.USERADD, map, new XutilsUtils.XCallBack() {
             @Override
-            public void run() {
-                string = userService.insertUser(user);
-                Log.i(TAG, "run: "+ string);
-                if (string!=null){
-                    try {
-                        JSONObject jsonObject = new JSONObject(string);
-                        final String msg = (String) jsonObject.get("msg");
-                        Log.i(TAG, "register: "+msg);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                SnackbarUtils.ShowSnackbar(getCurrentFocus(),msg);
-                                mProgressbar.setVisibility(View.INVISIBLE);
-                            }
-                        });
-
-                        if (msg.contains("注册成功")){
-                            SuccessToLogin();
-
-                        }else if (msg.contains("注册失败")){
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }else {
-                    SnackbarUtils.ShowSnackbar(getCurrentFocus(),"服务器连接失败");
-                    //mProgressbar.setVisibility(View.INVISIBLE);
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            mProgressbar.setVisibility(View.INVISIBLE);
-                        }
-                    });
-                }
+            public void onResponse(String result) {
+                SnackbarUtils.ShowSnackbar(getCurrentFocus(),"注册成功");
+                mProgressbar.setVisibility(View.INVISIBLE);
             }
-        }).start();
 
+            @Override
+            public void onResponseFail() {
+                SnackbarUtils.ShowSnackbar(getCurrentFocus(),"连接失败");
+                mProgressbar.setVisibility(View.INVISIBLE);
+            }
+
+        });
     }
 
     private void SuccessToLogin(){

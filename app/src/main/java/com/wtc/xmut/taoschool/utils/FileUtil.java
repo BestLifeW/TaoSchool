@@ -8,7 +8,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 
-import com.wtc.xmut.taoschool.MyApplication;
+import com.wtc.xmut.taoschool.myApplication;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -23,7 +23,7 @@ public class FileUtil {
 	// 保存到SD卡
 	public static String sdState = Environment.getExternalStorageState();
 	public static String savePath = Environment.getExternalStorageDirectory()
-			+ File.separator + "Android/data/"+ MyApplication.mContext.getPackageName()+ File.separator;
+			+ File.separator + "Android/data/"+ myApplication.mContext.getPackageName()+ File.separator;
 
 	public static boolean isSDCanUse() {
 		if (sdState.equals(Environment.MEDIA_MOUNTED)) {

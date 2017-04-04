@@ -1,0 +1,28 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:padding="8dp"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_weight="1"
+        android:id="@+id/comment_name"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="3dp"
+
+        android:text="加载中..."
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="12sp"
+        android:layout_width="match_parent" />
+
+    <TextView
+        android:text="加载中..."
+        android:layout_weight="1"
+        android:id="@+id/comment_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#3c3c3c"
+        android:textSize="12sp" />
+
+</LinearLayout>

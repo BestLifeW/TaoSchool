@@ -5,13 +5,17 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".MyApplication"
+        android:name="com.wtc.xmut.taoschool.myApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activity.MainActivity" />
+        <activity
+            android:name=".ui.activity.MainActivity"
+            android:label="淘学"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity
             android:name=".ui.activity.PublishActivity"
             android:theme="@style/AppTheme" />
@@ -28,15 +32,17 @@
         <activity android:name=".ui.activity.LoginActivity" />
         <activity android:name=".ui.activity.SettingActivity" />
         <activity android:name=".ui.activity.PersonActivity" />
-        <activity android:name=".ui.activity.ShopDetailActivity"
+        <activity
+            android:name=".ui.activity.ShopDetailActivity"
             android:label="@string/title_activity_shopdetial"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".ui.activity.OrderActivity"
             android:label="@string/title_activity_order"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ui.activity.SearchResultsActivity">
+
+        </activity>
     </application>
 
 </manifest>

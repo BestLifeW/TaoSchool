@@ -7,6 +7,7 @@ import com.wtc.xmut.taoschool.domain.User;
 import com.wtc.xmut.taoschool.utils.XutilsUtils;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import okhttp3.FormBody;
@@ -23,9 +24,12 @@ import okhttp3.Response;
 public class UserServiceImol implements UserService {
     private static OkHttpClient client;
 
+    private static XutilsUtils utils;
+
     static {
         client = new OkHttpClient();
         gson = new Gson();
+        utils = XutilsUtils.getInstance();
     }
 
     private static Gson gson;
@@ -33,27 +37,25 @@ public class UserServiceImol implements UserService {
 
     @Override
     public String insertUser(User user) {
-        String str = null;
-        RequestBody body = new FormBody.Builder()
-                .add("username", user.getUsername())
-                .add("password", user.getPassword())
-                .add("name", user.getName())
-                .build();
-        Request request = new Request.Builder()
-                .url(ServerApi.USERADD)
-                .post(body)
-                .build();
-        Response response = null;
-        try {
-            response = client.newCall(request).execute();
-            if (response.isSuccessful()) {
-                str = response.body().string();
-                return str;
+
+
+        final String[] str = {null};
+        HashMap<String,String> map = new HashMap<>();
+        map.put("username",user.getUsername());
+        map.put("password",user.getPassword());
+        utils.post(ServerApi.USERADD, map, new XutilsUtils.XCallBack() {
+            @Override
+            public void onResponse(String result) {
+              str[0] = result;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null; //返回空 说明连接失败
+
+            @Override
+            public void onResponseFail() {
+
+            }
+        });
+
+        return str[0]; //返回空 说明连接失败
     }
 
     @Override

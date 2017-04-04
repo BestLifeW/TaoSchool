@@ -8,8 +8,8 @@ package com.wtc.xmut.taoschool.api;
 public class ServerApi {
 
     //private static final String Host = "http://123.56.223.17:8080"; //服务器地址
-    //private static final String Host = "http://10.0.2.2:8080"; //手机测试地址
-    private static final String Host = "http://192.168.1.100:8080";
+    private static final String Host = "http://10.0.2.2:8080"; //手机测试地址
+    //private static final String Host = "http://192.168.1.100:8080";
     //private static final String Host = "http://127.0.0.1:8080";  //Junit测试专用地址
     private static final String SERVERHOST = Host + "/TaoSchool";
 
@@ -66,4 +66,13 @@ public class ServerApi {
     public  static final String COUNTLOVEBYUSERNAME = USERLIKE + "/countUserLove/";   //UserLike/countUserLove/lovec 调用格式
 
 
+
+    //评论的API
+      static  final  String COMMENT = SERVERHOST + "/Comment";
+
+    //评论的方法 通过 shopId 获取
+    public  static final  String GETCOMMENT = COMMENT +"/getComment/"; //同过/getComment/1 获得商品的评论
+
+    //评论的方法 通过POST表单提交
+    public  static  final  String ADDCOMMENT = COMMENT +"/addComment.do";
 }

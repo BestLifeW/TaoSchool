@@ -13,6 +13,7 @@ import org.xutils.image.ImageOptions;
 import org.xutils.x;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.Map;
 
 import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
@@ -71,6 +72,7 @@ public class XutilsUtils {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
+                onFaliResponse(callBack);
                 ex.printStackTrace();
             }
 
@@ -101,7 +103,6 @@ public class XutilsUtils {
                 params.addBodyParameter(entry.getKey(), entry.getValue());
             }
         }
-
         x.http().post(params, new Callback.CommonCallback<String>() {
 
             @Override
@@ -111,7 +112,7 @@ public class XutilsUtils {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-
+                onFaliResponse(callback);
             }
 
             @Override
@@ -412,13 +413,26 @@ public class XutilsUtils {
             public void run() {
                 if (callBack != null) {
                     callBack.onResponse(result);
+
+                }
+            }
+        });
+    }
+    private void onFaliResponse(final XCallBack callBack){
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (callBack!=null){
+                    callBack.onResponseFail();
                 }
             }
         });
     }
 
+
     public interface XCallBack {
         void onResponse(String result);
+        void onResponseFail();
     }
 
 
@@ -430,6 +444,10 @@ public class XutilsUtils {
         void onFinished();
     }
 
+
+    /**
+     * 同步的POST请求
+     */
 
 }
 

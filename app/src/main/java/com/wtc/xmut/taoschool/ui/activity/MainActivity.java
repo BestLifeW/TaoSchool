@@ -1,9 +1,24 @@
 package com.wtc.xmut.taoschool.ui.activity;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+
+import android.view.MenuItem;
+
+import android.widget.SearchView;
+import android.widget.SearchView.OnQueryTextListener;
+
+
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
+import android.widget.Toast;
 
 import com.startsmake.mainnavigatetabbar.widget.MainNavigateTabBar;
 import com.wtc.xmut.taoschool.R;
@@ -11,8 +26,11 @@ import com.wtc.xmut.taoschool.ui.fragment.CityFragment;
 import com.wtc.xmut.taoschool.ui.fragment.HomeFragment;
 import com.wtc.xmut.taoschool.ui.fragment.MessageFragment;
 import com.wtc.xmut.taoschool.ui.fragment.PersonFragment;
+import com.wtc.xmut.taoschool.utils.ToastUtils;
 
-public class MainActivity extends AppCompatActivity {
+import static android.R.attr.id;
+
+public class MainActivity extends AppCompatActivity  {
 
     private static final String TAG_PAGE_HOME = "首页";
     private static final String TAG_PAGE_CITY = "附近";
@@ -22,11 +40,15 @@ public class MainActivity extends AppCompatActivity {
 
 
     private MainNavigateTabBar mNavigateTabBar;
+    private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setTitleTextColor(Color.WHITE);
 
         mNavigateTabBar = (MainNavigateTabBar) findViewById(R.id.mainTabBar);
 
@@ -50,4 +72,34 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this,PublishActivity.class);
         startActivity(intent);
     }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu,menu);
+
+      /*  searchView = (SearchView) MenuItemCompat.getActionView(menuItem);//加载searchview
+        SearchManager searchManager =
+                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView =
+                (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView.setSearchableInfo(
+                searchManager.getSearchableInfo(getComponentName()));*/
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_search: {
+                Intent intent = new Intent(getApplicationContext(),SearchResultsActivity.class);
+                startActivity(intent);
+                return super.onOptionsItemSelected(item);
+
+            }
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
+
 }

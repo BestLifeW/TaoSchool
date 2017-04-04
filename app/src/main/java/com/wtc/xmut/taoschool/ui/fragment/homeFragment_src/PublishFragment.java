@@ -97,6 +97,11 @@ public class PublishFragment extends Fragment {
                 SpacesItemDecoration decoration = new SpacesItemDecoration(20);
                 mRecyclerView.addItemDecoration(decoration);
             }
+
+            @Override
+            public void onResponseFail() {
+
+            }
         });
 
         /*Request request = new Request.Builder()
