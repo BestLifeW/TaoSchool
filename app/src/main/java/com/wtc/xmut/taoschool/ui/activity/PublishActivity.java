@@ -15,7 +15,6 @@ import com.dou361.dialogui.DialogUIUtils;
 import com.dou361.dialogui.listener.DialogUIListener;
 import com.wtc.xmut.taoschool.R;
 import com.wtc.xmut.taoschool.utils.SnackbarUtils;
-import com.wtc.xmut.taoschool.view.PhotoPostDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,7 +69,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_addpic:
-                new PhotoPostDialog(this);
+              /*  new PhotoPostDialog(this);*/
                 break;
         }
     }
