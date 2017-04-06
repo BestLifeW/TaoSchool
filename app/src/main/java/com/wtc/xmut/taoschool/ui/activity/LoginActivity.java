@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -35,12 +36,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private static final String TAG = "LoginActivity";
     Gson gson = null;
     private ProgressBar progressBar2;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         userService = new UserServiceImol();
+       /* toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);*/
+       // getActionBar().setDisplayHomeAsUpEnabled(true);
         init();
     }
 
@@ -60,11 +65,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mEt_userpassword = (EditText) findViewById(R.id.et_userpassword);
         mBtn_signup = (Button) findViewById(R.id.btn_signup);
         mTv_register = (TextView) findViewById(R.id.tv_register);
-        progressBar2 = (ProgressBar) findViewById(R.id.progressBar2);
+        //progressBar2 = (ProgressBar) findViewById(R.id.progressBar2);
     }
 
     private void Login() {
-        progressBar2.setVisibility(View.VISIBLE);
+        //progressBar2.setVisibility(View.VISIBLE);
         usernumber = mEt_usernumber.getText().toString().trim();
         password = mEt_userpassword.getText().toString().trim();
         if (TextUtils.isEmpty(usernumber) || TextUtils.isEmpty(password)) {
@@ -118,7 +123,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             String val = data.getString("state");
             //ToastUtils.showToast(getApplicationContext(),val);
             Snackbar.make(getCurrentFocus(), val, Snackbar.LENGTH_LONG).show();
-            progressBar2.setVisibility(View.INVISIBLE);
+           // progressBar2.setVisibility(View.INVISIBLE);
         }
     };
 

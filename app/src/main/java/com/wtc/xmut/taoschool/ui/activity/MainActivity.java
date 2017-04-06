@@ -1,36 +1,29 @@
 package com.wtc.xmut.taoschool.ui.activity;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
-
-import android.view.MenuItem;
-
-import android.widget.SearchView;
-import android.widget.SearchView.OnQueryTextListener;
-
-
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
+import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.example.zhouwei.library.CustomPopWindow;
 import com.startsmake.mainnavigatetabbar.widget.MainNavigateTabBar;
 import com.wtc.xmut.taoschool.R;
 import com.wtc.xmut.taoschool.ui.fragment.CityFragment;
 import com.wtc.xmut.taoschool.ui.fragment.HomeFragment;
 import com.wtc.xmut.taoschool.ui.fragment.MessageFragment;
 import com.wtc.xmut.taoschool.ui.fragment.PersonFragment;
-import com.wtc.xmut.taoschool.utils.ToastUtils;
 
-import static android.R.attr.id;
-
-public class MainActivity extends AppCompatActivity  {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG_PAGE_HOME = "首页";
     private static final String TAG_PAGE_CITY = "附近";
@@ -41,6 +34,8 @@ public class MainActivity extends AppCompatActivity  {
 
     private MainNavigateTabBar mNavigateTabBar;
     private SearchView searchView;
+    private ImageView Iv_publish;
+    private CustomPopWindow.PopupWindowBuilder mCustomPopWindow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +44,8 @@ public class MainActivity extends AppCompatActivity  {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitleTextColor(Color.WHITE);
-
+        Iv_publish = (ImageView) findViewById(R.id.tab_post_icon);
+        Iv_publish.setOnClickListener(this);
         mNavigateTabBar = (MainNavigateTabBar) findViewById(R.id.mainTabBar);
 
         mNavigateTabBar.onRestoreInstanceState(savedInstanceState);
@@ -68,15 +64,9 @@ public class MainActivity extends AppCompatActivity  {
     }
 
 
-    public void onClickPublish(View v) {
-        Intent intent = new Intent(this,PublishActivity.class);
-        startActivity(intent);
-    }
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu,menu);
+        getMenuInflater().inflate(R.menu.menu, menu);
 
       /*  searchView = (SearchView) MenuItemCompat.getActionView(menuItem);//加载searchview
         SearchManager searchManager =
@@ -87,11 +77,12 @@ public class MainActivity extends AppCompatActivity  {
                 searchManager.getSearchableInfo(getComponentName()));*/
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_search: {
-                Intent intent = new Intent(getApplicationContext(),SearchResultsActivity.class);
+                Intent intent = new Intent(getApplicationContext(), SearchResultsActivity.class);
                 startActivity(intent);
                 return super.onOptionsItemSelected(item);
 
@@ -102,4 +93,60 @@ public class MainActivity extends AppCompatActivity  {
 
     }
 
+    @Override
+    public void onClick(View v) {
+
+        RotateAnimation rotate = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        //默认为0，为-1时一直循环动画
+        rotate.setRepeatCount(0);
+        //添加匀速加速器
+        rotate.setDuration(1000);
+        rotate.setFillAfter(true);
+        Iv_publish.startAnimation(rotate);
+
+
+        View contentView = LayoutInflater.from(this).inflate(R.layout.item_popup, null);
+        //处理popWindow 显示内容
+        //handleLogic(contentView);
+        //创建并显示popWindow
+
+        mCustomPopWindow = new CustomPopWindow.PopupWindowBuilder(this);
+        mCustomPopWindow
+                .setView(contentView)
+                .setClippingEnable(true)
+                .create()
+                .showAsDropDown(Iv_publish, -100, 60);
+        handleLogic(contentView);
+    }
+
+    private void handleLogic(View contentView){
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String showContent = "";
+                switch (v.getId()){
+                    case R.id.iv_publish:
+                        enterPublishActivity();
+                        break;
+                    case R.id.iv_inquiry:
+                        enterInquiryActivity();
+                        break;
+                }
+                Toast.makeText(MainActivity.this,showContent,Toast.LENGTH_SHORT).show();
+            }
+        };
+        contentView.findViewById(R.id.iv_publish).setOnClickListener(listener);
+        contentView.findViewById(R.id.iv_inquiry).setOnClickListener(listener);
+    }
+
+    private void enterInquiryActivity() {
+
+    }
+
+    private void enterPublishActivity() {
+        Intent intent = new Intent(getApplicationContext(),PublishActivity.class);
+        startActivity(intent);
+    }
 }
+

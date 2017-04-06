@@ -54,4 +54,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     compile 'com.lapism:searchview:4.0'
+
+    compile 'com.example.zhouwei.library:library:1.0.0'
 }

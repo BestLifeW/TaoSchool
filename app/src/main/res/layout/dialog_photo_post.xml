@@ -5,15 +5,6 @@
     android:background="@color/white"
     android:orientation="vertical" >
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:padding="12dp"
-        android:text="修改头像"
-        android:textColor="@color/actionBar_bg"
-        android:textSize="16sp" />
-
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

@@ -9,7 +9,7 @@ public class ServerApi {
 
     //private static final String Host = "http://123.56.223.17:8080"; //服务器地址
     //private static final String Host = "http://10.0.2.2:8080"; //手机测试地址
-    private static final String Host = "http://192.168.1.100:8080";
+    private static final String Host = "http://192.168.1.103:8080";
     //private static final String Host = "http://127.0.0.1:8080";  //Junit测试专用地址
     private static final String SERVERHOST = Host + "/TaoSchool";
 

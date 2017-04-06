@@ -25,6 +25,7 @@ import com.wtc.xmut.taoschool.Service.UserService;
 import com.wtc.xmut.taoschool.Service.impl.UserServiceImol;
 import com.wtc.xmut.taoschool.api.ServerApi;
 import com.wtc.xmut.taoschool.domain.User;
+import com.wtc.xmut.taoschool.ui.activity.LoginActivity;
 import com.wtc.xmut.taoschool.ui.activity.PersonActivity;
 import com.wtc.xmut.taoschool.ui.activity.SettingActivity;
 import com.wtc.xmut.taoschool.utils.PrefUtils;
@@ -203,7 +204,12 @@ public class PersonFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        Log.i(TAG, "onResume: ");
+        String username = PrefUtils.getString(getActivity(), PrefUtils.USER_NUMBER, "");
+        if (username.equals("")){
+            Toasty.error(getActivity(),"用户已经退出",Toast.LENGTH_LONG).show();
+            startActivity(new Intent(getActivity(), LoginActivity.class));
+            getActivity().finish();
+        }
     }
 
 }

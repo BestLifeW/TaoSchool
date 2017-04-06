@@ -30,27 +30,26 @@
         app:containerId="@+id/main_container"
         app:navigateTabSelectedTextColor="@color/comui_tab_text_color"
         app:navigateTabTextColor="@color/comui_tab_text_color"/>
-
-
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/mainTabBar"
         android:background="@mipmap/comui_bar_top_shadow"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="76.0dip"
         android:layout_alignParentBottom="true"
         android:background="@android:color/transparent"
         android:gravity="center|top"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:weightSum="1">
         <ImageView
+            android:layout_marginBottom="18dp"
             android:id="@+id/tab_post_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onClickPublish"
-            android:src="@mipmap/comui_tab_post"/>
+            android:layout_width="54dp"
+            android:layout_height="match_parent"
+
+            android:src="@drawable/comui_tab_post" />
     </LinearLayout>
     </RelativeLayout>
 </LinearLayout>
