@@ -3,7 +3,8 @@ package com.wtc.xmut.taoschool.adpater;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.support.v13.app.FragmentPagerAdapter;
+import android.support.v13.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
  * Created by lovec on 2016/9/22.
  */
 
-public class MyViewPagerAdapter extends FragmentPagerAdapter {
+public class MyViewPagerAdapter extends FragmentStatePagerAdapter {
     private final List<Fragment> mFragments = new ArrayList<>();//添加的Fragment的集合
     private final List<String> mFragmentsTitles = new ArrayList<>();//每个Fragment对应的title的集合
 
@@ -45,5 +46,10 @@ public class MyViewPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         //得到对应position的Fragment的title
         return mFragmentsTitles.get(position);
+    }
+ @Override
+    public int getItemPosition(Object object) {
+        // TODO Auto-generated method stub
+        return PagerAdapter.POSITION_NONE;
     }
 }

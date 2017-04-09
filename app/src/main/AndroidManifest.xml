@@ -3,6 +3,7 @@
     package="com.wtc.xmut.taoschool">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name="com.wtc.xmut.taoschool.myApplication"
@@ -40,7 +41,7 @@
             android:label="@string/title_activity_shopdetial"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".ui.activity.OrderActivity"
+            android:name=".ui.activity.SubmitDetailActivity"
             android:label="@string/title_activity_order"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ui.activity.SearchResultsActivity"

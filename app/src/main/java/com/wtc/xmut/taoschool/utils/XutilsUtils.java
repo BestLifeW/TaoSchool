@@ -4,7 +4,6 @@ package com.wtc.xmut.taoschool.utils;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import org.xutils.common.Callback;
@@ -13,10 +12,7 @@ import org.xutils.image.ImageOptions;
 import org.xutils.x;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.Map;
-
-import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
 
 /**
  * Created by admin on 2017/3/31.
@@ -306,7 +302,7 @@ public class XutilsUtils {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-
+                    onFaliResponse(callback);
             }
 
             @Override

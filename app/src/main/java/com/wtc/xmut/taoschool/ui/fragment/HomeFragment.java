@@ -1,34 +1,26 @@
 package com.wtc.xmut.taoschool.ui.fragment;
 
+import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import com.dou361.dialogui.DialogUIUtils;
 import com.wtc.xmut.taoschool.R;
 import com.wtc.xmut.taoschool.adpater.MyViewPagerAdapter;
 import com.wtc.xmut.taoschool.api.ServerApi;
-import com.wtc.xmut.taoschool.ui.fragment.homeFragment_src.inquiryFragment;
 import com.wtc.xmut.taoschool.ui.fragment.homeFragment_src.PublishFragment;
-import com.wtc.xmut.taoschool.utils.NetWorkUtils;
-import com.wtc.xmut.taoschool.utils.OkHttpUtils;
+import com.wtc.xmut.taoschool.ui.fragment.homeFragment_src.inquiryFragment;
 import com.wtc.xmut.taoschool.utils.XutilsUtils;
-
-import java.io.IOException;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Response;
 
 
 /***
@@ -45,6 +37,8 @@ public class HomeFragment extends Fragment {
 
     private XutilsUtils xUtils;
     private ProgressBar bar;
+    private SwipeRefreshLayout swipe_refresh_layout;
+    private Dialog dialog;
 
     public HomeFragment() {
         Log.d(TAG, "HomeFragment");
@@ -63,17 +57,19 @@ public class HomeFragment extends Fragment {
         mTabLayout = (TabLayout) view.findViewById(R.id.tabLayout);
         mTabLayout.addTab(mTabLayout.newTab().setText("发布"));//给TabLayout添加Tab
         mTabLayout.addTab(mTabLayout.newTab().setText("求购"));//给TabLayout添加Tab
-
+        dialog= DialogUIUtils.showMdLoading(getActivity(),"刷新中",true,true,true,true).show();
         //判断网络连接
         xUtils.get(ServerApi.ISCONNECT, null, new XutilsUtils.XCallBack() {
             @Override
             public void onResponse(String result) {
                 if (result.equals("true")) {
+                    dialog.dismiss();
                     loadDateSuccess(viewPagerAdapter);
                 }
             }
             @Override
             public void onResponseFail() {
+                dialog.dismiss();
                 loadDateFail(viewPagerAdapter);
 
             }
@@ -96,7 +92,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void initView() {
-
+        swipe_refresh_layout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
     }
 
     @Override

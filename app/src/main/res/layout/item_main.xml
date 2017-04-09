@@ -40,7 +40,7 @@
         android:layout_marginTop="20dp"
         android:padding="8dp">
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <com.wtc.xmut.taoschool.view.CircleImageView
             android:id="@+id/sld_usericon"
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -51,16 +51,17 @@
         <!--
             com.facebook.drawee.view.SimpleDraweeView
             -->
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/sld_shoppic"
             android:layout_width="match_parent"
             android:layout_height="200dp"
+            android:scaleType="fitXY"
             android:layout_alignEnd="@+id/tv_money"
             android:layout_alignStart="@+id/sld_usericon"
             android:layout_below="@+id/sld_usericon"
             android:layout_marginTop="8dp"
-            app:srcCompat="@color/colorAccent"
-            fresco:placeholderImage="@drawable/usericon" />
+
+            android:src="@drawable/loadding" />
 
         <TextView
             android:id="@+id/tv_money"

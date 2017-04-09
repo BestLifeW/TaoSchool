@@ -21,14 +21,17 @@ import java.util.List;
 public class CommentAdapter extends BaseAdapter {
 
     private static final String TAG = "CommentAdapter";
-    private List<Comment> comments= new ArrayList<>();
+    private List<Comment> comments = new ArrayList<>();
+    private String username;
+    private Context mContext;
 
-    private  Context mContext;
-    public CommentAdapter(Context context ,List<Comment> comment) {
+    public CommentAdapter(Context context, List<Comment> comment, String username) {
         this.mContext = context;
         this.comments = comment;
-        Log.i(TAG, "CommentAdapter: "+comment.size());
+        this.username = username;
+        Log.i(TAG, "CommentAdapter: " + comment.size());
     }
+
 
     @Override
     public int getCount() {
@@ -50,30 +53,35 @@ public class CommentAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         // 重用convertView
-        if(convertView == null){
+        if (convertView == null) {
             holder = new ViewHolder();
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_comment, null);
             holder.comment_name = (TextView) convertView.findViewById(R.id.comment_name);
             holder.comment_content = (TextView) convertView.findViewById(R.id.comment_content);
-
             convertView.setTag(holder);
-        }else{
+        } else {
             holder = (ViewHolder) convertView.getTag();
         }
         // 适配数据
-        holder.comment_name.setText(comments.get(position).getUsername()+"：");
+        if (comments.get(position).getUsername().equalsIgnoreCase(username)) {
+            holder.comment_name.setText("主人:");
+        } else {
+            holder.comment_name.setText(comments.get(position).getUsername() + "：");
+        }
         holder.comment_content.setText(comments.get(position).getContent());
 
         return convertView;
     }
+
     /**
      * 静态类，便于GC回收
      */
-     static class ViewHolder{
+    static class ViewHolder {
         TextView comment_name;
         TextView comment_content;
     }
-    public void addComment(Comment comment){
+
+    public void addComment(Comment comment) {
         comments.add(comment);
         notifyDataSetChanged();
     }

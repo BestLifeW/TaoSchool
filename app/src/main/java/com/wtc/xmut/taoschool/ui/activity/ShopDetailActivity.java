@@ -16,9 +16,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.dou361.dialogui.DialogUIUtils;
 import com.dou361.dialogui.listener.DialogUIListener;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.wtc.xmut.taoschool.R;
@@ -30,6 +30,7 @@ import com.wtc.xmut.taoschool.utils.PrefUtils;
 import com.wtc.xmut.taoschool.utils.SnackbarUtils;
 import com.wtc.xmut.taoschool.utils.ToastUtils;
 import com.wtc.xmut.taoschool.utils.XutilsUtils;
+import com.wtc.xmut.taoschool.view.CircleImageView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,12 +42,12 @@ import es.dmoral.toasty.Toasty;
 public class ShopDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
 
-    private SimpleDraweeView mSld_usericon;
+    private CircleImageView mSld_usericon;
     private TextView mTv_money;
     private TextView mTv_user_name;
     private TextView mTv_fromwhere;
     private TextView mTv_shop_summary;
-    private SimpleDraweeView mSdv_shop_pic;
+    private ImageView mSdv_shop_pic;
     private Button mBtn_buy;
     private boolean isLove = false;
     private ShopExt shopExt;
@@ -97,8 +98,6 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
 
             @Override
             public void onResponse(String result) {
-                Log.i(TAG, "评论"+result);
-
                 ParseJsonComment(result);
             }
 
@@ -142,7 +141,7 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
     private void ParseJsonComment(String json) {
         Gson gson = new Gson();
         comments=gson.fromJson(json, new TypeToken<ArrayList<Comment>>() {}.getType());
-        adapter = new CommentAdapter(getApplicationContext(), comments);
+        adapter = new CommentAdapter(getApplicationContext(), comments,shopExt.getUsername());
         mLv_comment.setAdapter(adapter);
         runOnUiThread(new Runnable() {
             @Override
@@ -150,10 +149,6 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
                 initDate();
             }
         });
-
-    }
-    //填充留言
-    private void FillComment(List<Comment> comments) {
 
     }
 
@@ -168,21 +163,21 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
             mTv_shop_summary.setText(shopExt.getDescription());
             Uri shopuri = Uri.parse(ServerApi.SHOWPIC + shopExt.getPicture());
             Uri UserIconUri = Uri.parse(ServerApi.SHOWPIC + shopExt.getIconpath());
-            mSld_usericon.setImageURI(UserIconUri);
-            mSdv_shop_pic.setImageURI(shopuri);
+            Glide.with(getApplication()).load(shopuri).placeholder(R.drawable.loadding).into(mSdv_shop_pic);
+            Glide.with(getApplication()).load(UserIconUri).placeholder(R.drawable.usericon).into(mSld_usericon);
             mTv_CommentCount.setText(comments.size()+"");
         }
     }
 
     private void initView() {
-        mSld_usericon = (SimpleDraweeView) findViewById(R.id.sld_usericon);
+        mSld_usericon = (CircleImageView) findViewById(R.id.sld_usericon);
         mTv_money = (TextView) findViewById(R.id.tv_money);
         mTv_user_name = (TextView) findViewById(R.id.tv_user_name);
         mTv_fromwhere = (TextView) findViewById(R.id.tv_fromwhere);
         mTv_shop_summary = (TextView) findViewById(R.id.tv_shop_summary);
         mIv_addComment = (ImageView) findViewById(R.id.iv_addcomment);
         mIv_addComment.setOnClickListener(this);
-        mSdv_shop_pic = (SimpleDraweeView) findViewById(R.id.sdv_shop_pic);
+        mSdv_shop_pic = (ImageView) findViewById(R.id.sdv_shop_pic);
         mLv_comment = (ListView) findViewById(R.id.lv_comment);
         mTv_CommentCount = (TextView) findViewById(R.id.tv_comment);
         mBtn_buy = (Button) findViewById(R.id.btn_buy);
@@ -216,21 +211,6 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
             }
         });
 
-
-/*
-
-        OkHttpUtils.doPostAsync(ServerApi.ISLOVE, map, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Toasty.error(getApplicationContext(), "服务器连接失败啦", Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-
-
-            }
-        });*/
     }
 
     @Override
@@ -307,10 +287,12 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void enterOrder() {
-        if (username==null){
-            SnackbarUtils.ShowSnackbar(getCurrentFocus(),"您还未登录");
+        Log.i(TAG, "enterOrder: "+username+shopExt.getUsername());
+        if (username.equalsIgnoreCase(shopExt.getUsername())){
+            SnackbarUtils.ShowSnackbar(getCurrentFocus(),"您不能购买自己的商品");
+
         }else {
-            Intent  intent = new Intent(getApplicationContext(),OrderActivity.class);
+            Intent  intent = new Intent(getApplicationContext(),SubmitDetailActivity.class);
             intent.putExtra("username",username);
             intent.putExtra("shopid", shopExt.getId());
             startActivity(intent);

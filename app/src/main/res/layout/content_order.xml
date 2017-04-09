@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:layout_marginTop="?attr/actionBarSize"
-    tools:context="com.wtc.xmut.taoschool.ui.activity.OrderActivity"
+    tools:context="com.wtc.xmut.taoschool.ui.activity.SubmitDetailActivity"
     tools:showIn="@layout/activity_order"
     android:weightSum="1">
 
@@ -47,7 +47,7 @@
             android:id="@+id/tv_jiaoyifangshi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="加载中..."
+            android:text="线下见面交易"
             android:layout_alignBottom="@+id/iv_shop"
             android:layout_alignStart="@+id/tv_shopmenoy" />
     </RelativeLayout>
@@ -78,7 +78,7 @@
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:text="收货地址"
+                    android:text="交易地址"
                     android:textColor="#3c3c3c"
                     android:typeface="sans" />
             </LinearLayout>
@@ -89,14 +89,12 @@
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-
                 <TextView
                     android:id="@+id/tv_username"
-                    android:textSize="12sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="王田朝|15606929310" />
-
+                    android:text="王田朝|15606929310"
+                    android:textSize="12sp" />
                 <TextView
                     android:id="@+id/tv_address"
                     android:layout_width="wrap_content"
@@ -120,10 +118,10 @@
             android:layout_height="wrap_content">
             <LinearLayout
                 android:layout_gravity="center_vertical"
-                android:layout_width="wrap_content"
+                android:layout_width="369dp"
                 android:layout_height="50dp"
-                android:layout_weight="1"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:weightSum="1">
 
                 <TextView
                     android:layout_width="100dp"
@@ -134,7 +132,7 @@
 
                 <TextView
                     android:id="@+id/tv_buymoney"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="200dp"
                     android:text="￥360"

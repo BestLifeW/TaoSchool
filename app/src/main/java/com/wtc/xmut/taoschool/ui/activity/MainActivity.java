@@ -13,7 +13,6 @@ import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.example.zhouwei.library.CustomPopWindow;
 import com.startsmake.mainnavigatetabbar.widget.MainNavigateTabBar;
@@ -114,6 +113,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mCustomPopWindow
                 .setView(contentView)
                 .setClippingEnable(true)
+                .enableBackgroundDark(true)
+                .setBgDarkAlpha(0.5f)
                 .create()
                 .showAsDropDown(Iv_publish, -100, 60);
         handleLogic(contentView);
@@ -123,8 +124,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                String showContent = "";
                 switch (v.getId()){
                     case R.id.iv_publish:
                         enterPublishActivity();
@@ -133,7 +132,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         enterInquiryActivity();
                         break;
                 }
-                Toast.makeText(MainActivity.this,showContent,Toast.LENGTH_SHORT).show();
             }
         };
         contentView.findViewById(R.id.iv_publish).setOnClickListener(listener);

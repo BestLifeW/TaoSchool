@@ -1,7 +1,5 @@
 package com.wtc.xmut.taoschool.domain;
 
-import java.util.Date;
-
 public class Shop {
     private Integer id;
 
@@ -19,7 +17,18 @@ public class Shop {
 
     private String oldprice;
 
-    private Date shoptime;
+    private String shoptime;
+
+    private int state;
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -84,11 +93,11 @@ public class Shop {
         this.oldprice = oldprice == null ? null : oldprice.trim();
     }
 
-    public Date getShoptime() {
+    public String getShoptime() {
         return shoptime;
     }
 
-    public void setShoptime(Date shoptime) {
+    public void setShoptime(String shoptime) {
         this.shoptime = shoptime;
     }
 

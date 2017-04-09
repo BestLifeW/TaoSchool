@@ -9,7 +9,7 @@ public class ServerApi {
 
     //private static final String Host = "http://123.56.223.17:8080"; //服务器地址
     //private static final String Host = "http://10.0.2.2:8080"; //手机测试地址
-    private static final String Host = "http://192.168.1.103:8080";
+    private static final String Host = "http://192.168.1.107:8080";
     //private static final String Host = "http://127.0.0.1:8080";  //Junit测试专用地址
     private static final String SERVERHOST = Host + "/TaoSchool";
 
@@ -45,6 +45,10 @@ public class ServerApi {
 
     //根据商品的ID查询商品信息
     public static final String GETSHOPBYID = SHOPHOST + "/getShopByShopID/";
+
+    //根据商品id和用户姓名获取 提交时的显示信息
+    public static final String GETSUBMITDETAIL =SHOPHOST + "/getSubmit";
+
 
     //判断网络连接
     public static final String ISCONNECT = SERVERHOST + "/getConnect/getNet.do";

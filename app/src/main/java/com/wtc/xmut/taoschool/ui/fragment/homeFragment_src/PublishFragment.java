@@ -2,16 +2,17 @@ package com.wtc.xmut.taoschool.ui.fragment.homeFragment_src;
 
 
 import android.app.Fragment;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -21,7 +22,6 @@ import com.wtc.xmut.taoschool.Service.ShopService;
 import com.wtc.xmut.taoschool.adpater.PublishAdapter;
 import com.wtc.xmut.taoschool.api.ServerApi;
 import com.wtc.xmut.taoschool.domain.ShopExt;
-import com.wtc.xmut.taoschool.utils.SnackbarUtils;
 import com.wtc.xmut.taoschool.utils.XutilsUtils;
 
 import java.io.IOException;
@@ -30,11 +30,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import es.dmoral.toasty.Toasty;
 
 
 public class PublishFragment extends Fragment {
@@ -49,7 +45,7 @@ public class PublishFragment extends Fragment {
     private static final String TAG = "PublishFragment";
     private SwipeRefreshLayout mSwipeRefreshWidget;
     private XutilsUtils utils;
-
+    private PublishAdapter adapter;
 
     public PublishFragment() {
 
@@ -68,6 +64,7 @@ public class PublishFragment extends Fragment {
         ButterKnife.bind(this, view);
         mSwipeRefreshWidget = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_widget);
         utils = XutilsUtils.getInstance();
+
         try {
             init();
         } catch (IOException e) {
@@ -82,71 +79,65 @@ public class PublishFragment extends Fragment {
     }
 
     private void initDate() throws IOException {
-
-
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        SpacesItemDecoration decoration = new SpacesItemDecoration(20);
+        mRecyclerView.addItemDecoration(decoration);
+        getConnectData();
+    }
 
-        utils.getCache(ServerApi.ALLSHOPANDUSER, null, true, 60 * 1000 * 6, new XutilsUtils.XCallBack() {
+    /**
+     * 获取网络数据
+     */
+    private void getConnectData() {
+        utils.getCache(ServerApi.ALLSHOPANDUSER, null, true, 60 * 1000, new XutilsUtils.XCallBack() {
             @Override
             public void onResponse(String result) {
-                Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-                shopList = gson.fromJson(result, new TypeToken<ArrayList<ShopExt>>() {
-                }.getType());
-                mRecyclerView.setAdapter(new PublishAdapter(getActivity(),
-                        R.layout.item_main, shopList));
-                SpacesItemDecoration decoration = new SpacesItemDecoration(20);
-                mRecyclerView.addItemDecoration(decoration);
+                parseDate(result);
             }
-
             @Override
             public void onResponseFail() {
-
             }
         });
+    }
 
-        /*Request request = new Request.Builder()
-                .url(ServerApi.ALLSHOPANDUSER)
-                .build();
-        OkHttpClient client = new OkHttpClient();
+    /**
+     * 解析网络数据
+     * @param result 网络数据
+     */
+    private void parseDate(String result) {
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+        shopList = gson.fromJson(result, new TypeToken<ArrayList<ShopExt>>() {
+        }.getType());
+        setAdapter();
+    }
 
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-
-                SnackbarUtils.ShowSnackbar(getView(), "服务器连接失败");
-                Log.i(TAG, "onFailure: 失败了");
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                    }
-                });
-
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String str = null;
-                str = response.body().string();
-                Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-                shopList = gson.fromJson(str, new TypeToken<ArrayList<ShopExt>>() {
-                }.getType());
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-
-                    }
-                });
-            }
-        });*/
+    /***
+     * 设置适配器
+     */
+    private void setAdapter() {
+        adapter = new PublishAdapter(getActivity(),
+                R.layout.item_main, shopList);
+        mRecyclerView.setAdapter(adapter);
     }
 
     private void initEvent() {
         // 这句话是为了，第一次进入页面的时候显示加载进度条
-        mSwipeRefreshWidget.setProgressViewOffset(false, 0, (int) TypedValue
-                .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
-                        .getDisplayMetrics()));
+        mSwipeRefreshWidget.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light, android.R.color.holo_orange_light, android.R.color.holo_green_light);
+        mSwipeRefreshWidget.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        getConnectData();
+                        adapter = new PublishAdapter(getActivity(),
+                                R.layout.item_main, shopList);
+                        mSwipeRefreshWidget.setRefreshing(false);
+                        Toasty.custom(getActivity(), "刷新成功", R.drawable.ic_favorite, Color.GREEN, Color.alpha(200), Toast.LENGTH_SHORT, true, true).show();
+                    }
+                }, 3000);
+            }
+        });
     }
 
     public static PublishFragment newInstance() {
@@ -156,14 +147,11 @@ public class PublishFragment extends Fragment {
         return fragment;
     }
 
-    class SpacesItemDecoration extends RecyclerView.ItemDecoration {
-
+    private class SpacesItemDecoration extends RecyclerView.ItemDecoration {
         private int space;
-
         SpacesItemDecoration(int space) {
             this.space = space;
         }
-
         @Override
         public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
             outRect.left = space;
@@ -174,6 +162,4 @@ public class PublishFragment extends Fragment {
             }
         }
     }
-
-
 }

@@ -6,7 +6,7 @@ android {
     defaultConfig {
         applicationId "com.wtc.xmut.taoschool"
         minSdkVersion 19
-        targetSdkVersion 25
+        targetSdkVersion 22
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -55,5 +55,5 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     compile 'com.lapism:searchview:4.0'
 
-    compile 'com.example.zhouwei.library:library:1.0.0'
+    compile 'com.github.pinguo-zhouwei:CustomPopwindow:2.0.0'
 }
