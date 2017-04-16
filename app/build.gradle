@@ -56,4 +56,6 @@ dependencies {
     compile 'com.lapism:searchview:4.0'
 
     compile 'com.github.pinguo-zhouwei:CustomPopwindow:2.0.0'
+    compile 'com.contrarywind:Android-PickerView:3.2.4'
+    compile 'com.yanzhenjie:recyclerview-swipe:1.0.4'
 }

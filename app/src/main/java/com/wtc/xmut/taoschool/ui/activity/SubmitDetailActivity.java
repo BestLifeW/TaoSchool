@@ -1,5 +1,8 @@
 package com.wtc.xmut.taoschool.ui.activity;
 
+
+import android.app.Dialog;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,7 +15,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bigkoo.pickerview.TimePickerView;
 import com.bumptech.glide.Glide;
 import com.dou361.dialogui.DialogUIUtils;
 import com.dou361.dialogui.listener.DialogUIListener;
@@ -22,10 +27,17 @@ import com.wtc.xmut.taoschool.api.ServerApi;
 import com.wtc.xmut.taoschool.domain.SubmitDetail;
 import com.wtc.xmut.taoschool.utils.PrefUtils;
 import com.wtc.xmut.taoschool.utils.SnackbarUtils;
+import com.wtc.xmut.taoschool.utils.ToastUtils;
 import com.wtc.xmut.taoschool.utils.XutilsUtils;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
 
 import static com.wtc.xmut.taoschool.R.id.tv_shopmenoy;
 
@@ -51,12 +63,19 @@ public class SubmitDetailActivity extends AppCompatActivity implements View.OnCl
     TextView tvBuymoney;
     @BindView(R.id.btn_ok)
     Button btnOk;
+    @BindView(R.id.tv_buytime)
+    TextView tvbuytime;
+
     private int shopId;
     private String username;
     private XutilsUtils utils;
     private SubmitDetail submitDetail;
     private static final String TAG = "SubmitDetailActivity";
     private Button btn_ok;
+    private LinearLayout ll_buytime;
+    private TimePickerView pvTime;
+    private Dialog show;
+    private Dialog submitDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +92,7 @@ public class SubmitDetailActivity extends AppCompatActivity implements View.OnCl
         username = PrefUtils.getString(getApplication(), PrefUtils.USER_NUMBER, "");
         init();
     }
+
     private void init() {
         initView();
         initDate();
@@ -81,6 +101,8 @@ public class SubmitDetailActivity extends AppCompatActivity implements View.OnCl
     private void initView() {
         btn_ok = (Button) findViewById(R.id.btn_ok);
         btn_ok.setOnClickListener(this);
+        ll_buytime = (LinearLayout) findViewById(R.id.ll_buytime);
+        ll_buytime.setOnClickListener(this);
     }
 
     /**
@@ -88,13 +110,14 @@ public class SubmitDetailActivity extends AppCompatActivity implements View.OnCl
      */
     private void initDate() {
         //初始化网络数据
-        Log.i(TAG, "initDate: "+ServerApi.GETSUBMITDETAIL + "/" + shopId + "/" + username);
+        Log.i(TAG, "initDate: " + ServerApi.GETSUBMITDETAIL + "/" + shopId + "/" + username);
         utils.post(ServerApi.GETSUBMITDETAIL + "/" + shopId + "/" + username, null, new XutilsUtils.XCallBack() {
             @Override
             public void onResponse(String result) {
-                Log.i(TAG, "onResponse: "+result);
+                Log.i(TAG, "onResponse: " + result);
                 parseResult(result);
             }
+
             @Override
             public void onResponseFail() {
                 SnackbarUtils.ShowSnackbar(getCurrentFocus(), "网络连接失败！");
@@ -106,15 +129,15 @@ public class SubmitDetailActivity extends AppCompatActivity implements View.OnCl
     private void parseResult(String result) {
         Gson gson = new Gson();
         submitDetail = gson.fromJson(result, SubmitDetail.class);
-        Log.i(TAG, "parseResult: "+submitDetail.toString());
+        Log.i(TAG, "parseResult: " + submitDetail.toString());
         fillView();
     }
 
     private void fillView() {
         if (submitDetail != null) {
-            tvShopname.setText(submitDetail.getShopname()+"");
-            tvBuymoney.setText("￥"+submitDetail.getPrice()+"");
-            tvShopmenoy.setText("￥"+submitDetail.getPrice()+"");
+            tvShopname.setText(submitDetail.getShopname() + "");
+            tvBuymoney.setText("￥" + submitDetail.getPrice() + "");
+            tvShopmenoy.setText("￥" + submitDetail.getPrice() + "");
             Uri UserIconUri = Uri.parse(ServerApi.SHOWPIC + submitDetail.getPicture());
             Glide.with(getApplication()).load(UserIconUri).placeholder(R.drawable.loadding).into(ivShop);
         }
@@ -132,9 +155,12 @@ public class SubmitDetailActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btn_ok:
                 AddOrder();
+                break;
+            case R.id.ll_buytime:
+                choseTime();
                 break;
             default:
                 break;
@@ -142,18 +168,88 @@ public class SubmitDetailActivity extends AppCompatActivity implements View.OnCl
 
     }
 
+    private void choseTime() {
+        //控制时间范围(如果不设置范围，则使用默认时间1900-2100年，此段代码可注释)
+        //因为系统Calendar的月份是从0-11的,所以如果是调用Calendar的set方法来设置时间,月份的范围也要是从0-11
+        ToastUtils.showToast(getApplication(), "选择");
+        Calendar selectedDate = Calendar.getInstance();
+        Calendar startDate = Calendar.getInstance();
+        startDate.set(2017, 4, 16);
+
+        Calendar endDate = Calendar.getInstance();
+        endDate.set(2019, 11, 28);
+        //时间选择器
+        pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date, View v) {//选中事件回调
+                // 这里回调过来的v,就是show()方法里面所添加的 View 参数，如果show的时候没有添加参数，v则为null
+                tvbuytime.setText(getTime(date));
+            }
+        })
+                .setType(TimePickerView.Type.MONTH_DAY_HOUR_MIN)
+                .setLabel("年", "月", "日", "时", "分", "秒") //设置空字符串以隐藏单位提示   hide label
+                .setDividerColor(Color.DKGRAY)
+                .setContentSize(20)
+                .setDate(selectedDate)
+                .setRangDate(startDate, endDate)
+                .build();
+        pvTime.show();
+    }
+
     private void AddOrder() {
-        DialogUIUtils.showMdAlert(this, "确认信息", "确认提交订单？", false, false, new DialogUIListener() {
+        show = DialogUIUtils.showMdAlert(this, "确认信息", "确认提交订单？建议在提交前，先电话联系卖家！", false, false, new DialogUIListener() {
             @Override
             public void onPositive() {
-                DialogUIUtils.showLoading(getApplicationContext(), "提交中", false, false, false, true).show();
+                //提交订单操作
+                addOrderinWeb();
+                submitDialog = DialogUIUtils.showLoading(getApplicationContext(), "提交中", false, false, false, true).show();
             }
 
             @Override
             public void onNegative() {
-
             }
         }).show();
+    }
 
+
+    private void addOrderinWeb() {
+        String time = tvbuytime.getText().toString();
+        String newid = shopId+"";
+        if (!time.contains("请选择")) {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("shopid", newid);
+            map.put("buyerusername", username);
+            map.put("sellerusername", submitDetail.getUsername());
+            map.put("time", time);
+            map.put("s","拍下");
+            utils.post(ServerApi.ADDORDER, map, new XutilsUtils.XCallBack() {
+                @Override
+                public void onResponse(String result) {
+                    Log.i(TAG, "onResponse: " + result);
+                    if (result.contains("成功")) {
+                        Toasty.success(getApplicationContext(), "提交成功", Toast.LENGTH_LONG).show();
+                        submitDialog.dismiss();
+                        finish();
+                    } else {
+                        Toasty.error(getApplicationContext(), "提交失败", Toast.LENGTH_LONG).show();
+                        submitDialog.dismiss();
+                    }
+                }
+
+                @Override
+                public void onResponseFail() {
+                    Toasty.error(getApplicationContext(), "提交失败", Toast.LENGTH_LONG).show();
+                    submitDialog.dismiss();
+                }
+            });
+        } else {
+            submitDialog.dismiss();
+            SnackbarUtils.ShowSnackbar(getCurrentFocus(), "请输入时间");
+        }
+    }
+
+    private String getTime(Date date) {//可根据需要自行截取数据显示
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return format.format(date);
     }
 }

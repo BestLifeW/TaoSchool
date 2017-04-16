@@ -52,9 +52,9 @@
             android:layout_alignStart="@+id/tv_shopmenoy" />
     </RelativeLayout>
     <LinearLayout
+        android:layout_marginTop="8dp"
         android:padding="8dp"
         android:background="@drawable/list_bg"
-        android:layout_marginTop="8dp"
         android:orientation="vertical"
         android:layout_gravity="center_vertical"
         android:layout_width="match_parent"
@@ -134,8 +134,44 @@
                     android:id="@+id/tv_buymoney"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="200dp"
+                    android:layout_marginRight="10dp"
                     android:text="￥360"
+                    android:textAlignment="viewEnd"
+                    android:textColor="#3c3c3c"
+                    android:typeface="sans" />
+            </LinearLayout>
+        </LinearLayout>
+        <View
+            android:background="@color/line_dd"
+            android:layout_width="wrap_content"
+            android:layout_height="0.5dp"/>
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/ll_buytime"
+                android:layout_gravity="center_vertical"
+                android:layout_width="369dp"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:weightSum="1">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="交易时间"
+                    android:textColor="#3c3c3c"
+                    android:typeface="sans" />
+
+                <TextView
+
+                    android:id="@+id/tv_buytime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:text="请选择线下时间"
+                    android:textAlignment="viewEnd"
                     android:textColor="#3c3c3c"
                     android:typeface="sans" />
             </LinearLayout>

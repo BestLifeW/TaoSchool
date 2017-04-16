@@ -56,8 +56,8 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
     private String username;
     private XutilsUtils utils;
     private ListView mLv_comment;
-    private  final  int DETAILTYPE = 1; //这是详情
-    private final  int  COMMENTTYPE = 2; //这是评论
+    private final int DETAILTYPE = 1; //这是详情
+    private final int COMMENTTYPE = 2; //这是评论
     private List<Comment> comments;
     private TextView mTv_CommentCount;
     private ImageView mIv_addComment;
@@ -68,7 +68,7 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopdetail);
         ButterKnife.bind(this);
-        username = PrefUtils.getString(getApplicationContext(), PrefUtils.USER_NUMBER,"");
+        username = PrefUtils.getString(getApplicationContext(), PrefUtils.USER_NUMBER, "");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -76,13 +76,14 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
         final int ShopId = (int) getIntent().getExtras().get("ShopId");
         init();
 
-        utils.getCache(ServerApi.GETSHOPBYID + ShopId, null, true,60*1000*6, new XutilsUtils.XCallBack() {
+        utils.getCache(ServerApi.GETSHOPBYID + ShopId, null, true, 60 * 1000 * 6, new XutilsUtils.XCallBack() {
             @Override
             public void onResponse(String result) {
                 ParseJson(result);
                 isLoveShow(ShopId);
                 getComment(ShopId);
             }
+
             @Override
             public void onResponseFail() {
             }
@@ -90,11 +91,10 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
         //获取评论
 
 
-
     }
 
     private void getComment(int shopId) {
-        utils.getCache(ServerApi.GETCOMMENT+shopId,null,false,60*1000, new XutilsUtils.XCallBack() {
+        utils.getCache(ServerApi.GETCOMMENT + shopId, null, false, 60 * 1000, new XutilsUtils.XCallBack() {
 
             @Override
             public void onResponse(String result) {
@@ -103,11 +103,14 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
 
             @Override
             public void onResponseFail() {
-                ToastUtils.showToast(getApplicationContext(),"失败了");
+                ToastUtils.showToast(getApplicationContext(), "失败了");
             }
         });
     }
 
+    /**
+     * @param shopId
+     */
     private void isLoveShow(int shopId) {
         //进来判断是否有赞
 
@@ -120,6 +123,7 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
                     mBtnLove.setImageResource(R.drawable.love_gray);
                 }
             }
+
             @Override
             public void onResponseFail() {
             }
@@ -128,20 +132,22 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
 //
 
 
-
     private void ParseJson(String json) {
         Gson gson = new Gson();
-         shopExt = gson.fromJson(json, ShopExt.class);
+        shopExt = gson.fromJson(json, ShopExt.class);
+        isOrder(shopExt.getId()+"");
     }
 
     /**
-     *解析留言
+     * 解析留言
+     *
      * @param json
      */
     private void ParseJsonComment(String json) {
         Gson gson = new Gson();
-        comments=gson.fromJson(json, new TypeToken<ArrayList<Comment>>() {}.getType());
-        adapter = new CommentAdapter(getApplicationContext(), comments,shopExt.getUsername());
+        comments = gson.fromJson(json, new TypeToken<ArrayList<Comment>>() {
+        }.getType());
+        adapter = new CommentAdapter(getApplicationContext(), comments, shopExt.getUsername());
         mLv_comment.setAdapter(adapter);
         runOnUiThread(new Runnable() {
             @Override
@@ -159,13 +165,13 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
     private void initDate() {
         if (shopExt != null) {
             mTv_user_name.setText(shopExt.getName());
-            mTv_money.setText("￥"+ shopExt.getPrice() + "");
+            mTv_money.setText("￥" + shopExt.getPrice() + "");
             mTv_shop_summary.setText(shopExt.getDescription());
             Uri shopuri = Uri.parse(ServerApi.SHOWPIC + shopExt.getPicture());
             Uri UserIconUri = Uri.parse(ServerApi.SHOWPIC + shopExt.getIconpath());
             Glide.with(getApplication()).load(shopuri).placeholder(R.drawable.loadding).into(mSdv_shop_pic);
             Glide.with(getApplication()).load(UserIconUri).placeholder(R.drawable.usericon).into(mSld_usericon);
-            mTv_CommentCount.setText(comments.size()+"");
+            mTv_CommentCount.setText(comments.size() + "");
         }
     }
 
@@ -198,9 +204,9 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
                     mBtnLove.setImageResource(R.drawable.love_red);
                     Toasty.custom(getApplicationContext(), "+1", R.drawable.love_red, Color.GRAY, Color.alpha(200), Toast.LENGTH_SHORT, true, true).show();
 
-                }else {
-                 mBtnLove.setImageResource(R.drawable.love_gray);
-                 Toasty.custom(getApplicationContext(), "-1", R.drawable.love_gray, Color.GRAY, Color.alpha(200), Toast.LENGTH_SHORT, true, true).show();
+                } else {
+                    mBtnLove.setImageResource(R.drawable.love_gray);
+                    Toasty.custom(getApplicationContext(), "-1", R.drawable.love_gray, Color.GRAY, Color.alpha(200), Toast.LENGTH_SHORT, true, true).show();
                 }
 
             }
@@ -222,7 +228,7 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.iv_love:
                 addLike();
                 break;
@@ -245,16 +251,18 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
             @Override
             public void onPositive() {
             }
+
             @Override
             public void onNegative() {
             }
+
             @Override
             public void onGetInput(CharSequence input1, CharSequence input2) {
-                String content = (String)input1;
-                if (!TextUtils.isEmpty(content.trim())){
+                String content = (String) input1;
+                if (!TextUtils.isEmpty(content.trim())) {
                     addCommentContent(content);
-                }else {
-                    SnackbarUtils.ShowSnackbar(getCurrentFocus(),"请输入内容");
+                } else {
+                    SnackbarUtils.ShowSnackbar(getCurrentFocus(), "请输入内容");
                 }
 
             }
@@ -263,11 +271,11 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
 
     //将内容推送至服务器
     private void addCommentContent(String input1) {
-        String content =input1;
-        final HashMap<String,String> map = new HashMap<>();
-        map.put("username",username);
-        map.put("content",content);
-        map.put("shopid",shopExt.getId()+"");
+        String content = input1;
+        final HashMap<String, String> map = new HashMap<>();
+        map.put("username", username);
+        map.put("content", content);
+        map.put("shopid", shopExt.getId() + "");
         final Comment comment = new Comment();
         comment.setShopid(shopExt.getId());
         comment.setUsername(username);
@@ -281,19 +289,19 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
 
             @Override
             public void onResponseFail() {
-                SnackbarUtils.ShowSnackbar(getCurrentFocus(),"网络连接失败");
+                SnackbarUtils.ShowSnackbar(getCurrentFocus(), "网络连接失败");
             }
         });
     }
 
     private void enterOrder() {
-        Log.i(TAG, "enterOrder: "+username+shopExt.getUsername());
-        if (username.equalsIgnoreCase(shopExt.getUsername())){
-            SnackbarUtils.ShowSnackbar(getCurrentFocus(),"您不能购买自己的商品");
+        Log.i(TAG, "enterOrder: " + username + shopExt.getUsername());
+        if (username.equalsIgnoreCase(shopExt.getUsername())) {
+            SnackbarUtils.ShowSnackbar(getCurrentFocus(), "您不能购买自己的商品");
 
-        }else {
-            Intent  intent = new Intent(getApplicationContext(),SubmitDetailActivity.class);
-            intent.putExtra("username",username);
+        } else {
+            Intent intent = new Intent(getApplicationContext(), SubmitDetailActivity.class);
+            intent.putExtra("username", username);
             intent.putExtra("shopid", shopExt.getId());
             startActivity(intent);
         }
@@ -322,4 +330,22 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
         }
         return super.onOptionsItemSelected(item);
     }
+
+    private void isOrder(String shopid) {
+        utils.get(ServerApi.ISORDER + shopid, null, new XutilsUtils.XCallBack() {
+            @Override
+            public void onResponse(String result) {
+                if (result.contains("已经拍下")) {
+                    mBtn_buy.setBackgroundColor(Color.GRAY);
+                    mBtn_buy.setText("已有预定");
+                    mBtn_buy.setOnClickListener(null);
+                }
+            }
+            @Override
+            public void onResponseFail() {
+                SnackbarUtils.ShowSnackbar(getCurrentFocus(),"连接失败");
+            }
+        });
+    }
+
 }

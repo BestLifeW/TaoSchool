@@ -8,8 +8,8 @@ package com.wtc.xmut.taoschool.api;
 public class ServerApi {
 
     //private static final String Host = "http://123.56.223.17:8080"; //服务器地址
-    private static final String Host = "http://10.0.2.2:8080"; //手机测试地址
-    //private static final String Host = "http://192.168.1.107:8080";
+    //private static final String Host = "http://10.0.2.2:8080"; //手机测试地址
+    private static final String Host = "http://192.168.1.112:8080";
     //private static final String Host = "http://127.0.0.1:8080";  //Junit测试专用地址
     private static final String SERVERHOST = Host + "/TaoSchool";
 
@@ -49,6 +49,8 @@ public class ServerApi {
     //根据商品id和用户姓名获取 提交时的显示信息
     public static final String GETSUBMITDETAIL =SHOPHOST + "/getSubmit";
 
+    //根据用户名查询该用户的所有商品
+    public static final String GETSHOPBYUSERNAME = SHOPHOST + "/getShopByUserName/" ;
 
     //判断网络连接
     public static final String ISCONNECT = SERVERHOST + "/getConnect/getNet.do";
@@ -79,4 +81,16 @@ public class ServerApi {
 
     //评论的方法 通过POST表单提交
     public  static  final  String ADDCOMMENT = COMMENT +"/addComment.do";
+
+
+
+    //订单的API
+    static final String ORDER =SERVERHOST +"/Order";
+
+    //提交订单的
+    public static final String  ADDORDER = ORDER +"/addOrder.do";
+
+    //根据商品id获取是否拍下
+    public  static final String ISORDER = ORDER + "/getOrderByShopid/";   //9
+
 }
