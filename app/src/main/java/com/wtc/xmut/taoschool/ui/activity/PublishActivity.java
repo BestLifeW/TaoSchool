@@ -137,9 +137,8 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
     public void OkPublish() {
         //获取系统时间
         SimpleDateFormat formatter = new SimpleDateFormat ("yyyy-MM-dd");
-       Date curDate = new Date(System.currentTimeMillis());//获取当前时间
+        Date curDate = new Date(System.currentTimeMillis());//获取当前时间
         String str = formatter.format(curDate);
-        Log.i(TAG, "OkPublish: "+curDate);
         HashMap<String, String> Shop = new HashMap<>();
         String title = et_title.getText().toString().trim();
         String description = et_summary.getText().toString().trim();
@@ -149,7 +148,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
             Shop.put("username", username);
             Shop.put("price", newmoney);
             Shop.put("oldprice", oldmoney);
-           Shop.put("shoptime", str);
+            Shop.put("shoptime",str);
         } else {
             SnackbarUtils.ShowSnackbar(getCurrentFocus(), "请输入完整信息");
             return;

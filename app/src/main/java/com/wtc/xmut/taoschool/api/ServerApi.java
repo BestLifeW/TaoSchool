@@ -93,4 +93,9 @@ public class ServerApi {
     //根据商品id获取是否拍下
     public  static final String ISORDER = ORDER + "/getOrderByShopid/";   //9
 
+    //根据用户姓名获取 商品订单
+
+    public static final String GETORDERBYUSERNAME =ORDER+"/getOrdersByUsername/"; //lovec
+
+    
 }
