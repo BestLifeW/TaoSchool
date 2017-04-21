@@ -39,6 +39,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.dmoral.toasty.Toasty;
 
+import static com.wtc.xmut.taoschool.R.id.toast_icon;
 import static com.wtc.xmut.taoschool.R.id.tv_shopmenoy;
 
 public class SubmitDetailActivity extends AppCompatActivity implements View.OnClickListener {
@@ -76,6 +77,7 @@ public class SubmitDetailActivity extends AppCompatActivity implements View.OnCl
     private TimePickerView pvTime;
     private Dialog show;
     private Dialog submitDialog;
+    private String time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +102,7 @@ public class SubmitDetailActivity extends AppCompatActivity implements View.OnCl
 
     private void initView() {
         btn_ok = (Button) findViewById(R.id.btn_ok);
-        btn_ok.setOnClickListener(this);
+
         ll_buytime = (LinearLayout) findViewById(R.id.ll_buytime);
         ll_buytime.setOnClickListener(this);
     }
@@ -116,6 +118,7 @@ public class SubmitDetailActivity extends AppCompatActivity implements View.OnCl
             public void onResponse(String result) {
                 Log.i(TAG, "onResponse: " + result);
                 parseResult(result);
+
             }
 
             @Override
@@ -131,6 +134,7 @@ public class SubmitDetailActivity extends AppCompatActivity implements View.OnCl
         submitDetail = gson.fromJson(result, SubmitDetail.class);
         Log.i(TAG, "parseResult: " + submitDetail.toString());
         fillView();
+        btn_ok.setOnClickListener(this);
     }
 
     private void fillView() {
@@ -201,8 +205,16 @@ public class SubmitDetailActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void onPositive() {
                 //提交订单操作
-                addOrderinWeb();
-                submitDialog = DialogUIUtils.showLoading(getApplicationContext(), "提交中", false, false, false, true).show();
+
+                time = tvbuytime.getText().toString();
+                if (!time.contains("请选择")){
+                    addOrderinWeb();
+                    submitDialog = DialogUIUtils.showLoading(getApplicationContext(), "提交中", false, false, false, true).show();
+                }else {
+                   Toasty.info(getApplicationContext(),"请选择时间",Toast.LENGTH_LONG).show();
+
+                }
+
             }
 
             @Override
@@ -213,15 +225,14 @@ public class SubmitDetailActivity extends AppCompatActivity implements View.OnCl
 
 
     private void addOrderinWeb() {
-        String time = tvbuytime.getText().toString();
+        Log.i(TAG, "addOrderinWeb: "+time);
         String newid = shopId+"";
-        if (!time.contains("请选择")) {
             HashMap<String, String> map = new HashMap<>();
             map.put("shopid", newid);
             map.put("buyerusername", username);
             map.put("sellerusername", submitDetail.getUsername());
             map.put("time", time);
-            map.put("s","拍下");
+            map.put("state","拍下");
             utils.post(ServerApi.ADDORDER, map, new XutilsUtils.XCallBack() {
                 @Override
                 public void onResponse(String result) {
@@ -242,14 +253,36 @@ public class SubmitDetailActivity extends AppCompatActivity implements View.OnCl
                     submitDialog.dismiss();
                 }
             });
-        } else {
-            submitDialog.dismiss();
-            SnackbarUtils.ShowSnackbar(getCurrentFocus(), "请输入时间");
-        }
+
     }
 
     private String getTime(Date date) {//可根据需要自行截取数据显示
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return format.format(date);
+    }
+
+    @Override
+    protected void onResume() {
+        Log.i(TAG, "onResume: ");
+        initDate();
+        super.onResume();
+    }
+
+    @Override
+    protected void onRestart() {
+        Log.i(TAG, "onRestart: ");
+        super.onRestart();
+    }
+
+    @Override
+    protected void onResumeFragments() {
+        Log.i(TAG, "onResumeFragments: ");
+        super.onResumeFragments();
+    }
+
+    @Override
+    protected void onPostResume() {
+        Log.i(TAG, "onPostResume: ");
+        super.onPostResume();
     }
 }

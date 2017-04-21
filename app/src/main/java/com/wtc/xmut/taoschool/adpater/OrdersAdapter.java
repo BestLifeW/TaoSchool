@@ -3,6 +3,7 @@ package com.wtc.xmut.taoschool.adpater;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -21,6 +22,7 @@ import java.util.List;
  */
 
 public class OrdersAdapter extends CommonAdapter<OrdersExt> {
+    private static final String TAG = "OrdersAdapter";
     private Context mcontext;
     public OrdersAdapter(Context context, int layoutId, List<OrdersExt> datas) {
         super(context, layoutId, datas);
@@ -35,6 +37,7 @@ public class OrdersAdapter extends CommonAdapter<OrdersExt> {
 
         String iconpath = ordersExt.getIconpath();
         String shopimg = ordersExt.getPicture();
+        Log.i(TAG, "convert: "+ServerApi.SHOWPIC+shopimg);
         Glide.with(mcontext).load(ServerApi.SHOWPIC+shopimg).placeholder(R.drawable.loadding).into(shopuri);
         Glide.with(mcontext).load(ServerApi.SHOWPIC+iconpath).placeholder(R.drawable.usericon).into(user_icon);
 

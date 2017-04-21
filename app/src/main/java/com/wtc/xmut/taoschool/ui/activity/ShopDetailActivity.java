@@ -62,6 +62,7 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
     private TextView mTv_CommentCount;
     private ImageView mIv_addComment;
     private CommentAdapter adapter;
+    private int shopId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,24 +74,28 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         utils = XutilsUtils.getInstance();
-        final int ShopId = (int) getIntent().getExtras().get("ShopId");
+        shopId = (int) getIntent().getExtras().get("ShopId");
         init();
 
-        utils.getCache(ServerApi.GETSHOPBYID + ShopId, null, true, 60 * 1000 * 6, new XutilsUtils.XCallBack() {
+        getDateAndFillView(shopId);
+        //获取评论
+
+
+    }
+
+    private void getDateAndFillView(final int shopId) {
+        utils.getCache(ServerApi.GETSHOPBYID + shopId, null, true, 60 * 1000 * 6, new XutilsUtils.XCallBack() {
             @Override
             public void onResponse(String result) {
                 ParseJson(result);
-                isLoveShow(ShopId);
-                getComment(ShopId);
+                isLoveShow(shopId);
+                getComment(shopId);
             }
 
             @Override
             public void onResponseFail() {
             }
         });
-        //获取评论
-
-
     }
 
     private void getComment(int shopId) {
@@ -348,4 +353,16 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getDateAndFillView(shopId);
+        Log.i(TAG, "onResume: ");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.i(TAG, "onRestart: ");
+    }
 }
