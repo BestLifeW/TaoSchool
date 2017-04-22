@@ -1,10 +1,12 @@
 package com.wtc.xmut.taoschool.domain;
 
+import java.io.Serializable;
+
 /**
  * Created by tianchao on 17-3-19.
  */
 
-public class ShopExtDetail extends Shop{
+public class ShopExtDetail extends Shop implements Serializable{
 
 
     private String username;

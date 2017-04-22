@@ -17,6 +17,8 @@ import com.zhy.adapter.recyclerview.base.ViewHolder;
 
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 /**
  * Created by tianchaowang on 17-4-20.
  */
@@ -24,6 +26,8 @@ import java.util.List;
 public class OrdersAdapter extends CommonAdapter<OrdersExt> {
     private static final String TAG = "OrdersAdapter";
     private Context mcontext;
+    private View ll_order;
+
     public OrdersAdapter(Context context, int layoutId, List<OrdersExt> datas) {
         super(context, layoutId, datas);
         this.mcontext = context;
@@ -40,7 +44,25 @@ public class OrdersAdapter extends CommonAdapter<OrdersExt> {
         Log.i(TAG, "convert: "+ServerApi.SHOWPIC+shopimg);
         Glide.with(mcontext).load(ServerApi.SHOWPIC+shopimg).placeholder(R.drawable.loadding).into(shopuri);
         Glide.with(mcontext).load(ServerApi.SHOWPIC+iconpath).placeholder(R.drawable.usericon).into(user_icon);
-
+        ll_order = holder.getView(R.id.ll_order);
+        ll_order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new SweetAlertDialog(mContext, SweetAlertDialog.WARNING_TYPE)
+                        .setTitleText("查看信息?")
+                        .setContentText("Won't be able to recover this file!")
+                        .setConfirmText("Yes,delete it!")
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                sDialog.setTitleText("Good job!")
+                                        .setContentText("You clicked the button!")
+                                        .show();
+                            }
+                        })
+                        .show();
+            }
+        });
         holder.setText(R.id.buyusername, ordersExt.getBuyerusername());
         if (ordersExt.getShopstate().equals("0")){
             holder.setText(R.id.tv_ordermsg, "[订单]商品已被拍下");
