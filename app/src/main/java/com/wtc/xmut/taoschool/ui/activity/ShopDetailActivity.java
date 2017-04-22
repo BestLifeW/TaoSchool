@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,6 +64,7 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
     private ImageView mIv_addComment;
     private CommentAdapter adapter;
     private int shopId;
+    private RelativeLayout rl_shopdetail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -195,7 +197,7 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
         mBtn_buy.setOnClickListener(this);
         mBtnLove = (ImageView) findViewById(R.id.iv_love);
         mBtnLove.setOnClickListener(this);
-
+        rl_shopdetail = (RelativeLayout) findViewById(R.id.rl_shopdetail);
     }
 
 
@@ -302,8 +304,8 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
     private void enterOrder() {
         Log.i(TAG, "enterOrder: " + username + shopExt.getUsername());
         if (username.equalsIgnoreCase(shopExt.getUsername())) {
-            SnackbarUtils.ShowSnackbar(getCurrentFocus(), "您不能购买自己的商品");
-
+            Log.i(TAG, "enterOrder: 进来了");
+            SnackbarUtils.ShowSnackbar(rl_shopdetail, "您不能购买自己的商品");
         } else {
             Intent intent = new Intent(getApplicationContext(), SubmitDetailActivity.class);
             intent.putExtra("username", username);

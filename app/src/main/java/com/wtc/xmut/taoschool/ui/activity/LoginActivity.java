@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mEt_userpassword = (EditText) findViewById(R.id.et_userpassword);
         mBtn_signup = (Button) findViewById(R.id.btn_signup);
         mTv_register = (TextView) findViewById(R.id.tv_register);
-        //progressBar2 = (ProgressBar) findViewById(R.id.progressBar2);
+        progressBar2 = (ProgressBar) findViewById(R.id.progressBar2);
     }
 
     private void Login() {
