@@ -1,12 +1,48 @@
 package com.wtc.xmut.taoschool.domain;
 
-/**
- * Created by tianchaowang on 17-4-20.
- */
-
 public class OrdersExt {
-
-    private int shopid;
+    /* select shop.id as shopid,shop.price,
+        user.iconpath,
+        user.telephone,
+        user.college,
+        user.dormitory,
+        user.floor
+        ,shop.shopname
+        ,shop.state as shopstate
+        ,shop.username,
+        orders.id as orderid,
+        orders.buyerusername,
+        orders.sellerusername,
+        orders.time,
+        orders.state as ordersstate,
+        shop.picture
+ from shop,orders,user
+ where shop.id = orders.shopid and shop.username = user.username
+*/	private int shopid;
+    public String getCollege() {
+        return college;
+    }
+    public void setCollege(String college) {
+        this.college = college;
+    }
+    public String getDormitory() {
+        return dormitory;
+    }
+    public void setDormitory(String dormitory) {
+        this.dormitory = dormitory;
+    }
+    public String getFloor() {
+        return floor;
+    }
+    public void setFloor(String floor) {
+        this.floor = floor;
+    }
+    public String getTelephone() {
+        return telephone;
+    }
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
     private String price;
     private String shopstate;
     private String username;
@@ -16,16 +52,25 @@ public class OrdersExt {
     private String ordersstate;
     private String iconpath;
     private String picture;
+    private String time;
+    private String college;
+    private String dormitory;
+    private String floor;
+    private String telephone;
+    private String name;
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getTime() {
         return time;
     }
-
     public void setTime(String time) {
         this.time = time;
     }
-
-    private String time;
     public String getIconpath() {
         return iconpath;
     }
@@ -87,4 +132,25 @@ public class OrdersExt {
         this.ordersstate = ordersstate;
     }
 
+    @Override
+    public String toString() {
+        return "OrdersExt{" +
+                "shopid=" + shopid +
+                ", price='" + price + '\'' +
+                ", shopstate='" + shopstate + '\'' +
+                ", username='" + username + '\'' +
+                ", orderid=" + orderid +
+                ", buyerusername='" + buyerusername + '\'' +
+                ", sellerusername='" + sellerusername + '\'' +
+                ", ordersstate='" + ordersstate + '\'' +
+                ", iconpath='" + iconpath + '\'' +
+                ", picture='" + picture + '\'' +
+                ", time='" + time + '\'' +
+                ", college='" + college + '\'' +
+                ", dormitory='" + dormitory + '\'' +
+                ", floor='" + floor + '\'' +
+                ", telephone='" + telephone + '\'' +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

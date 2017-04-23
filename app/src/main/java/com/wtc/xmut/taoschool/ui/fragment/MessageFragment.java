@@ -1,5 +1,6 @@
 package com.wtc.xmut.taoschool.ui.fragment;
 
+import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
@@ -10,8 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.dou361.dialogui.DialogUIUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.tapadoo.alerter.Alerter;
 import com.wtc.xmut.taoschool.R;
 import com.wtc.xmut.taoschool.adpater.OrdersAdapter;
 import com.wtc.xmut.taoschool.api.ServerApi;
@@ -39,6 +42,7 @@ public class MessageFragment extends Fragment {
     private static final String TAG = "MessageFragment";
     private SwipeMenuRecyclerView mRecyclerView;
     private OrdersAdapter adapter;
+    private Dialog dialog;
 
     public MessageFragment() {
         this.mContext = getActivity();
@@ -49,6 +53,7 @@ public class MessageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_message,null);
         username = PrefUtils.getString(getActivity(), PrefUtils.USER_NUMBER, "");
+        dialog = DialogUIUtils.showMdLoading(getActivity(),"刷新中",true,true,true,true).show();
         utils = XutilsUtils.getInstance();
         mRecyclerView = (SwipeMenuRecyclerView) view.findViewById(R.id.smrlview);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -88,8 +93,12 @@ public class MessageFragment extends Fragment {
         shoplist = gson.fromJson(result, new TypeToken<ArrayList<OrdersExt>>() {
         }.getType());
         Log.i(TAG, "parseResult: "+shoplist.size());
-
+        /*Alerter.create(getActivity())
+                .setTitle("提示")
+                .setText("有新消息啦～")
+                .show();*/
         adapter = new OrdersAdapter(getActivity(), R.layout.item_message, shoplist);
+        dialog.dismiss();
         mRecyclerView.setAdapter(adapter);
     }
 

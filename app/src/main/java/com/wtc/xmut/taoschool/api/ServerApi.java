@@ -97,5 +97,6 @@ public class ServerApi {
 
     public static final String GETORDERBYUSERNAME =ORDER+"/getOrdersByUsername/"; //lovec
 
-    
+    //根据订单ID修改订单信息
+    public static  final  String UPDATEORDERBYID = ORDER + "/updateOrderById.do";//修改信息
 }
