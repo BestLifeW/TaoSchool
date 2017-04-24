@@ -16,7 +16,8 @@
         android:layout_width="190dp"
         android:layout_height="47dp"
         android:layout_marginLeft="8dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_weight="0.03">
 
         <TextView
             android:id="@+id/buyusername"
@@ -33,17 +34,17 @@
             android:layout_height="wrap_content"
             android:text="[订单]买家已经拍下"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@+id/tv_ordertime" />
 
         <TextView
             android:id="@+id/tv_ordertime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="|2011年"
+            android:text="| 2011年"
             android:layout_marginLeft="8dp"
             android:layout_alignParentBottom="true"
-            android:layout_toEndOf="@+id/tv_ordermsg"
-            android:layout_marginStart="8dp" />
+            android:layout_alignParentEnd="true" />
     </RelativeLayout>
 
     <ImageView

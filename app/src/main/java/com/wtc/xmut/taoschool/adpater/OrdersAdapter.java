@@ -58,7 +58,7 @@ public class OrdersAdapter extends CommonAdapter<OrdersExt> {
         ll_order = holder.getView(R.id.ll_order);
         Log.i(TAG, "convert: "+ordersExt.toString());
         holder.setText(R.id.buyusername, ordersExt.getBuyerusername());
-        if (ordersExt.getOrdersstate().contains("拍下")){
+        if (ordersExt.getOrdersstate().contains("拍下")&&STATE==1){
             holder.setText(R.id.tv_ordermsg, "[订单]商品已被拍下");
             ll_order.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -67,7 +67,7 @@ public class OrdersAdapter extends CommonAdapter<OrdersExt> {
                 }
             });
         }else if (!(ordersExt.getOrdersstate().contains("拍下"))||STATE==2){
-            holder.setText(R.id.tv_ordermsg, "[订单]已经同意买家请求");
+            holder.setText(R.id.tv_ordermsg, "[订单]同意买家请求");
             ll_order.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -89,7 +89,6 @@ public class OrdersAdapter extends CommonAdapter<OrdersExt> {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         UpdateOrder(ordersExt);
-
                     }
                 })
                 .onNegative(new MaterialDialog.SingleButtonCallback() {
@@ -101,7 +100,6 @@ public class OrdersAdapter extends CommonAdapter<OrdersExt> {
                 })
                 .show();
     }
-
     //根据订单id修改信息
     private void UpdateOrder(final OrdersExt ordersExt) {
         HashMap<String,String> map = new HashMap<>();
@@ -116,14 +114,12 @@ public class OrdersAdapter extends CommonAdapter<OrdersExt> {
                     alertOld(ordersExt);
                 }
             }
-
             @Override
             public void onResponseFail() {
                 Toasty.error(mContext,"服务器链接失败", Toast.LENGTH_LONG).show();
             }
         });
     }
-
     private void alertOld(OrdersExt ordersExt){
         new MaterialStyledDialog.Builder(mContext)
                 .setTitle("查看信息")
@@ -139,5 +135,10 @@ public class OrdersAdapter extends CommonAdapter<OrdersExt> {
                     }
                 })
                 .show();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
     }
 }

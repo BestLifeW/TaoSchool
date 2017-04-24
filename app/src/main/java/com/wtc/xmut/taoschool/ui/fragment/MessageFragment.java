@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,7 +41,7 @@ public class MessageFragment extends Fragment {
     private XutilsUtils utils;
     private List<OrdersExt> shoplist;
     private static final String TAG = "MessageFragment";
-    private SwipeMenuRecyclerView mRecyclerView;
+    private RecyclerView mRecyclerView;
     private OrdersAdapter adapter;
     private Dialog dialog;
 
@@ -55,7 +56,7 @@ public class MessageFragment extends Fragment {
         username = PrefUtils.getString(getActivity(), PrefUtils.USER_NUMBER, "");
         dialog = DialogUIUtils.showMdLoading(getActivity(),"刷新中",true,true,true,true).show();
         utils = XutilsUtils.getInstance();
-        mRecyclerView = (SwipeMenuRecyclerView) view.findViewById(R.id.smrlview);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.smrlview);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         init();
         return view;
