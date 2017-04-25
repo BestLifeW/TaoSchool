@@ -1,83 +1,91 @@
 package com.wtc.xmut.taoschool.adpater;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.wtc.xmut.taoschool.R;
 import com.wtc.xmut.taoschool.domain.OrdersExt;
+import com.wtc.xmut.taoschool.utils.PrefUtils;
+import com.wtc.xmut.taoschool.utils.XutilsUtils;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
-
-import cn.lemon.view.adapter.BaseViewHolder;
-import cn.lemon.view.adapter.RecyclerAdapter;
 
 /**
  * Created by tianchaowang on 17-4-24.
  */
 
 public class OrdersNewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private final String username;
+    private final XutilsUtils utils;
+    private LayoutInflater mLayoutInflater;
+    private Context mContext;
+    private List<OrdersExt> list;
 
-    private static final int BUYER_TYPE = 0;
-    private static final int SELLER_TYPE = 1;
-
-    private List<OrdersExt> datas;
-
-    public OrdersNewAdapter(List<String> datas) {
-
+    //建立枚举 2个item 类型
+    public enum ORDERS {
+        BURSER,
+        SELLER
+    }
+    public OrdersNewAdapter(Context context,List<OrdersExt> list){
+        this.list = list;
+        username = PrefUtils.getString(context, PrefUtils.USER_NUMBER, "");
+        this.mContext = context;
+        mLayoutInflater = LayoutInflater.from(context);
+        utils = XutilsUtils.getInstance();
     }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-       /* if (viewType == BUYER_TYPE) {
-            return new BuyerViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_message, parent, false));
-        } else
-            return new SallerViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_buyser, parent, false));*/
-       //// TODO: 17-4-24  这边是写多种类型 
-       return  null;
+        //加载Item View的时候根据不同TYPE加载不同的布局
+        if (viewType == ORDERS.BURSER.ordinal()) {
+            return new BuyerItem(mLayoutInflater.inflate(R.layout.item_buyser, parent, false));
+        } else {
+            return new SellerItem(mLayoutInflater.inflate(R.layout.item_message, parent, false));
+        }
     }
-
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
+        if (holder instanceof BuyerItem) {
+            //((Item1ViewHolder) holder).mTextView.setText(titles[position]);
+        } else if (holder instanceof SellerItem) {
+           // ((Item2ViewHolder) holder).mTextView.setText(titles[position]);
+        }
     }
-
-    @Override
-    public int getItemCount() {
-        return 0;
-    }
+    //设置ITEM类型，可以自由发挥，这里设置item position单数显示item1 偶数显示item2
     @Override
     public int getItemViewType(int position) {
-        if (position % 4 == 0) {
-            return BUYER_TYPE;
-        }
-        return SELLER_TYPE;
+        //Enum类提供了一个ordinal()方法，返回枚举类型的序数，这里ITEM_TYPE.ITEM1.ordinal()代表0， ITEM_TYPE.ITEM2.ordinal()代表1
+        //return position % 2 == 0 ? ORDERS.BURSER.ordinal() : ORDERS.SELLER.ordinal();
+        return list.get(position).getBuyerusername().equals(username) ?ORDERS.BURSER.ordinal():ORDERS.SELLER.ordinal();
     }
-
- /*   private class SallerViewHolder extends RecyclerView.ViewHolder {
-        public SallerViewHolder(Object inflate) {
-            super();
-        }
+    @Override
+    public int getItemCount() {
+        return list == null ? 0 : list.size();
     }
-
-    private class BuyerViewHolder extends RecyclerView.ViewHolder {
-        public BuyerViewHolder(View inflate) {
-            super();
-        }
-    }
-    class SallerViewHolder extends RecyclerView.ViewHolder  {
-
-        TextView tv_name;
-        LinearLayout rootView;
-
-        public NormalHolder(View itemView) {
+    //item1 的ViewHolder
+     private static class BuyerItem extends RecyclerView.ViewHolder{
+        TextView tv_shopname;
+        TextView tv_money;
+        TextView tv_seller;
+        TextView tv_isgreer;
+        BuyerItem(View itemView) {
             super(itemView);
-
+                tv_shopname = (TextView) itemView.findViewById(R.id.tv_shopname);
+                tv_money = (TextView)itemView.findViewById(R.id.tv_money);
+                tv_seller = (TextView)itemView.findViewById(R.id.tv_seller);
+                tv_isgreer = (TextView)itemView.findViewById(R.id.tv_isgreer);
         }
-
-        class BuyerViewHolder extends RecyclerView.ViewHolder {
-            public CheckHoldr(View itemView) {
-                super(itemView);
-            }
-        }*/
+    }
+    //item2 的ViewHolder
+     private static class SellerItem extends RecyclerView.ViewHolder{
+        TextView mTextView;
+        public SellerItem(View itemView) {
+            super(itemView);
+        }
+    }
 }
