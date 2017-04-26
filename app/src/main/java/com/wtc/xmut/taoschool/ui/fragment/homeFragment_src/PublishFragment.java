@@ -133,7 +133,7 @@ public class PublishFragment extends Fragment {
                         adapter = new PublishAdapter(getActivity(),
                                 R.layout.item_main, shopList);
                         mSwipeRefreshWidget.setRefreshing(false);
-                        Toasty.custom(getActivity(), "刷新成功", R.drawable.ic_favorite, Color.GREEN, Color.alpha(200), Toast.LENGTH_SHORT, true, true).show();
+                        Toasty.custom(getActivity(), "刷新成功", null, Color.WHITE, Color.alpha(200), Toast.LENGTH_SHORT, true, true).show();
                     }
                 }, 3000);
             }

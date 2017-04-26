@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.dou361.dialogui.DialogUIUtils;
 import com.google.gson.Gson;
@@ -44,6 +45,7 @@ public class MessageFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private OrdersAdapter adapter;
     private Dialog dialog;
+    private TextView isMessage;
 
     public MessageFragment() {
         this.mContext = getActivity();
@@ -98,6 +100,9 @@ public class MessageFragment extends Fragment {
                 .setTitle("提示")
                 .setText("有新消息啦～")
                 .show();*/
+        if (shoplist==null||shoplist.size()==0){
+            isMessage.setVisibility(View.VISIBLE);
+        }
         adapter = new OrdersAdapter(getActivity(), R.layout.item_message, shoplist);
         dialog.dismiss();
         mRecyclerView.setAdapter(adapter);
@@ -107,7 +112,7 @@ public class MessageFragment extends Fragment {
      * 初始化View
      */
     private void initView() {
-
+        isMessage = (TextView) view.findViewById(R.id.isMessage);
 
     }
 
