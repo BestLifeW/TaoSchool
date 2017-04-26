@@ -8,6 +8,14 @@
         android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <TextView
+            android:padding="8dp"
+            android:visibility="gone"
+            android:gravity="center_horizontal"
+            android:text="还没有任何信息"
+            android:id="@+id/isMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
         <android.support.v7.widget.RecyclerView
             android:id="@+id/smrlview"
             android:layout_width="wrap_content"
