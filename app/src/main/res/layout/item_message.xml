@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:padding="8dp"
-    android:id="@+id/ll_order"
+
+    android:id="@+id/cv_order"
     android:layout_height="wrap_content"
     android:weightSum="1">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
     <com.wtc.xmut.taoschool.view.CircleImageView
         android:id="@+id/clv_userhead"
         android:src="@drawable/usericon"
@@ -54,4 +58,5 @@
         android:layout_weight="0.11"
         android:layout_marginLeft="50dp"
 />
-</LinearLayout>
+    </LinearLayout>
+</android.support.v7.widget.CardView>

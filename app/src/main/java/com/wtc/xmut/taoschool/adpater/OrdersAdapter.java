@@ -55,7 +55,7 @@ public class OrdersAdapter extends CommonAdapter<OrdersExt> {
         Log.i(TAG, "convert: "+ServerApi.SHOWPIC+shopimg);
         Glide.with(mcontext).load(ServerApi.SHOWPIC+shopimg).placeholder(R.drawable.loadding).into(shopuri);
         Glide.with(mcontext).load(ServerApi.SHOWPIC+iconpath).placeholder(R.drawable.usericon).into(user_icon);
-        ll_order = holder.getView(R.id.ll_order);
+        ll_order = holder.getView(R.id.cv_order);
         Log.i(TAG, "convert: "+ordersExt.toString());
         holder.setText(R.id.buyusername, ordersExt.getBuyerusername());
         if (ordersExt.getOrdersstate().contains("拍下")&&STATE==1){

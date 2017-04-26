@@ -3,6 +3,7 @@ package com.wtc.xmut.taoschool.ui.fragment;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Context;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,6 +20,7 @@ import com.google.gson.reflect.TypeToken;
 import com.tapadoo.alerter.Alerter;
 import com.wtc.xmut.taoschool.R;
 import com.wtc.xmut.taoschool.adpater.OrdersAdapter;
+import com.wtc.xmut.taoschool.adpater.OrdersNewAdapter;
 import com.wtc.xmut.taoschool.api.ServerApi;
 import com.wtc.xmut.taoschool.domain.OrdersExt;
 import com.wtc.xmut.taoschool.utils.PrefUtils;
@@ -43,7 +45,7 @@ public class MessageFragment extends Fragment {
     private List<OrdersExt> shoplist;
     private static final String TAG = "MessageFragment";
     private RecyclerView mRecyclerView;
-    private OrdersAdapter adapter;
+    private OrdersNewAdapter adapter;
     private Dialog dialog;
     private TextView isMessage;
 
@@ -60,6 +62,7 @@ public class MessageFragment extends Fragment {
         utils = XutilsUtils.getInstance();
         mRecyclerView = (RecyclerView) view.findViewById(R.id.smrlview);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.addItemDecoration(new MyItemDecoration());
         init();
         return view;
     }
@@ -100,12 +103,16 @@ public class MessageFragment extends Fragment {
                 .setTitle("提示")
                 .setText("有新消息啦～")
                 .show();*/
-        if (shoplist==null||shoplist.size()==0){
+       if (shoplist==null||shoplist.size()==0){
             isMessage.setVisibility(View.VISIBLE);
         }
-        adapter = new OrdersAdapter(getActivity(), R.layout.item_message, shoplist);
+      /*  adapter = new OrdersAdapter(getActivity(), R.layout.item_message, shoplist);*/
+      adapter = new OrdersNewAdapter(getActivity(),shoplist);
+
         dialog.dismiss();
+
         mRecyclerView.setAdapter(adapter);
+
     }
 
     /**
@@ -121,5 +128,14 @@ public class MessageFragment extends Fragment {
         MessageFragment fragment = new MessageFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    class MyItemDecoration extends RecyclerView.ItemDecoration {
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+            //设定底部边距为1px
+            outRect.set(0, 0, 0, 1);
+        }
     }
 }

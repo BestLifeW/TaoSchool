@@ -246,7 +246,6 @@ public class SubmitDetailActivity extends AppCompatActivity implements View.OnCl
                         submitDialog.dismiss();
                     }
                 }
-
                 @Override
                 public void onResponseFail() {
                     Toasty.error(getApplicationContext(), "提交失败", Toast.LENGTH_LONG).show();
