@@ -13,6 +13,7 @@
         android:orientation="vertical">
 
         <RelativeLayout
+            android:stateListAnimator="@animator/touch_raise"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#fff"
@@ -147,6 +148,7 @@
             android:orientation="vertical">
             <!--我发布的-->
             <RelativeLayout
+                android:stateListAnimator="@animator/touch_raise"
                 android:id="@+id/rl_mypublish"
                 android:layout_width="match_parent"
                 android:layout_height="50dp">
@@ -190,6 +192,7 @@
 
             <!--我卖出的-->
             <RelativeLayout
+                android:stateListAnimator="@animator/touch_raise"
                 android:id="@+id/rl_setting_sale"
                 android:layout_width="match_parent"
                 android:layout_height="50dp">
@@ -233,6 +236,7 @@
                 android:background="#f2f2f2" />
 
             <RelativeLayout
+                android:stateListAnimator="@animator/touch_raise"
                 android:id="@+id/rl_setting_mybuy"
                 android:layout_width="match_parent"
                 android:layout_height="50dp">
@@ -269,6 +273,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:stateListAnimator="@animator/touch_raise"
                 android:id="@+id/rl_setting_like"
                 android:layout_width="match_parent"
                 android:layout_height="50dp">
@@ -318,6 +323,7 @@
             android:background="#f2f2f2" />
 
         <RelativeLayout
+            android:stateListAnimator="@animator/touch_raise"
             android:id="@+id/rl_setting_setting"
             android:layout_width="match_parent"
             android:layout_height="50dp"

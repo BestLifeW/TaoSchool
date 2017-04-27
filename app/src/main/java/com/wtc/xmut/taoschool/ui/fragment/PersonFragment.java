@@ -26,7 +26,10 @@ import com.wtc.xmut.taoschool.Service.impl.UserServiceImol;
 import com.wtc.xmut.taoschool.api.ServerApi;
 import com.wtc.xmut.taoschool.domain.User;
 import com.wtc.xmut.taoschool.ui.activity.LoginActivity;
+import com.wtc.xmut.taoschool.ui.activity.MyBuyActivity;
+import com.wtc.xmut.taoschool.ui.activity.MyLikeActivity;
 import com.wtc.xmut.taoschool.ui.activity.MyPublishActivity;
+import com.wtc.xmut.taoschool.ui.activity.MySallerActivity;
 import com.wtc.xmut.taoschool.ui.activity.PersonActivity;
 import com.wtc.xmut.taoschool.ui.activity.SettingActivity;
 import com.wtc.xmut.taoschool.utils.PrefUtils;
@@ -208,16 +211,49 @@ public class PersonFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.rl_setting_sale:
                 //我卖出的东西
+                enterMySalle(usernumber);
                 break;
             case R.id.rl_setting_mybuy:
                 //我买到的东西
+                enterMyBuy(usernumber);
                 break;
             case R.id.rl_setting_like:
                 //我点赞的东西
+                enterMyLike(usernumber);
                 break;
             default:
                 break;
         }
+    }
+
+    /**
+     * 进入我的点赞
+     * @param usernumber
+     */
+    private void enterMyLike(String usernumber) {
+        Intent intent = new Intent(getActivity(),MyLikeActivity.class);
+        intent.putExtra("username",usernumber);
+        startActivity(intent);
+    }
+
+    /**
+     * 进入我购买的
+     * @param usernumber
+     */
+    private void enterMyBuy(String usernumber) {
+        Intent intent = new Intent(getActivity(),MyBuyActivity.class);
+        intent.putExtra("username",usernumber);
+        startActivity(intent);
+    }
+
+    /**
+     * 进入我的购买
+     * @param usernumber
+     */
+    private void enterMySalle(String usernumber) {
+        Intent intent = new Intent(getActivity(),MySallerActivity.class);
+        intent.putExtra("username",usernumber);
+        startActivity(intent);
     }
 
 

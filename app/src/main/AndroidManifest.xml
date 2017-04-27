@@ -17,7 +17,7 @@
         <activity
             android:name=".ui.activity.MainActivity"
             android:label="淘学"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.activity.PublishActivity"
             android:theme="@style/AppTheme" />
@@ -53,10 +53,22 @@
         <activity
             android:name=".ui.activity.SearchResultsActivity"
             android:label="@string/title_activity_search"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.activity.MyPublishActivity"
             android:label="@string/title_activity_my_publish"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.activity.MyLikeActivity"
+            android:label="@string/title_activity_my_like"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.activity.MyBuyActivity"
+            android:label="@string/title_activity_my_buy"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.activity.MySallerActivity"
+            android:label="@string/title_activity_my_saller"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

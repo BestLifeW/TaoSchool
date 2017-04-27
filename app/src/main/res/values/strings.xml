@@ -7,4 +7,7 @@
     <string name="title_activity_shopdetial">商品详情</string>
     <string name="title_activity_search">搜索</string>
     <string name="title_activity_my_publish">我发布的商品</string>
+    <string name="title_activity_my_like">我点赞的</string>
+    <string name="title_activity_my_buy">我购买的</string>
+    <string name="title_activity_my_saller">我卖出的</string>
 </resources>

@@ -5,11 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.wtc.xmut.taoschool.ui.activity.MyPublishActivity"
-    tools:showIn="@layout/activity_my_publish">
-    <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
-        android:id="@+id/sm_rlv"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView>
+    tools:context="com.wtc.xmut.taoschool.ui.activity.MyBuyActivity"
+    tools:showIn="@layout/activity_my_buy">
+
 </android.support.constraint.ConstraintLayout>
