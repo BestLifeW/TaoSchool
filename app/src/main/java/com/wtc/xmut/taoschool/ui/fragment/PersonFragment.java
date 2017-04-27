@@ -26,6 +26,7 @@ import com.wtc.xmut.taoschool.Service.impl.UserServiceImol;
 import com.wtc.xmut.taoschool.api.ServerApi;
 import com.wtc.xmut.taoschool.domain.User;
 import com.wtc.xmut.taoschool.ui.activity.LoginActivity;
+import com.wtc.xmut.taoschool.ui.activity.MyPublishActivity;
 import com.wtc.xmut.taoschool.ui.activity.PersonActivity;
 import com.wtc.xmut.taoschool.ui.activity.SettingActivity;
 import com.wtc.xmut.taoschool.utils.PrefUtils;
@@ -57,6 +58,10 @@ public class PersonFragment extends Fragment implements View.OnClickListener {
     private SimpleDraweeView mSdv_user_icon;
     private RelativeLayout rl_person;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private RelativeLayout rl_mypublish;
+    private RelativeLayout rl_setting_sale;
+    private RelativeLayout rl_setting_mybuy;
+    private RelativeLayout rl_setting_like;
 
     public PersonFragment() {
         userService = new UserServiceImol();
@@ -87,6 +92,13 @@ public class PersonFragment extends Fragment implements View.OnClickListener {
         rl_person = (RelativeLayout) view.findViewById(R.id.rl_person);
         swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swipe_container);
                 //设置刷新时动画的颜色，可以设置4个
+
+
+        //初始化 我发布的 我卖出的。。等等
+        rl_mypublish = (RelativeLayout) view.findViewById(R.id.rl_mypublish);
+        rl_setting_sale = (RelativeLayout) view.findViewById(R.id.rl_setting_sale);
+        rl_setting_mybuy = (RelativeLayout) view.findViewById(R.id.rl_setting_mybuy);
+        rl_setting_like = (RelativeLayout) view.findViewById(R.id.rl_setting_like);
     }
 
     private void init() {
@@ -117,6 +129,12 @@ public class PersonFragment extends Fragment implements View.OnClickListener {
                 }, 3000);
             }
         });
+        rl_mypublish.setOnClickListener(this);
+        rl_setting_sale.setOnClickListener(this);
+        rl_setting_mybuy.setOnClickListener(this);
+        rl_setting_like.setOnClickListener(this);
+
+
     }
 
     private void initDate() {
@@ -182,9 +200,32 @@ public class PersonFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.rl_person:
                 enterPerson();
+                break;
+            case R.id.rl_mypublish:
+                enterMyPublish(usernumber);
+                //进入我发布的界面
+
+                break;
+            case R.id.rl_setting_sale:
+                //我卖出的东西
+                break;
+            case R.id.rl_setting_mybuy:
+                //我买到的东西
+                break;
+            case R.id.rl_setting_like:
+                //我点赞的东西
+                break;
             default:
                 break;
         }
+    }
+
+
+    //进入我的发布的界面
+    private void enterMyPublish(String usernumber) {
+        Intent intent = new Intent(getActivity(),MyPublishActivity.class);
+        intent.putExtra("username",usernumber);
+        startActivity(intent);
     }
 
     //进入设置界面

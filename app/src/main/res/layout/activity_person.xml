@@ -29,7 +29,7 @@
             android:orientation="vertical">
             <!--我的头像-->
             <RelativeLayout
-                android:id="@+id/rl_account_usericon"
+                android:id="@+id/rl_mypublish"
                 android:layout_width="match_parent"
                 android:layout_height="50dp">
 
