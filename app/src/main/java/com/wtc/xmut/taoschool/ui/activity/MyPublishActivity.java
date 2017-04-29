@@ -8,8 +8,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.wtc.xmut.taoschool.R;
+import com.wtc.xmut.taoschool.utils.XutilsUtils;
+
+import butterknife.internal.Utils;
 
 public class MyPublishActivity extends AppCompatActivity {
+
+    private String username;
+    private XutilsUtils xutilsUtils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,8 +23,20 @@ public class MyPublishActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_publish);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        xutilsUtils = XutilsUtils.getInstance();
+        username = (String)getIntent().getExtras().get("username");
+        init();
+    }
+    private void init(){
+        initView();
+        initData();
+    }
 
+    private void initData() {
 
     }
 
+
+    private void initView() {
+    }
 }

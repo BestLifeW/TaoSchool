@@ -234,6 +234,7 @@ public class PersonFragment extends Fragment implements View.OnClickListener {
         Intent intent = new Intent(getActivity(),MyLikeActivity.class);
         intent.putExtra("username",usernumber);
         startActivity(intent);
+        enterAnim();
     }
 
     /**
@@ -244,6 +245,7 @@ public class PersonFragment extends Fragment implements View.OnClickListener {
         Intent intent = new Intent(getActivity(),MyBuyActivity.class);
         intent.putExtra("username",usernumber);
         startActivity(intent);
+        enterAnim();
     }
 
     /**
@@ -254,6 +256,7 @@ public class PersonFragment extends Fragment implements View.OnClickListener {
         Intent intent = new Intent(getActivity(),MySallerActivity.class);
         intent.putExtra("username",usernumber);
         startActivity(intent);
+        enterAnim();
     }
 
 
@@ -262,12 +265,14 @@ public class PersonFragment extends Fragment implements View.OnClickListener {
         Intent intent = new Intent(getActivity(),MyPublishActivity.class);
         intent.putExtra("username",usernumber);
         startActivity(intent);
+        enterAnim();
     }
 
     //进入设置界面
     private void enterSetting() {
         Intent intent = new Intent(mContext,SettingActivity.class);
         startActivity(intent);
+        enterAnim();
     }
     private void enterPerson(){
         if (usernumber.equals("")){
@@ -276,6 +281,7 @@ public class PersonFragment extends Fragment implements View.OnClickListener {
         }
         Intent intent = new Intent(mContext,PersonActivity.class);
         startActivity(intent);
+        enterAnim();
     }
 
     @Override
@@ -288,5 +294,8 @@ public class PersonFragment extends Fragment implements View.OnClickListener {
             getActivity().finish();
         }
     }
-
+    private void enterAnim(){
+        getActivity().overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+        getActivity().overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+    }
 }
