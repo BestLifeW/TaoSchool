@@ -2,7 +2,6 @@ package com.wtc.xmut.taoschool.ui.fragment.homeFragment_src;
 
 
 import android.app.Fragment;
-import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,7 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -30,7 +28,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import es.dmoral.toasty.Toasty;
 
 
 public class PublishFragment extends Fragment {
@@ -64,7 +61,6 @@ public class PublishFragment extends Fragment {
         ButterKnife.bind(this, view);
         mSwipeRefreshWidget = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_widget);
         utils = XutilsUtils.getInstance();
-
         try {
             init();
         } catch (IOException e) {
@@ -133,7 +129,7 @@ public class PublishFragment extends Fragment {
                         adapter = new PublishAdapter(getActivity(),
                                 R.layout.item_main, shopList);
                         mSwipeRefreshWidget.setRefreshing(false);
-                        Toasty.custom(getActivity(), "刷新成功", null, Color.WHITE, Color.alpha(200), Toast.LENGTH_SHORT, true, true).show();
+                        //Toasty.custom(getActivity(), "刷新成功", null, Color.WHITE, Color.alpha(200), Toast.LENGTH_SHORT, true, true).show();
                     }
                 }, 3000);
             }
@@ -161,5 +157,14 @@ public class PublishFragment extends Fragment {
                 outRect.top = space;
             }
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getConnectData();
+        adapter = new PublishAdapter(getActivity(),
+                R.layout.item_main, shopList);
+
     }
 }

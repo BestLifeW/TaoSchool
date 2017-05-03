@@ -17,16 +17,13 @@ import android.widget.TextView;
 import com.dou361.dialogui.DialogUIUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.tapadoo.alerter.Alerter;
 import com.wtc.xmut.taoschool.R;
-import com.wtc.xmut.taoschool.adpater.OrdersAdapter;
 import com.wtc.xmut.taoschool.adpater.OrdersNewAdapter;
 import com.wtc.xmut.taoschool.api.ServerApi;
 import com.wtc.xmut.taoschool.domain.OrdersExt;
 import com.wtc.xmut.taoschool.utils.PrefUtils;
 import com.wtc.xmut.taoschool.utils.SnackbarUtils;
 import com.wtc.xmut.taoschool.utils.XutilsUtils;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,7 +72,7 @@ public class MessageFragment extends Fragment {
      * 初始化数据
      */
     private void initData() {
-        //先获取本人发送的所有商品id 返回集合类型
+
         utils.get(ServerApi.GETORDERBYUSERNAME + username, null, new XutilsUtils.XCallBack() {
             @Override
             public void onResponse(String result) {
@@ -99,14 +96,10 @@ public class MessageFragment extends Fragment {
         shoplist = gson.fromJson(result, new TypeToken<ArrayList<OrdersExt>>() {
         }.getType());
         Log.i(TAG, "parseResult: "+shoplist.size());
-        /*Alerter.create(getActivity())
-                .setTitle("提示")
-                .setText("有新消息啦～")
-                .show();*/
+
        if (shoplist==null||shoplist.size()==0){
             isMessage.setVisibility(View.VISIBLE);
         }
-      /*  adapter = new OrdersAdapter(getActivity(), R.layout.item_message, shoplist);*/
       adapter = new OrdersNewAdapter(getActivity(),shoplist);
 
         dialog.dismiss();
@@ -137,5 +130,12 @@ public class MessageFragment extends Fragment {
             //设定底部边距为1px
             outRect.set(0, 0, 0, 1);
         }
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initData();
     }
 }

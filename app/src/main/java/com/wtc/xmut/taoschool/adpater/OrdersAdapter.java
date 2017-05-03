@@ -1,10 +1,7 @@
 package com.wtc.xmut.taoschool.adpater;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,7 +14,6 @@ import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.wtc.xmut.taoschool.R;
 import com.wtc.xmut.taoschool.api.ServerApi;
 import com.wtc.xmut.taoschool.domain.OrdersExt;
-import com.wtc.xmut.taoschool.ui.activity.ShopDetailActivity;
 import com.wtc.xmut.taoschool.utils.XutilsUtils;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
@@ -25,7 +21,6 @@ import com.zhy.adapter.recyclerview.base.ViewHolder;
 import java.util.HashMap;
 import java.util.List;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import es.dmoral.toasty.Toasty;
 
 /**
@@ -136,7 +131,6 @@ public class OrdersAdapter extends CommonAdapter<OrdersExt> {
                 })
                 .show();
     }
-
     @Override
     public int getItemViewType(int position) {
         return super.getItemViewType(position);

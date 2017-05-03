@@ -339,10 +339,11 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void isOrder(String shopid) {
-        utils.get(ServerApi.ISORDER + shopid, null, new XutilsUtils.XCallBack() {
+        utils.get(ServerApi.GETORDERBYSHOPID + shopid, null, new XutilsUtils.XCallBack() {
             @Override
             public void onResponse(String result) {
-                if (result.contains("已经拍下")) {
+                Log.i(TAG, "onResponse: "+result);
+                if (!(result.equalsIgnoreCase("null")||result.contains("卖家拒绝"))) {  //result ==null 说明没有订单   result 包含 卖家拒绝  可以点
                     mBtn_buy.setBackgroundColor(Color.GRAY);
                     mBtn_buy.setText("已有预定");
                     mBtn_buy.setOnClickListener(null);

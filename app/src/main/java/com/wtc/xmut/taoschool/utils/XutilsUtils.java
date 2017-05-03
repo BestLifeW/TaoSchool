@@ -3,7 +3,6 @@ package com.wtc.xmut.taoschool.utils;
 
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.widget.Toast;
 
 import org.xutils.common.Callback;
@@ -15,9 +14,8 @@ import java.io.File;
 import java.util.Map;
 
 /**
- * Created by admin on 2017/3/31.
+ * Created by 王田朝 on 2017/3/31.
  */
-
 public class XutilsUtils {
 
     private volatile static XutilsUtils instance;
@@ -27,12 +25,6 @@ public class XutilsUtils {
     private XutilsUtils() {
         handler = new Handler(Looper.getMainLooper());
     }
-
-    /**
-     * 单例模式
-     *
-     * @return
-     */
     public static XutilsUtils getInstance() {
         if (instance == null) {
             synchronized (XutilsUtils.class) {
@@ -43,7 +35,6 @@ public class XutilsUtils {
         }
         return instance;
     }
-
     /**
      * 异步get请求
      *
@@ -148,7 +139,6 @@ public class XutilsUtils {
             public boolean onCache(String result) {
                 if (ifCache && null != result){
                     this.result = result;
-                Log.i(TAG, "onCache:"+"走缓存");
                 }
                 // true: 信任缓存数据, 不在发起网络请求; false不信任缓存数据.
                 return ifCache;

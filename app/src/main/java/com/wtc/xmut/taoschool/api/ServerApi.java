@@ -7,13 +7,13 @@ package com.wtc.xmut.taoschool.api;
 
 public class ServerApi {
 
-    //private static final String Host = "http://123.56.223.17:8080"; //服务器地址
+    // private static final String Host = "http://123.56.223.17:8080"; //服务器地址
     private static final String Host = "http://10.0.2.2:8080"; //手机测试地址
-    //private static final String Host = "http://192.168.1.112:8080";
+    // private static final String Host = "http://192.168.1.101:8080";
     //private static final String Host = "http://127.0.0.1:8080";  //Junit测试专用地址
     private static final String SERVERHOST = Host + "/TaoSchool";
 
-    //用户api
+    //-----用户api
     private static final String USERHOST = SERVERHOST + "/User";/**/
     //用户注册
     public static final String USERADD = USERHOST + "/addUser.do";
@@ -31,7 +31,7 @@ public class ServerApi {
     public static final String SHOWPIC = Host;
 
 
-    //商品操作
+    //-----商品操作
     public static final String SHOPHOST = SERVERHOST + "/Shop";
 
     //商品的添加
@@ -55,8 +55,10 @@ public class ServerApi {
     //判断网络连接
     public static final String ISCONNECT = SERVERHOST + "/getConnect/getNet.do";
 
+    public static final  String DELSHOPBYID = SHOPHOST + "/deleteShopById/"; //1
 
-    //点赞的API
+
+    //-----点赞的API
     public static final String USERLIKE = SERVERHOST + "/UserLike";
 
 
@@ -73,7 +75,7 @@ public class ServerApi {
 
 
 
-    //评论的API
+    //-----评论的API
       static  final  String COMMENT = SERVERHOST + "/Comment";
 
     //评论的方法 通过 shopId 获取
@@ -84,7 +86,7 @@ public class ServerApi {
 
 
 
-    //订单的API
+    //-----订单的API
     static final String ORDER =SERVERHOST +"/Order";
 
     //提交订单的
@@ -99,4 +101,11 @@ public class ServerApi {
 
     //根据订单ID修改订单信息
     public static  final  String UPDATEORDERBYID = ORDER + "/updateOrderById.do";//修改信息
+
+    //根据商品id获取订单信息
+    public  static final  String GETORDERBYSHOPID = ORDER + "/getOrdersByShopid/"; //9
+
+    //根据id删除订单
+
+    public static final  String DELORDERBYID = ORDER + "/delOrderById/";//1
 }

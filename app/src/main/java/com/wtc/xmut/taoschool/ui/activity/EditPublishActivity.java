@@ -18,7 +18,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dou361.dialogui.DialogUIUtils;
 import com.dou361.dialogui.bean.TieBean;
@@ -30,7 +29,6 @@ import com.wtc.xmut.taoschool.utils.FileUtil;
 import com.wtc.xmut.taoschool.utils.PrefUtils;
 import com.wtc.xmut.taoschool.utils.SnackbarUtils;
 import com.wtc.xmut.taoschool.utils.XutilsUtils;
-import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -46,14 +44,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static org.xutils.common.util.DensityUtil.getScreenHeight;
-import static org.xutils.common.util.DensityUtil.getScreenWidth;
-
-public class PublishActivity extends AppCompatActivity implements View.OnClickListener {
+public class EditPublishActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "PublishActivity";
-    private static final int CROP_FROM_CAMERA = 5; //拍照裁剪
-    private static final int CROP_FROM_PHOTO = 6;
+
     @BindView(R.id.et_title)
     EditText et_title;
 
@@ -74,7 +68,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
 
     @BindView(R.id.iv_addpic)
     ImageView iv_addpic;
-    private String fileName;
+
     private String newmoney;
     private String oldmoney;
     private String srcPath;
@@ -84,7 +78,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
     private XutilsUtils xutilsUtils;
     private String realFilePath;
     private String username;
-    private static final int SCALE = 5;//照片缩小比例
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -168,9 +162,9 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                 xutilsUtils.upLoadFile(ServerApi.SHOPADD, Shop, picmap, new XutilsUtils.XCallBack() {
                     @Override
                     public void onResponse(String result) {
-                        Log.i(TAG, "onResponse: ");
+                        Log.i(TAG, "onResponse: " + "图片城固");
                         show.dismiss();
-                        PublishActivity.this.finish();
+                        EditPublishActivity.this.finish();
                     }
 
                     @Override
@@ -207,20 +201,13 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void getPicForCamera() {
-
+        //构建隐式Intent
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        //判断存储卡是否可以用
-        if (hasSdcard()) {
-            fileName = Environment.getExternalStorageDirectory().getPath() + "/DCIM/Camera/" + System.currentTimeMillis() + ".jpg";
-            File file = new File(fileName);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
-        }
+        //调用系统相机
         startActivityForResult(intent, CAMERA_CODE);
 
     }
-    private boolean hasSdcard() {
-        return android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
-    }
+
     private void getPicForSelect() {
         //构建一个内容选择的Intent
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -240,21 +227,24 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case CAMERA_CODE:
-                //保存裁剪后的图片,这里用到了一个裁剪的第三方库ucrop
-                if (hasSdcard()) {
-                    File file = new File(fileName);
-                    if (file.exists()) {
-                        //ucrop裁剪
-                        crop(Uri.fromFile(file), CROP_FROM_CAMERA);
-                        //系统裁剪
-//                            crop2(Uri.fromFile(file), 400, 400);
-                    }
+                //用户点击了取消
+                if (data == null) {
+                    return;
                 } else {
-
-                    Toast.makeText(this, "未找到存储卡,无法存储照片", Toast.LENGTH_SHORT).show();
+                    Bundle extras = data.getExtras();
+                    if (extras != null) {
+                        //获得拍的照片
+                        Bitmap bm = extras.getParcelable("data");
+                        //将Bitmap转化为uri
+                        Uri uri = saveBitmap(bm, "temp");
+                        //启动图像裁剪
+                        iv_addpic.setImageURI(uri);
+                        startImageZoom(uri);
+                        realFilePath = FileUtil.getRealFilePath(getApplication(), uri);
+                        Log.i(TAG, "拍照: " + realFilePath);
+                    }
                 }
                 break;
-
             case GALLERY_CODE:
                 if (data == null) {
                     return;
@@ -266,6 +256,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                     //返回的Uri为content类型的Uri,不能进行复制等操作,需要转换为文件Uri
                     uri = convertUri(uri);
                     iv_addpic.setImageURI(uri);
+                    startImageZoom(uri);
                     realFilePath = FileUtil.getRealFilePath(getApplication(), uri);
                     Log.i(TAG, "本地: " + realFilePath);
                 }
@@ -281,22 +272,6 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                         iv_addpic.setImageBitmap(bm);
                     }
                 }
-                break;
-            case CROP_FROM_CAMERA:   //拍照裁剪
-            case CROP_FROM_PHOTO:    //相册裁剪
-                //裁剪之后显示照片
-
-                Uri uri = UCrop.getOutput(data);
-//                    Uri uri = Uri.fromFile(new File(fileName));
-                Bitmap bitmap = BitmapFactory.decodeFile(uri.getPath());
-                iv_addpic.setImageBitmap(bitmap);
-                if (requestCode == CROP_FROM_CAMERA) {  //如果是拍照,则删除原图，只保存裁剪后的图片
-                    File oldFile = new File(fileName);
-                    if (oldFile.exists()) {
-                        oldFile.delete();   //删除原图
-                    }
-                }
-                realFilePath = FileUtil.getRealFilePath(getApplication(), uri);
                 break;
             default:
                 break;
@@ -341,6 +316,28 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
+    /**
+     * 通过Uri传递图像信息以供裁剪
+     *
+     * @param uri
+     */
+    private void startImageZoom(Uri uri) {
+        //构建隐式Intent来启动裁剪程序
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        //设置数据uri和类型为图片类型
+        intent.setDataAndType(uri, "image/*");
+        //显示View为可裁剪的
+        intent.putExtra("crop", true);
+        //裁剪的宽高的比例为16:9
+        intent.putExtra("aspectX", 16);
+        intent.putExtra("aspectY", 9);
+        //输出图片的宽高均为150
+        intent.putExtra("outputX", 300);
+        intent.putExtra("outputY", 200);
+        //裁剪之后的数据是通过Intent返回
+        intent.putExtra("return-data", true);
+        startActivityForResult(intent, CROP_CODE);
+    }
 
     /**
      * 将content类型的Uri转化为文件类型的Uri
@@ -366,54 +363,4 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
             return null;
         }
     }
-
-    private void crop(Uri uri, int requestCode) {
-
-        //计算压缩后图片的宽和高
-
-        int scale = getinSamlpeSize(uri);
-
-        UCrop.Options options = new UCrop.Options();
-        options.setFreeStyleCropEnabled(true);  //设置裁剪框可控制
-        options.setHideBottomControls(true);  //隐藏裁剪界面底部View
-//        options.setShowCropFrame(true);
-//        options.setCropGridRowCount(0);      //设置网格数量
-        options.setToolbarTitle("图片裁剪");
-        options.setStatusBarColor(getResources().getColor(R.color.colorPrimary));   //状态栏颜色
-        options.setToolbarColor(getResources().getColor(R.color.colorPrimary));  //标题栏背景色
-//        options.setToolbarWidgetColor(Color.BLACK);
-        options.withAspectRatio(16, 9);   //裁剪框初始化比例
-        options.withMaxResultSize(getScreenWidth() / scale, getScreenHeight() / scale); //裁剪后图片的最大分辨率
-//        options.setCircleDimmedLayer(false);
-        UCrop.of(uri, Uri.fromFile(new File(Environment.getExternalStorageDirectory(), System.currentTimeMillis() + ".jpg")))//裁剪后图片存储的路径
-                .withOptions(options)
-                .start(this, requestCode);
-    }
-    //获取压缩比例
-    private int getinSamlpeSize(Uri uri) {
-
-        BitmapFactory.Options newOpts = new BitmapFactory.Options();
-        //开始读入图片，此时把options.inJustDecodeBounds 设回true了
-        newOpts.inJustDecodeBounds = true;
-//        Bitmap bitmap = BitmapFactory.decodeFile(uri.getPath(), newOpts);//此时返回bm为空
-        newOpts.inJustDecodeBounds = false;
-        int w = newOpts.outWidth;
-        int h = newOpts.outHeight;
-        //现在主流手机比较多是800*480分辨率，所以高和宽我们设置为
-        float hh = 800f;//这里设置高度为800f
-        float ww = 480f;//这里设置宽度为480f
-        //缩放比。由于是固定比例缩放，只用高或者宽其中一个数据进行计算即可
-        int inSampleSize = 1;//be=1表示不缩放
-        if (w > h && w > ww) {//如果宽度大的话根据宽度固定大小缩放
-            inSampleSize = (int) (newOpts.outWidth / ww);
-        } else if (w < h && h > hh) {//如果高度高的话根据宽度固定大小缩放
-            inSampleSize = (int) (newOpts.outHeight / hh);
-        }
-
-        if (inSampleSize <= 0)
-            inSampleSize = 1;
-        return inSampleSize;
-    }
-
-
 }

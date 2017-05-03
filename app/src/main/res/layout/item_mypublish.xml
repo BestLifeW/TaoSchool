@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:background="@color/gray_bg"
     xmlns:fresco="http://schemas.android.com/tools"
     app:cardCornerRadius="2dp"
     android:stateListAnimator="@animator/touch_raise"
@@ -64,6 +65,7 @@
             android:src="@drawable/loadding" />
 
         <TextView
+
             android:id="@+id/tv_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -86,7 +88,7 @@
             android:layout_marginStart="10dp"
             android:layout_toEndOf="@+id/sld_usericon"
             android:text="加载中..."
-            android:textColor="@color/bb_darkBackgroundColor" />
+            android:textColor="@color/btn_alert" />
 
         <TextView
             android:id="@+id/tv_description"
@@ -105,9 +107,10 @@
             android:id="@+id/tv_fromwhere"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/sld_usericon"
-            android:layout_alignStart="@+id/tv_user_name"
-            android:text="加载中..." />
+            android:text="加载中..."
+            android:textColor="@color/bb_tabletRightBorderDark"
+            android:layout_above="@+id/sld_shoppic"
+            android:layout_alignStart="@+id/tv_user_name" />
         <LinearLayout
             android:weightSum="2"
             android:gravity="center_vertical"
@@ -118,18 +121,9 @@
             android:layout_marginStart="11dp"
             android:layout_alignParentEnd="true">
 
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignTop="@+id/iv_comment"
-                android:layout_weight="0.1"
-                android:text="修改"
-                android:textSize="12sp" />
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/tv_del"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBaseline="@+id/textView6"
@@ -138,6 +132,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_weight="1.5"
                 android:text="删除"
+                android:textColor="@color/bb_inActiveBottomBarItemColor"
                 android:textSize="12sp" />
 
         </LinearLayout>

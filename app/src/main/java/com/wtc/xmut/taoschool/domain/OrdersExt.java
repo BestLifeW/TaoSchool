@@ -19,34 +19,11 @@ public class OrdersExt {
  from shop,orders,user
  where shop.id = orders.shopid and shop.username = user.username
 */	private int shopid;
-    public String getCollege() {
-        return college;
-    }
-    public void setCollege(String college) {
-        this.college = college;
-    }
-    public String getDormitory() {
-        return dormitory;
-    }
-    public void setDormitory(String dormitory) {
-        this.dormitory = dormitory;
-    }
-    public String getFloor() {
-        return floor;
-    }
-    public void setFloor(String floor) {
-        this.floor = floor;
-    }
-    public String getTelephone() {
-        return telephone;
-    }
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
-    }
     private String price;
     private String shopstate;
     private String username;
     private int orderid;
+    private String shopname;
     private String buyerusername;
     private String sellerusername;
     private String ordersstate;
@@ -64,7 +41,6 @@ public class OrdersExt {
     public void setName(String name) {
         this.name = name;
     }
-
     public String getTime() {
         return time;
     }
@@ -131,26 +107,34 @@ public class OrdersExt {
     public void setOrdersstate(String ordersstate) {
         this.ordersstate = ordersstate;
     }
-
-    @Override
-    public String toString() {
-        return "OrdersExt{" +
-                "shopid=" + shopid +
-                ", price='" + price + '\'' +
-                ", shopstate='" + shopstate + '\'' +
-                ", username='" + username + '\'' +
-                ", orderid=" + orderid +
-                ", buyerusername='" + buyerusername + '\'' +
-                ", sellerusername='" + sellerusername + '\'' +
-                ", ordersstate='" + ordersstate + '\'' +
-                ", iconpath='" + iconpath + '\'' +
-                ", picture='" + picture + '\'' +
-                ", time='" + time + '\'' +
-                ", college='" + college + '\'' +
-                ", dormitory='" + dormitory + '\'' +
-                ", floor='" + floor + '\'' +
-                ", telephone='" + telephone + '\'' +
-                ", name='" + name + '\'' +
-                '}';
+    public String getShopname() {
+        return shopname;
+    }
+    public void setShopname(String shopname) {
+        this.shopname = shopname;
+    }
+    public String getCollege() {
+        return college;
+    }
+    public void setCollege(String college) {
+        this.college = college;
+    }
+    public String getDormitory() {
+        return dormitory;
+    }
+    public void setDormitory(String dormitory) {
+        this.dormitory = dormitory;
+    }
+    public String getFloor() {
+        return floor;
+    }
+    public void setFloor(String floor) {
+        this.floor = floor;
+    }
+    public String getTelephone() {
+        return telephone;
+    }
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
     }
 }

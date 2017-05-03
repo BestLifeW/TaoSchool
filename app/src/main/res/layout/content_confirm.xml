@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.wtc.xmut.taoschool.ui.activity.ConfirmActivity"
+    tools:showIn="@layout/activity_confirm">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:weightSum="1">
+
+            <LinearLayout
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/list_bg"
+                android:orientation="vertical"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="8dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:padding="8dp"
+                    android:text="联系人:"
+                    android:textColor="#3c3c3c" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_bg" />
+
+                <TextView
+                    android:id="@+id/tv_buyername"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="8dp"
+                    android:paddingTop="4dp"
+                    android:text="王田朝" />
+
+                <TextView
+                    android:id="@+id/tv_buyerphone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="4dp"
+                    android:paddingLeft="8dp"
+                    android:text="15606929310" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_bg" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:padding="8dp"
+                    android:text="见面交易地址"
+                    android:textColor="#3c3c3c" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_bg" />
+
+                <TextView
+                    android:id="@+id/tv_buycollege"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="8dp"
+                    android:paddingTop="4dp"
+                    android:text="厦门理工学院" />
+
+                <TextView
+                    android:id="@+id/tv_buysushe"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="4dp"
+                    android:paddingLeft="8dp"
+                    android:text="D栋宿舍 128室" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_bg" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:padding="8dp"
+                    android:text="见面时间:"
+                    android:textColor="#3c3c3c" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_bg" />
+
+                <TextView
+                    android:id="@+id/tv_buytime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:padding="8dp"
+                    android:text="5/17/23:12" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_weight="0.94"
+                android:background="@drawable/list_bg"
+                android:orientation="vertical"
+                android:weightSum="1"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="8dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:padding="8dp"
+                    android:text="订单详情"
+                    android:textColor="#3c3c3c" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_bg" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.92">
+
+                    <ImageView
+
+                        android:id="@+id/im_shopimg"
+                        android:layout_width="100dp"
+                        android:layout_height="80dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginTop="4dp"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="8dp"
+                        android:paddingTop="4dp"
+                        android:src="@drawable/ic_logo"
+                        android:text="王田朝" />
+
+                    <TextView
+                        android:id="@+id/tv_shopname"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/im_shopimg"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="13dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:layout_toEndOf="@+id/im_shopimg"
+                        android:text="正在加载中..."
+                        android:textColor="#3c3c3c"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/textView12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@+id/tv_shopname"
+                        android:layout_centerVertical="true"
+                        android:text="价格：" />
+
+                    <TextView
+                        android:id="@+id/tv_shopmoney"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/textView12"
+                        android:text="￥2600" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_bg" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:padding="8dp"
+                    android:text="交易方式"
+                    android:textColor="#3c3c3c" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_bg" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="8dp"
+                    android:paddingTop="4dp"
+                    android:text="见面交易" />
+
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.dd.CircularProgressButton
+                android:id="@+id/btn_refuse"
+                android:layout_width="0dp"
+                android:layout_height="38dp"
+                android:layout_weight="0.5"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                app:cpb_selectorIdle="@drawable/idle_error_state"
+                app:cpb_textComplete="确认"
+                app:cpb_textError=""
+                app:cpb_textIdle="拒绝请求" />
+
+            <com.dd.CircularProgressButton
+                android:id="@+id/btn_agree"
+                android:layout_width="0dp"
+                android:layout_height="38dp"
+                android:layout_marginLeft="8dp"
+                android:layout_weight="0.5"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                app:cpb_selectorIdle="@drawable/idle_select_state"
+                app:cpb_textComplete="确认成功"
+                app:cpb_textError="确认失败"
+                app:cpb_textIdle="同意请求" />
+        </LinearLayout>
+    </RelativeLayout>
+</android.support.constraint.ConstraintLayout>
