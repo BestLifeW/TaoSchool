@@ -64,4 +64,7 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     //按钮
     compile 'com.github.dmytrodanylyk.circular-progress-button:library:1.1.3'
+
+    //订单提示部分阶段
+    compile 'com.xyz.step:step:1.0.4'
 }
