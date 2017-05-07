@@ -29,17 +29,18 @@
             android:orientation="vertical">
             <!--我的头像-->
             <RelativeLayout
-                android:id="@+id/rl_mypublish"
+                android:id="@+id/rl_chooseusericon"
                 android:layout_width="match_parent"
                 android:layout_height="50dp">
 
-                <ImageView
+                <com.wtc.xmut.taoschool.view.CircleImageView
                     android:id="@+id/iv_user_icon"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
-                    android:src="@drawable/setting_icon_publish" />
+                    android:src="@drawable/usericon" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -78,8 +79,6 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
-                    android:layout_toEndOf="@+id/iv_user_icon"
-                    android:layout_toRightOf="@+id/iv_user_icon"
                     android:text="修改密码"
                     android:textColor="#3c3c3c"
                     android:textSize="16sp" />

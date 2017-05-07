@@ -102,4 +102,25 @@
     </string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_category_detail">CategoryDetailActivity</string>
+
+    <string-array name="college">
+        <item>软件学院</item>
+        <item>机械工程学院</item>
+        <item>建筑工程学院</item>
+        <item>电子电气学院</item>
+        <item>计科学院</item>
+        <item>环境工程学院</item>
+        <item>数理学院</item>
+        <item>商学院</item>
+        <item>管理科学学院</item>
+        <item>外语学院</item>
+        <item>文化传播学院</item>
+        <item>设计艺术学院</item>
+        <item>人文科学学院</item>
+        <item>空间信息科学学院</item>
+        <item>继续教育学院</item>
+        <item>公共体育学院</item>
+        <item>其他学院</item>
+    </string-array>
+
 </resources>

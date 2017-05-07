@@ -69,7 +69,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void Login() {
-        //progressBar2.setVisibility(View.VISIBLE);
+
+
+
+        progressBar2.setVisibility(View.VISIBLE);
         usernumber = mEt_usernumber.getText().toString().trim();
         password = mEt_userpassword.getText().toString().trim();
         if (TextUtils.isEmpty(usernumber) || TextUtils.isEmpty(password)) {
@@ -107,6 +110,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         handler.sendMessage(msg);
                     }
                 } else {
+                    progressBar2.setVisibility(View.INVISIBLE);
                     data.putString("state", "服务器连接失败");
                     msg.setData(data);
                     handler.sendMessage(msg);
@@ -123,7 +127,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             String val = data.getString("state");
             //ToastUtils.showToast(getApplicationContext(),val);
             Snackbar.make(getCurrentFocus(), val, Snackbar.LENGTH_LONG).show();
-           // progressBar2.setVisibility(View.INVISIBLE);
+            progressBar2.setVisibility(View.INVISIBLE);
         }
     };
 

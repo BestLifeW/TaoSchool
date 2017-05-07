@@ -169,8 +169,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
         String title = et_title.getText().toString().trim();
         String description = et_summary.getText().toString().trim();
         String classify = tv_classify.getText().toString().trim();
-        //if (!(title.trim().equals("") || description.trim().equals("") || username.trim().equals("") || newmoney.trim().equals("") || oldmoney.trim().equals(""))) {
-        if (true) {
+        if (!(title.trim().equals("") || description.trim().equals("") || username.trim().equals("") || newmoney.trim().equals("") || oldmoney.trim().equals(""))) {
             Shop.put("shopname", title);
             Shop.put("description", description);
             Shop.put("username", username);
@@ -257,7 +256,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
         //构建一个内容选择的Intent
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         //设置选择类型为图片类型
-        intent.setType("image*//*");
+        intent.setType("image/*");
         //打开图片选择
         startActivityForResult(intent, GALLERY_CODE);
 
@@ -297,6 +296,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                     uri = data.getData();
                     //返回的Uri为content类型的Uri,不能进行复制等操作,需要转换为文件Uri
                     uri = convertUri(uri);
+                    crop(uri, CROP_FROM_PHOTO);
                     iv_addpic.setImageURI(uri);
                     realFilePath = FileUtil.getRealFilePath(getApplication(), uri);
                     Log.i(TAG, "本地: " + realFilePath);

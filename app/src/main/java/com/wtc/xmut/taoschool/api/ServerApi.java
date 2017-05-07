@@ -20,9 +20,9 @@ public class ServerApi {
     //用户登录
     public static final String USERLOGIN = USERHOST + "/login.do";
     //根据姓名查找用户
-    public static final String FINDUSERBYNAME = USERHOST + "/getUserByName";  //使用方法 /getUserByName/lovec
+    public static final String FINDUSERBYNAME = USERHOST + "/getUserByName/";  //使用方法 /getUserByName/lovec
     //根据用户ID查找用户
-    public static final String FINDUSERBYID = USERHOST + "/getUserById";
+    public static final String FINDUSERBYID = USERHOST + "/getUserById/";
     //更新用户信息
     public static final String UPDATEUSER = USERHOST + "/updateUser.do";
     //用户上传头像

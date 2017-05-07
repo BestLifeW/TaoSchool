@@ -3,29 +3,24 @@ package com.wtc.xmut.taoschool.ui.fragment;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Context;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.dou361.dialogui.DialogUIUtils;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.wtc.xmut.taoschool.R;
+import com.wtc.xmut.taoschool.adpater.MyViewPagerAdapter;
 import com.wtc.xmut.taoschool.adpater.OrdersNewAdapter;
-import com.wtc.xmut.taoschool.api.ServerApi;
 import com.wtc.xmut.taoschool.domain.OrdersExt;
-import com.wtc.xmut.taoschool.utils.PrefUtils;
-import com.wtc.xmut.taoschool.utils.SnackbarUtils;
+import com.wtc.xmut.taoschool.ui.fragment.messageFragment_src.messageBuyer;
+import com.wtc.xmut.taoschool.ui.fragment.messageFragment_src.messageSaller;
 import com.wtc.xmut.taoschool.utils.XutilsUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -45,6 +40,8 @@ public class MessageFragment extends Fragment {
     private OrdersNewAdapter adapter;
     private Dialog dialog;
     private TextView isMessage;
+    private ViewPager mViewPager;
+    private TabLayout mTabLayout;
 
     public MessageFragment() {
         this.mContext = getActivity();
@@ -54,88 +51,15 @@ public class MessageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_message,null);
-        username = PrefUtils.getString(getActivity(), PrefUtils.USER_NUMBER, "");
-        dialog = DialogUIUtils.showMdLoading(getActivity(),"刷新中",true,true,true,true).show();
-        utils = XutilsUtils.getInstance();
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.smrlview);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecyclerView.addItemDecoration(new MyItemDecoration());
-        init();
+        mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
+        final MyViewPagerAdapter viewPagerAdapter = new MyViewPagerAdapter(getChildFragmentManager());
+        mTabLayout = (TabLayout) view.findViewById(R.id.tabLayout);
+        mTabLayout.addTab(mTabLayout.newTab().setText("卖家消息"));//给TabLayout添加Tab
+        mTabLayout.addTab(mTabLayout.newTab().setText("求购"));//给TabLayout添加Tab
+        viewPagerAdapter.addFragment(messageBuyer.newInstance(), "买到的");
+        viewPagerAdapter.addFragment(messageSaller.newInstance(), "卖出的");
+        mViewPager.setAdapter(viewPagerAdapter);//设置适配器
+        mTabLayout.setupWithViewPager(mViewPager);
         return view;
-    }
-    private void init(){
-        initData();
-        initView();
-    }
-
-    /**
-     * 初始化数据
-     */
-    private void initData() {
-
-        utils.get(ServerApi.GETORDERBYUSERNAME + username, null, new XutilsUtils.XCallBack() {
-            @Override
-            public void onResponse(String result) {
-                Log.i(TAG, "parseResult: "+result);
-                parseResult(result);
-            }
-            @Override
-            public void onResponseFail() {
-                SnackbarUtils.ShowSnackbar(getView(),"连接失败");
-            }
-        });
-
-    }
-
-    /**
-     * 解析返回的数据
-     * @param result
-     */
-    private void parseResult(String result) {
-        Gson gson = new Gson();
-        shoplist = gson.fromJson(result, new TypeToken<ArrayList<OrdersExt>>() {
-        }.getType());
-        Log.i(TAG, "parseResult: "+shoplist.size());
-
-       if (shoplist==null||shoplist.size()==0){
-            isMessage.setVisibility(View.VISIBLE);
-        }
-      adapter = new OrdersNewAdapter(getActivity(),shoplist);
-
-        dialog.dismiss();
-
-        mRecyclerView.setAdapter(adapter);
-
-    }
-
-    /**
-     * 初始化View
-     */
-    private void initView() {
-        isMessage = (TextView) view.findViewById(R.id.isMessage);
-
-    }
-
-    public static MessageFragment newInstance() {
-        Bundle args = new Bundle();
-        MessageFragment fragment = new MessageFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    class MyItemDecoration extends RecyclerView.ItemDecoration {
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-            //设定底部边距为1px
-            outRect.set(0, 0, 0, 1);
-        }
-    }
-
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        initData();
     }
 }

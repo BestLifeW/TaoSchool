@@ -37,12 +37,14 @@ public class PublishAdapter extends CommonAdapter<ShopExt> {
     protected void convert(ViewHolder holder, final ShopExt shopExt, int position) {
         Uri shopuri = Uri.parse(ServerApi.SHOWPIC + shopExt.getPicture());
         Uri UserIconUri = Uri.parse(ServerApi.SHOWPIC + shopExt.getIconpath());
+
         ImageView draweeView = holder.getView(R.id.sld_shoppic);
         ImageView user_icon = holder.getView(R.id.sld_usericon);
+        Glide.with(mcontext).load(UserIconUri).placeholder(R.drawable.usericon).into(user_icon);
+
         CardView view = holder.getView(R.id.card_view);
         view.setBackgroundColor(Color.WHITE);
         Glide.with(mcontext).load(shopuri).placeholder(R.drawable.loadding).into(draweeView);
-        Glide.with(mcontext).load(UserIconUri).placeholder(R.drawable.usericon).into(user_icon);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,7 +55,7 @@ public class PublishAdapter extends CommonAdapter<ShopExt> {
             }
         });
         holder.setText(R.id.tv_money, "￥" + shopExt.getPrice());
-        holder.setText(R.id.tv_description, shopExt.getDescription());
+        holder.setText(R.id.tv_description, shopExt.getShopname());
         holder.setText(R.id.tv_user_name, shopExt.getName());
         holder.setText(R.id.tv_fromwhere, "來自" + shopExt.getCollege());
         holder.setText(R.id.tv_shoptime, shopExt.getShoptime());

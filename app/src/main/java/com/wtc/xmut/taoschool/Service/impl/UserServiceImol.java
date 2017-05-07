@@ -78,7 +78,7 @@ public class UserServiceImol implements UserService {
     public User findUserById(Integer id) throws IOException {
         User user = null;
         Request request = new Request.Builder()
-                .url(ServerApi.FINDUSERBYID + "/" + id)
+                .url(ServerApi.FINDUSERBYID + id)
                 .build();
         Response response = null;
         response = client.newCall(request).execute();
@@ -98,7 +98,7 @@ public class UserServiceImol implements UserService {
     public User findUserByName(String username) throws IOException {
         User user = null;
         Request request = new Request.Builder()
-                .url(ServerApi.FINDUSERBYNAME + "/" + username)
+                .url(ServerApi.FINDUSERBYNAME+username)
                 .build();
         Response response = null;
         response = client.newCall(request).execute();

@@ -13,11 +13,11 @@
         android:orientation="vertical">
 
         <RelativeLayout
-            android:stateListAnimator="@animator/touch_raise"
+            android:id="@+id/rl_person"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#fff"
-            android:id="@+id/rl_person">
+            android:stateListAnimator="@animator/touch_raise">
 
             <!-- 头像-->
             <com.facebook.drawee.view.SimpleDraweeView
