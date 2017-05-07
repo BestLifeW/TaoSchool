@@ -25,7 +25,7 @@ import com.wtc.xmut.taoschool.ui.fragment.PersonFragment;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG_PAGE_HOME = "首页";
-    private static final String TAG_PAGE_CITY = "附近";
+    private static final String TAG_PAGE_CITY = "分类";
     private static final String TAG_PAGE_PUBLISH = "发布";
     private static final String TAG_PAGE_MESSAGE = "消息";
     private static final String TAG_PAGE_PERSON = "我的";

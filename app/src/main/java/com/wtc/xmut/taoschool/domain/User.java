@@ -9,7 +9,7 @@ public class User {
 
     private String name;
 
-    private Integer telephone;
+    private String telephone;
 
     private String college;
 
@@ -59,11 +59,11 @@ public class User {
         this.name = name == null ? null : name.trim();
     }
 
-    public Integer getTelephone() {
+    public String getTelephone() {
         return telephone;
     }
 
-    public void setTelephone(Integer telephone) {
+    public void setTelephone(String telephone) {
         this.telephone = telephone;
     }
 

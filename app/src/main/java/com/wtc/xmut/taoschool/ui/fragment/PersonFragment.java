@@ -298,4 +298,20 @@ public class PersonFragment extends Fragment implements View.OnClickListener {
         getActivity().overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
         getActivity().overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
+
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Log.i(TAG, "onDetach: ");
+    }
+
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.i(TAG, "onPause: ");
+    }
+
 }

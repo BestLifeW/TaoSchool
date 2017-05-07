@@ -7,7 +7,6 @@ import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,14 +14,10 @@ import android.widget.TextView;
 
 import com.wtc.xmut.taoschool.R;
 import com.wtc.xmut.taoschool.Service.UserService;
-import com.wtc.xmut.taoschool.Service.impl.UserServiceImol;
 import com.wtc.xmut.taoschool.api.ServerApi;
 import com.wtc.xmut.taoschool.domain.User;
 import com.wtc.xmut.taoschool.utils.SnackbarUtils;
 import com.wtc.xmut.taoschool.utils.XutilsUtils;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.HashMap;
 
@@ -43,6 +38,8 @@ public class RegisterActivity extends AppCompatActivity {
     EditText etUserpassword;
     @BindView(R.id.et_username)
     EditText etUsername;
+    @BindView(R.id.et_phone)
+    EditText etphone;
     @BindView(R.id.btn_register)
     Button btnRegister;
     @BindView(R.id.tv_returnLogin)
@@ -56,6 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
     private static final String TAG = "RegisterActivity";
     private String string;
     private XutilsUtils utils;
+    private String phone;
 
 
     @Override
@@ -80,12 +78,14 @@ public class RegisterActivity extends AppCompatActivity {
         username = etUsernumber.getText().toString();
         name = etUsername.getText().toString();
         userpassword = etUserpassword.getText().toString();
-        if (!(TextUtils.isEmpty(username)||TextUtils.isEmpty(name)||TextUtils.isEmpty(userpassword))){
+        phone = etphone.getText().toString();
+        if (!(TextUtils.isEmpty(username)||TextUtils.isEmpty(name)||TextUtils.isEmpty(userpassword)||TextUtils.isEmpty(phone))){
             user.setUsername(username);
             user.setName(name);
             user.setPassword(userpassword);
-            insert(user);
 
+            user.setTelephone(phone);
+            insert(user);
         }else {
             Snackbar.make(getCurrentFocus(),"请输入完整信息",Snackbar.LENGTH_LONG).show();
             mProgressbar.setVisibility(View.INVISIBLE);
@@ -99,11 +99,13 @@ public class RegisterActivity extends AppCompatActivity {
         map.put("username",user.getUsername());
         map.put("password",user.getPassword());
         map.put("name",user.getName());
+        map.put("telephone",user.getTelephone());
         utils.post(ServerApi.USERADD, map, new XutilsUtils.XCallBack() {
             @Override
             public void onResponse(String result) {
                 SnackbarUtils.ShowSnackbar(getCurrentFocus(),"注册成功");
                 mProgressbar.setVisibility(View.INVISIBLE);
+                SuccessToLogin();
             }
 
             @Override

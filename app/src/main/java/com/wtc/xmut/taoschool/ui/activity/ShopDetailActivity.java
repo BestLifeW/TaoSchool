@@ -101,7 +101,7 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void getComment(int shopId) {
-        utils.getCache(ServerApi.GETCOMMENT + shopId, null, false, 60 * 1000, new XutilsUtils.XCallBack() {
+        utils.getCache(ServerApi.GETCOMMENT + shopId, null, true, 60 * 100, new XutilsUtils.XCallBack() {
 
             @Override
             public void onResponse(String result) {
@@ -268,6 +268,7 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
                 String content = (String) input1;
                 if (!TextUtils.isEmpty(content.trim())) {
                     addCommentContent(content);
+
                 } else {
                     SnackbarUtils.ShowSnackbar(getCurrentFocus(), "请输入内容");
                 }
@@ -292,6 +293,7 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
             public void onResponse(String result) {
                 //插入成功
                 adapter.addComment(comment);
+                onRestart();
             }
 
             @Override
@@ -366,6 +368,19 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
     @Override
     protected void onRestart() {
         super.onRestart();
+        getDateAndFillView(shopId);
         Log.i(TAG, "onRestart: ");
+    }
+
+    //分享
+    //分享文字
+    public void shareText(String shopinfo) {
+        Intent shareIntent = new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.putExtra(Intent.EXTRA_TEXT, shopinfo);
+        shareIntent.setType("text/plain");
+
+        //设置分享列表的标题，并且每次都显示分享列表
+        startActivity(Intent.createChooser(shareIntent, "分享到"));
     }
 }

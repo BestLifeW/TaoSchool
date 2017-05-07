@@ -48,6 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textView"
                 android:hint="请输入用户名"
+                android:textSize="14sp"
                 android:inputType="textCapWords" />
         </android.support.design.widget.TextInputLayout>
 
@@ -62,6 +63,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="请输入密码"
+                android:textSize="14sp"
                 android:inputType="textPassword" />
         </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
@@ -77,9 +79,25 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textView"
                 android:hint="请输入姓名"
+                android:textSize="14sp"
                 android:inputType="textCapWords" />
         </android.support.design.widget.TextInputLayout>
-
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            >
+            <EditText
+                android:id="@+id/et_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView"
+                android:hint="请输入电话号码"
+                android:textSize="14sp"
+                android:inputType="phone" />
+        </android.support.design.widget.TextInputLayout>
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btn_register"
@@ -91,7 +109,6 @@
             android:textColor="#fff"
             android:background="@color/colorPrimary"
             android:text="确认注册" />
-
         <TextView
             android:id="@+id/tv_returnLogin"
             android:layout_width="fill_parent"
@@ -100,7 +117,6 @@
             android:gravity="center"
             android:text="注册成功，返回登录"
             android:textSize="16dip" />
-
     </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>

@@ -1,23 +1,29 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/gray_bg"
-    tools:context="com.wtc.xmut.taoschool.ui.fragment.homeFragment_src.PublishFragment">
+    android:id="@+id/swipe_refresh_widget"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/swipe_refresh_widget"
-        >
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gray_bg"
+        tools:context="com.wtc.xmut.taoschool.ui.fragment.homeFragment_src.PublishFragment">
+
         <!-- TODO: Update blank fragment layout -->
-        <android.support.v7.widget.RecyclerView
+        <com.wtc.xmut.taoschool.view.RecyclerViewEmptySupport
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:load_more_able="false"
             app:refresh_able="true" />
-    </android.support.v4.widget.SwipeRefreshLayout>
 
-</FrameLayout>
+        <include
+            android:id="@+id/fail"
+            layout="@layout/fail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </FrameLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

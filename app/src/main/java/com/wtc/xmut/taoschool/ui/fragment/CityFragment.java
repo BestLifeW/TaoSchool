@@ -2,6 +2,7 @@ package com.wtc.xmut.taoschool.ui.fragment;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.wtc.xmut.taoschool.R;
+import com.wtc.xmut.taoschool.ui.activity.CategoryDetailActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,10 +51,14 @@ public class CityFragment extends Fragment {
             "其他",
 
     };
+   private String[] pinyin={
+           "fushi","caizhuang","zhubao","shuma","yundong","qiche","shenghuo","jiaju","qita"
+   };
+
     private View view;
 
     public CityFragment() {
-        this.mContext = getActivity();
+        //this.mContext = getContext();
     }
 
 
@@ -85,6 +91,9 @@ public class CityFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(getActivity(),name[position],Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getActivity(), CategoryDetailActivity.class);
+                intent.putExtra("category", pinyin[position]);
+                startActivity(intent);
             }
         });
 

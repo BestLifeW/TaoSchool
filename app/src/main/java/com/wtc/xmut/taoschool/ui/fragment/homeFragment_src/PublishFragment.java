@@ -21,6 +21,7 @@ import com.wtc.xmut.taoschool.adpater.PublishAdapter;
 import com.wtc.xmut.taoschool.api.ServerApi;
 import com.wtc.xmut.taoschool.domain.ShopExt;
 import com.wtc.xmut.taoschool.utils.XutilsUtils;
+import com.wtc.xmut.taoschool.view.RecyclerViewEmptySupport;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ public class PublishFragment extends Fragment {
 
     private View view;
     @BindView(R.id.recycler_view)
-    RecyclerView mRecyclerView;
+    RecyclerViewEmptySupport mRecyclerView;
 
 
     private ShopService shopService;
@@ -76,6 +77,7 @@ public class PublishFragment extends Fragment {
 
     private void initDate() throws IOException {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.setEmptyView(view.findViewById(R.id.fail));
         SpacesItemDecoration decoration = new SpacesItemDecoration(20);
         mRecyclerView.addItemDecoration(decoration);
         getConnectData();
@@ -85,7 +87,7 @@ public class PublishFragment extends Fragment {
      * 获取网络数据
      */
     private void getConnectData() {
-        utils.getCache(ServerApi.ALLSHOPANDUSER, null, true, 60 * 1000, new XutilsUtils.XCallBack() {
+        utils.getCache(ServerApi.ALLSHOPANDUSER, null, true, 60 * 10, new XutilsUtils.XCallBack() {
             @Override
             public void onResponse(String result) {
                 parseDate(result);

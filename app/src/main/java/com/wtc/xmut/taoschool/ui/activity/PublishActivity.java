@@ -74,6 +74,11 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
 
     @BindView(R.id.iv_addpic)
     ImageView iv_addpic;
+
+    @BindView(R.id.tv_classify)
+    TextView tv_classify;
+    String[] words2 = new String[]{"服饰", "彩妆", "珠宝", "数码", "运动", "汽车", "生活", "家具", "其他"};
+    String[] pinyin = new String[]{"fushi", "caizhuang", "zhubao", "shuma", "yundong", "qiche", "shenghuo", "jiaju", "qita"};
     private String fileName;
     private String newmoney;
     private String oldmoney;
@@ -85,6 +90,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
     private String realFilePath;
     private String username;
     private static final int SCALE = 5;//照片缩小比例
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -139,28 +145,52 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
         }).show();
     }
 
+    @OnClick(R.id.rl_select)
+    public void chooseFenLei() {
+
+        DialogUIUtils.showSingleChoose(PublishActivity.this, "请选择分类", 0, words2, new DialogUIItemListener() {
+            @Override
+            public void onItemClick(CharSequence text, int position) {
+                if (text != null) {
+                    tv_classify.setText(text);
+                }
+            }
+        }).show();
+    }
+
+
     @OnClick(R.id.btn_publish)
     public void OkPublish() {
         //获取系统时间
-        SimpleDateFormat formatter = new SimpleDateFormat ("yyyy-MM-dd");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date curDate = new Date(System.currentTimeMillis());//获取当前时间
         String str = formatter.format(curDate);
         HashMap<String, String> Shop = new HashMap<>();
         String title = et_title.getText().toString().trim();
         String description = et_summary.getText().toString().trim();
-        if (!(title.trim().equals("") || description.trim().equals("") || username.trim().equals("") || newmoney.trim().equals("") || oldmoney.trim().equals(""))) {
+        String classify = tv_classify.getText().toString().trim();
+        //if (!(title.trim().equals("") || description.trim().equals("") || username.trim().equals("") || newmoney.trim().equals("") || oldmoney.trim().equals(""))) {
+        if (true) {
             Shop.put("shopname", title);
             Shop.put("description", description);
             Shop.put("username", username);
             Shop.put("price", newmoney);
             Shop.put("oldprice", oldmoney);
-            Shop.put("shoptime",str);
+            //插入分类
+            for (int i = 0; i < words2.length; i++) {
+                if (classify==words2[i]){
+                    Shop.put("category", pinyin[i]);
+                }
+            }
+
+
+            Shop.put("shoptime", str);
         } else {
             SnackbarUtils.ShowSnackbar(getCurrentFocus(), "请输入完整信息");
             return;
         }
         HashMap<String, File> picmap = new HashMap<>();
-        if (!(realFilePath==null)) {
+        if (!(realFilePath == null)) {
             File file = new File(realFilePath);
             if (!file.getName().equals("")) {
                 picmap.put("file", file);
@@ -175,13 +205,13 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
 
                     @Override
                     public void onResponseFail() {
-                        SnackbarUtils.ShowSnackbar(getCurrentFocus(),"发布失败，请检查网络");
+                        SnackbarUtils.ShowSnackbar(getCurrentFocus(), "发布失败，请检查网络");
                         show.dismiss();
                     }
                 });
             }
-        }else {
-            SnackbarUtils.ShowSnackbar(getCurrentFocus(),"请选择一张图片");
+        } else {
+            SnackbarUtils.ShowSnackbar(getCurrentFocus(), "请选择一张图片");
         }
     }
 
@@ -218,9 +248,11 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
         startActivityForResult(intent, CAMERA_CODE);
 
     }
+
     private boolean hasSdcard() {
         return android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
     }
+
     private void getPicForSelect() {
         //构建一个内容选择的Intent
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -277,7 +309,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                     Bundle extras = data.getExtras();
                     if (extras != null) {
                         //获取到裁剪后的图像
-                       Bitmap bm = extras.getParcelable("data");
+                        Bitmap bm = extras.getParcelable("data");
                         iv_addpic.setImageBitmap(bm);
                     }
                 }
@@ -389,6 +421,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                 .withOptions(options)
                 .start(this, requestCode);
     }
+
     //获取压缩比例
     private int getinSamlpeSize(Uri uri) {
 

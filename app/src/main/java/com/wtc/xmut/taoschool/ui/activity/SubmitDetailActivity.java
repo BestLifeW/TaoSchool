@@ -39,7 +39,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.dmoral.toasty.Toasty;
 
-import static com.wtc.xmut.taoschool.R.id.toast_icon;
 import static com.wtc.xmut.taoschool.R.id.tv_shopmenoy;
 
 public class SubmitDetailActivity extends AppCompatActivity implements View.OnClickListener {
@@ -94,6 +93,7 @@ public class SubmitDetailActivity extends AppCompatActivity implements View.OnCl
         username = PrefUtils.getString(getApplication(), PrefUtils.USER_NUMBER, "");
         init();
     }
+
 
     private void init() {
         initView();
@@ -255,6 +255,7 @@ public class SubmitDetailActivity extends AppCompatActivity implements View.OnCl
 
     }
 
+
     private String getTime(Date date) {//可根据需要自行截取数据显示
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return format.format(date);
@@ -284,4 +285,5 @@ public class SubmitDetailActivity extends AppCompatActivity implements View.OnCl
         Log.i(TAG, "onPostResume: ");
         super.onPostResume();
     }
+
 }

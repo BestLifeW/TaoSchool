@@ -2,6 +2,7 @@ package com.wtc.xmut.taoschool.adpater;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.view.View;
@@ -39,6 +40,7 @@ public class PublishAdapter extends CommonAdapter<ShopExt> {
         ImageView draweeView = holder.getView(R.id.sld_shoppic);
         ImageView user_icon = holder.getView(R.id.sld_usericon);
         CardView view = holder.getView(R.id.card_view);
+        view.setBackgroundColor(Color.WHITE);
         Glide.with(mcontext).load(shopuri).placeholder(R.drawable.loadding).into(draweeView);
         Glide.with(mcontext).load(UserIconUri).placeholder(R.drawable.usericon).into(user_icon);
         view.setOnClickListener(new View.OnClickListener() {
@@ -46,6 +48,7 @@ public class PublishAdapter extends CommonAdapter<ShopExt> {
             public void onClick(View v) {
                 Intent intent = new Intent(mcontext, ShopDetailActivity.class);
                 intent.putExtra("ShopId", shopExt.getId());
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mcontext.startActivity(intent);
             }
         });
@@ -55,5 +58,23 @@ public class PublishAdapter extends CommonAdapter<ShopExt> {
         holder.setText(R.id.tv_fromwhere, "來自" + shopExt.getCollege());
         holder.setText(R.id.tv_shoptime, shopExt.getShoptime());
 
+        holder.getView(R.id.tv_share).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shareText("我在淘学App上看到一个很棒的商品："+shopExt.getShopname()+",价格：￥"+shopExt.getPrice()+"，分享给你哦~");
+            }
+        });
     }
+    //分享文字
+    public void shareText(String shopinfo) {
+        Intent shareIntent = new Intent();
+        shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.putExtra(Intent.EXTRA_TEXT, shopinfo);
+        shareIntent.setType("text/plain");
+
+        //设置分享列表的标题，并且每次都显示分享列表
+        mcontext.startActivity(Intent.createChooser(shareIntent, "分享到"));
+    }
+
 }

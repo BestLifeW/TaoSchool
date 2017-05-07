@@ -132,7 +132,7 @@
 
                 <TextView
                     android:id="@+id/tv_buymoney"
-                    android:layout_width="match_parent"
+                    android:layout_width="229dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
                     android:text="￥360"
@@ -167,7 +167,7 @@
                 <TextView
 
                     android:id="@+id/tv_buytime"
-                    android:layout_width="match_parent"
+                    android:layout_width="233dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
                     android:text="请选择线下时间"

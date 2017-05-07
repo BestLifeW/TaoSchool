@@ -25,6 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:text="加载中..."
+            android:textColor="#8A000000"
             android:textSize="9sp" />
 
         <View
@@ -86,7 +87,7 @@
             android:layout_marginStart="10dp"
             android:layout_toEndOf="@+id/sld_usericon"
             android:text="加载中..."
-            android:textColor="@color/bb_darkBackgroundColor" />
+            android:textColor="#3c3c3c" />
 
         <TextView
             android:id="@+id/tv_description"
@@ -95,7 +96,7 @@
             android:layout_alignBottom="@+id/sld_shoppic"
             android:layout_alignParentEnd="true"
             android:layout_alignParentStart="true"
-            android:background="#85999999"
+            android:background="#85808080"
             android:maxLines="1"
             android:padding="8dp"
             android:text="详情加载中..."
@@ -107,7 +108,8 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/sld_usericon"
             android:layout_alignStart="@+id/tv_user_name"
-            android:text="加载中..." />
+            android:text="加载中..."
+            android:textColor="#8A000000" />
         <LinearLayout
             android:weightSum="2"
             android:gravity="center_vertical"
@@ -117,26 +119,29 @@
             android:layout_alignParentStart="true"
             android:layout_marginStart="11dp"
             android:layout_alignParentEnd="true">
-            <TextView
-                android:layout_weight="0.1"
-                android:id="@+id/textView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:text="分享"
-                android:layout_alignTop="@+id/iv_comment"
-                android:layout_alignParentStart="true" />
 
             <TextView
-                android:layout_weight="1.5"
+                android:id="@+id/tv_share"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignTop="@+id/iv_comment"
+                android:layout_weight="0.1"
+                android:text="分享"
+                android:textColor="#8A000000"
+                android:textSize="12sp" />
+
+            <TextView
                 android:id="@+id/tv_del"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/textView6"
-                android:layout_alignBottom="@+id/textView6"
+                android:layout_alignBaseline="@+id/tv_share"
+                android:layout_alignBottom="@+id/tv_share"
                 android:layout_alignStart="@+id/tv_fromwhere"
                 android:layout_marginStart="10dp"
+                android:layout_weight="1.5"
                 android:text="详情"
+                android:textColor="#8A000000"
                 android:textSize="12sp" />
 
             <ImageView
