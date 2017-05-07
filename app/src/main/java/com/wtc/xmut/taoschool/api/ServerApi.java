@@ -109,6 +109,9 @@ public class ServerApi {
     public  static final  String GETORDERBYSHOPID = ORDER + "/getOrdersByShopid/"; //9
 
     //根据id删除订单
-
     public static final  String DELORDERBYID = ORDER + "/delOrderById/";//1
+
+
+    //根据买家姓名获取订单
+    public static final String GETORDERBYBUYERNAME = ORDER +"/getOrdersBybuyer/"; //
 }

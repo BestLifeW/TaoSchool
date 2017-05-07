@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -120,11 +121,15 @@ public class PublishFragment extends Fragment {
 
     private void initEvent() {
         // 这句话是为了，第一次进入页面的时候显示加载进度条
+        mSwipeRefreshWidget.setProgressViewOffset(false, 0, (int) TypedValue
+                .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
+                        .getDisplayMetrics()));
+
         mSwipeRefreshWidget.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light, android.R.color.holo_orange_light, android.R.color.holo_green_light);
         mSwipeRefreshWidget.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new Handler().postDelayed(new Runnable() {
+                new Handler().post(new Runnable() {
                     @Override
                     public void run() {
                         getConnectData();
@@ -133,7 +138,7 @@ public class PublishFragment extends Fragment {
                         mSwipeRefreshWidget.setRefreshing(false);
                         //Toasty.custom(getActivity(), "刷新成功", null, Color.WHITE, Color.alpha(200), Toast.LENGTH_SHORT, true, true).show();
                     }
-                }, 3000);
+                });
             }
         });
     }

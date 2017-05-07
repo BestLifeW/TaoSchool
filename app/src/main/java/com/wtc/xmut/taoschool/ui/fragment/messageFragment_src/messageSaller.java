@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.wtc.xmut.taoschool.R;
-import com.wtc.xmut.taoschool.adpater.OrdersNewAdapter;
+import com.wtc.xmut.taoschool.adpater.OrderSallerAdapter;
 import com.wtc.xmut.taoschool.api.ServerApi;
 import com.wtc.xmut.taoschool.domain.OrdersExt;
 import com.wtc.xmut.taoschool.utils.PrefUtils;
@@ -32,7 +32,7 @@ import static com.marshalchen.ultimaterecyclerview.expanx.Util.DataUtil.TAG;
 public class messageSaller extends Fragment {
 
     private List<OrdersExt> shoplist;
-    private OrdersNewAdapter adapter;
+    private OrderSallerAdapter adapter;
     private View view;
     private RecyclerViewEmptySupport recycler_view;
     private XutilsUtils utils;
@@ -91,7 +91,7 @@ public class messageSaller extends Fragment {
         if (shoplist ==null|| shoplist.size()==0){
            // isMessage.setVisibility(View.VISIBLE);
         }
-        adapter = new OrdersNewAdapter(getActivity(), shoplist);
+        adapter = new OrderSallerAdapter(getActivity(), shoplist);
         recycler_view.setEmptyView(view.findViewById(R.id.fail));
         recycler_view.setAdapter(adapter);
 

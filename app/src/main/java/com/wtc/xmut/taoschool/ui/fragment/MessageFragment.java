@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.wtc.xmut.taoschool.R;
 import com.wtc.xmut.taoschool.adpater.MyViewPagerAdapter;
-import com.wtc.xmut.taoschool.adpater.OrdersNewAdapter;
+import com.wtc.xmut.taoschool.adpater.OrderSallerAdapter;
 import com.wtc.xmut.taoschool.domain.OrdersExt;
 import com.wtc.xmut.taoschool.ui.fragment.messageFragment_src.messageBuyer;
 import com.wtc.xmut.taoschool.ui.fragment.messageFragment_src.messageSaller;
@@ -37,7 +37,7 @@ public class MessageFragment extends Fragment {
     private List<OrdersExt> shoplist;
     private static final String TAG = "MessageFragment";
     private RecyclerView mRecyclerView;
-    private OrdersNewAdapter adapter;
+    private OrderSallerAdapter adapter;
     private Dialog dialog;
     private TextView isMessage;
     private ViewPager mViewPager;

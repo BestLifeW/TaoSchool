@@ -93,7 +93,7 @@ public class PersonActivity extends AppCompatActivity implements View.OnClickLis
             public void onResponse(String result) {
                 Gson gson = new Gson();
                 user = gson.fromJson(result, User.class);
-                Glide.with(getApplicationContext()).load(ServerApi.SHOWPIC+user.getIconpath()).into(iv_user_icon);
+                Glide.with(getApplicationContext()).load(ServerApi.SHOWPIC + user.getIconpath()).into(iv_user_icon);
             }
 
             @Override
@@ -219,21 +219,26 @@ public class PersonActivity extends AppCompatActivity implements View.OnClickLis
                 break;
             case CROP_FROM_CAMERA:   //拍照裁剪
             case CROP_FROM_PHOTO:    //相册裁剪
-                //裁剪之后显示照片
-
-                Uri uri = UCrop.getOutput(data);
+                //裁剪之后显示照片 //如果用户点了取消，那么 啥都不干，防止报空
+                if (data == null) {
+                    return;
+                } else {
+                    Uri uri = UCrop.getOutput(data);
+                    if (uri != null) {
 //                    Uri uri = Uri.fromFile(new File(fileName));
-                Bitmap bitmap = BitmapFactory.decodeFile(uri.getPath());
-                iv_user_icon.setImageBitmap(bitmap);
-                if (requestCode == CROP_FROM_CAMERA) {  //如果是拍照,则删除原图，只保存裁剪后的图片
-                    File oldFile = new File(fileName);
-                    if (oldFile.exists()) {
-                        oldFile.delete();   //删除原图
+                        Bitmap bitmap = BitmapFactory.decodeFile(uri.getPath());
+                        iv_user_icon.setImageBitmap(bitmap);
+                        if (requestCode == CROP_FROM_CAMERA) {  //如果是拍照,则删除原图，只保存裁剪后的图片
+                            File oldFile = new File(fileName);
+                            if (oldFile.exists()) {
+                                oldFile.delete();   //删除原图
+                            }
+                        }
+                        realFilePath = FileUtil.getRealFilePath(getApplication(), uri);
+                        //这里进行网络访问 进行头像的上传
+                        updateIcon(realFilePath);
                     }
                 }
-                realFilePath = FileUtil.getRealFilePath(getApplication(), uri);
-                //这里进行网络访问 进行头像的上传
-                updateIcon(realFilePath);
                 break;
             default:
                 break;
@@ -242,15 +247,15 @@ public class PersonActivity extends AppCompatActivity implements View.OnClickLis
 
     /**
      * 头像上传
-     * @param realFilePath 头像文件路径
      *
+     * @param realFilePath 头像文件路径
      */
     private void updateIcon(String realFilePath) {
 
-        ToastUtils.showToast(getApplicationContext(),user.getId()+"");
+        ToastUtils.showToast(getApplicationContext(), user.getId() + "");
 
         HashMap<String, String> user = new HashMap<>();
-        user.put("username",username);
+        user.put("username", username);
 
         HashMap<String, File> picmap = new HashMap<>();
         if (!(realFilePath == null)) {
@@ -258,7 +263,7 @@ public class PersonActivity extends AppCompatActivity implements View.OnClickLis
             if (!file.getName().equals("")) {
                 picmap.put("file", file);
                 final Dialog show = DialogUIUtils.showLoading(getApplicationContext(), "发布中...", false, false, false, true).show();
-                utils.upLoadFile(ServerApi.USERHEAD,user, picmap, new XutilsUtils.XCallBack() {
+                utils.upLoadFile(ServerApi.USERHEAD, user, picmap, new XutilsUtils.XCallBack() {
                     @Override
                     public void onResponse(String result) {
                         Log.i(TAG, "onResponse: ");
@@ -276,7 +281,6 @@ public class PersonActivity extends AppCompatActivity implements View.OnClickLis
         } else {
             SnackbarUtils.ShowSnackbar(getCurrentFocus(), "请选择一张图片");
         }
-
 
 
     }
