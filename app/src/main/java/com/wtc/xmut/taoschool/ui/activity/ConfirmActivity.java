@@ -110,7 +110,7 @@ public class ConfirmActivity extends AppCompatActivity {
         if (result != null) {
             Log.i(TAG, "fillData: " + result.getOrdersstate());
             if (result.getOrdersstate().equals("卖家确认")) {
-                btnRefuse.setVisibility(View.GONE);
+                btnRefuse.setText("交易确认");
                 btnAgree.setText("联系买家");
             }
             tvBuyername.setText(result.getBuyerusername());
@@ -171,10 +171,7 @@ public class ConfirmActivity extends AppCompatActivity {
                 public void onPositive() {
                     Intent intent = new Intent();
                     intent.setAction(Intent.ACTION_CALL);
-                    //url:统一资源定位符
-                    //uri:统一资源标示符（更广）
                     intent.setData(Uri.parse("tel:" + result.getTelephone()));
-                    //开启系统拨号器
                     startActivity(intent);
                 }
 

@@ -18,6 +18,7 @@ import com.wtc.xmut.taoschool.adpater.PublishAdapter;
 import com.wtc.xmut.taoschool.api.ServerApi;
 import com.wtc.xmut.taoschool.domain.ShopExt;
 import com.wtc.xmut.taoschool.utils.XutilsUtils;
+import com.wtc.xmut.taoschool.view.RecyclerViewEmptySupport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ public class CategoryDetailActivity extends AppCompatActivity {
 
     private String category;
     private XutilsUtils utils;
-    private RecyclerView mRecyclerView;
+    private RecyclerViewEmptySupport mRecyclerView;
     private List<ShopExt> shopList;
     private PublishAdapter adapter;
     private static final String TAG = "CategoryDetailActivity";
@@ -86,6 +87,7 @@ public class CategoryDetailActivity extends AppCompatActivity {
     private void setAdapter() {
         adapter = new PublishAdapter(getApplicationContext(),
                 R.layout.item_main, shopList);
+        mRecyclerView.setEmptyView(findViewById(R.id.fail));
         mRecyclerView.setAdapter(adapter);
     }
 
@@ -93,7 +95,7 @@ public class CategoryDetailActivity extends AppCompatActivity {
      * 初始化布局
      */
     private void initView() {
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        mRecyclerView = (RecyclerViewEmptySupport) findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
         SpacesItemDecoration decoration = new SpacesItemDecoration(20);
