@@ -112,6 +112,9 @@ public class ConfirmActivity extends AppCompatActivity {
             if (result.getOrdersstate().equals("卖家确认")) {
                 btnRefuse.setText("交易确认");
                 btnAgree.setText("联系买家");
+            }else if (result.getOrdersstate().equalsIgnoreCase("卖家确认交易")){
+                btnRefuse.setVisibility(View.GONE);
+                btnAgree.setText("交易成功");
             }
             tvBuyername.setText(result.getBuyerusername());
             tvBuyerphone.setText(result.getTelephone());
@@ -180,9 +183,8 @@ public class ConfirmActivity extends AppCompatActivity {
                     return;
                 }
             }).show();
-
-
         }
+
     }
 
     @Override
@@ -194,12 +196,13 @@ public class ConfirmActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
     //取消按钮
     @OnClick(R.id.btn_refuse)
     public void cancel() {
+        Log.i(TAG, "cancel: "+btnRefuse.getText().toString());
 
-
-        //if (!(btnRefuse.getText().toString().equalsIgnoreCase("已拒绝"))) {
+        if (!(btnRefuse.getText().toString().equalsIgnoreCase("已拒绝"))&&!(btnRefuse.getText().toString().equalsIgnoreCase("交易确认"))) {
             btnAgree.setVisibility(View.GONE);
             HashMap<String, String> map = new HashMap<>();
             map.put("id", result.getOrderid() + "");
@@ -234,6 +237,60 @@ public class ConfirmActivity extends AppCompatActivity {
                     Toasty.error(mContext, "服务器链接失败", Toast.LENGTH_LONG).show();
                 }
             });
+        } else if (btnRefuse.getText().toString().equalsIgnoreCase("交易确认")) {
+            DialogUIUtils.showMdAlert(this, "确认交易？", "请确认是否见面交易成功？", new DialogUIListener() {
+                @Override
+                public void onPositive() {
+                    Toasty.success(getApplicationContext(),"确认成功",Toast.LENGTH_LONG).show();
+                    HashMap<String, String> map = new HashMap<>();
+                    map.put("id", result.getOrderid() + "");
+                    map.put("state", "卖家确认交易");
+                    utils.post(ServerApi.UPDATEORDERBYID, map, new XutilsUtils.XCallBack() {
+                        @Override
+                        public void onResponse(String result) {
+                            if (result.contains("成功")) {
+                                Toasty.error(getApplicationContext(), "已取消", Toast.LENGTH_LONG).show();
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        for (int i = 0; i <= 100; i++) {
+                                            btnRefuse.setProgress(i);
+                                            if (i == 100) {
+                                                new Handler().postDelayed(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        finish();
+                                                    }
+                                                }, 2000);
+                                            }
+                                        }
+                                    }
+                                }, 200);
+
+                            }
+                        }
+
+                        @Override
+                        public void onResponseFail() {
+                            Toasty.error(mContext, "服务器链接失败", Toast.LENGTH_LONG).show();
+                        }
+                    });
+
+
+
+
+
+
+
+                }
+
+                @Override
+                public void onNegative() {
+
+                }
+            }).show();
         }
-   // }
+    }
 }
+
+

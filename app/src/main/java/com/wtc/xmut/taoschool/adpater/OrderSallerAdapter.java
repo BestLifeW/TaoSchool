@@ -57,6 +57,10 @@ public class OrderSallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             ((SellerItem) holder).tv_ordermsg.setText("已确认信息");
         } else if (list.get(position).getOrdersstate().equals("卖家拒绝")) {
             ((SellerItem) holder).tv_ordermsg.setText("已取消信息");
+        }else if (list.get(position).getOrdersstate().equals("卖家确认交易")){
+            ((SellerItem) holder).tv_ordermsg.setText("卖家已确认");
+        }else if (list.get(position).getOrdersstate().equals("交易成功")){
+            ((SellerItem) holder).tv_ordermsg.setText("交易成功");
         }
         ((SellerItem) holder).tv_ordertime.setText("日期:" + list.get(position).getTime().substring(5, 10));
         ((SellerItem) holder).buyusername.setText(list.get(position).getBuyerusername());
