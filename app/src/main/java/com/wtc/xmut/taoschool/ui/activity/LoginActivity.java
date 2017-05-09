@@ -110,7 +110,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         handler.sendMessage(msg);
                     }
                 } else {
-                    progressBar2.setVisibility(View.INVISIBLE);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            progressBar2.setVisibility(View.INVISIBLE);
+                        }
+                    });
+
                     data.putString("state", "服务器连接失败");
                     msg.setData(data);
                     handler.sendMessage(msg);

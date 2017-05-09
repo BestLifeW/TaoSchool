@@ -139,6 +139,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void enterInquiryActivity() {
+        Intent intent = new Intent(getApplicationContext(),InquiryActivity.class);
+        startActivity(intent);
 
     }
 
