@@ -9,12 +9,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dou361.dialogui.DialogUIUtils;
 import com.dou361.dialogui.listener.DialogUIListener;
 import com.wtc.xmut.taoschool.R;
+import com.wtc.xmut.taoschool.api.ServerApi;
 import com.wtc.xmut.taoschool.utils.PrefUtils;
 import com.wtc.xmut.taoschool.utils.SnackbarUtils;
+import com.wtc.xmut.taoschool.utils.XutilsUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -23,6 +26,7 @@ import java.util.HashMap;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import es.dmoral.toasty.Toasty;
 
 import static com.wtc.xmut.taoschool.R.id.et_summary;
 import static com.wtc.xmut.taoschool.R.id.et_title;
@@ -47,18 +51,21 @@ public class InquiryActivity extends AppCompatActivity {
     private String newmoney;
     private String oldmoney;
     private String username;
+    private XutilsUtils utils;
+    private Dialog show;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inquiry);
         ButterKnife.bind(this);
+        utils = XutilsUtils.getInstance();
         username = PrefUtils.getString(getApplicationContext(), PrefUtils.USER_NUMBER, "");
     }
 
     @OnClick(R.id.rl_money)
     public void inputMoney() {
-        DialogUIUtils.showAlert(this, null, "请输入出售的价格", "价格", "原先的价格", "确定", "取消", false, false, false, new DialogUIListener() {
+        DialogUIUtils.showAlert(this, null, "请输入出售的价格", "预估价格", null, "确定", "取消", false, false, false, new DialogUIListener() {
             @Override
             public void onPositive() {
             }
@@ -70,9 +77,9 @@ public class InquiryActivity extends AppCompatActivity {
             @Override
             public void onGetInput(CharSequence input1, CharSequence input2) {
                 newmoney = (String) input1;
-                oldmoney = (String) input2;
-                if (!(TextUtils.isEmpty(newmoney) || TextUtils.isEmpty(oldmoney))) {
-                    tvMoney.setText("￥：" + newmoney + "元");
+
+                if (!(TextUtils.isEmpty(newmoney))) {
+                    tvMoney.setText("￥:" + newmoney + "元");
                 } else {
                     SnackbarUtils.ShowSnackbar(getCurrentFocus(), "未输入任何数据");
                 }
@@ -87,23 +94,50 @@ public class InquiryActivity extends AppCompatActivity {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date curDate = new Date(System.currentTimeMillis());//获取当前时间
         String str = formatter.format(curDate);
-        HashMap<String, String> Shop = new HashMap<>();
+        HashMap<String, String> inquiry = new HashMap<>();
         String title = etTitle.getText().toString().trim();
         String description = etSummary.getText().toString().trim();
 
-        if (!(title.trim().equals("") || description.trim().equals("") || username.trim().equals("") || newmoney.trim().equals("") || oldmoney.trim().equals(""))) {
-            Shop.put("shopname", title);
-            Shop.put("description", description);
-            Shop.put("username", username);
-            Shop.put("price", newmoney);
-            Shop.put("shoptime", str);
+        if (!(title.trim().equals("") || description.trim().equals("") || username.trim().equals("") || newmoney.trim().equals(""))) {
+            inquiry.put("ishopname", title);
+            inquiry.put("idescription", description);
+            inquiry.put("iusername", username);
+            inquiry.put("iprice", newmoney);
+            inquiry.put("itime", str);
+
+            update(inquiry);
+
+
         } else {
             SnackbarUtils.ShowSnackbar(getCurrentFocus(), "请输入完整信息");
             return;
         }
+        show = DialogUIUtils.showLoading(getApplicationContext(), "发布中...", false, false, false, true).show();
 
-        final Dialog show = DialogUIUtils.showLoading(getApplicationContext(), "发布中...", false, false, false, true).show();
+    }
 
+    /**
+     * 提交数据
+     *
+     * @param inquiry
+     */
+    private void update(HashMap<String, String> inquiry) {
+        utils.post(ServerApi.ADDINQUIRY, inquiry, new XutilsUtils.XCallBack() {
+            @Override
+            public void onResponse(String result) {
+                if (result.contains("插入成功")) {
+                    Toasty.success(getApplicationContext(), "提交成功", Toast.LENGTH_LONG).show();
+                    show.dismiss();
+                    finish();
+                }
+            }
+
+            @Override
+            public void onResponseFail() {
+                Toasty.error(getApplicationContext(), "网络连接失败了", Toast.LENGTH_LONG).show();
+                show.dismiss();
+            }
+        });
     }
 
 }

@@ -113,5 +113,22 @@ public class ServerApi {
 
 
     //根据买家姓名获取订单
-    public static final String GETORDERBYBUYERNAME = ORDER +"/getOrdersBybuyer/"; //
+    public static final String GETORDERBYBUYERNAME = ORDER +"/getOrdersBybuyer/"; //\
+
+
+
+
+    //添加求购商品
+
+    static final String INQUIRY = SERVERHOST +"/Inquiry";
+
+    //提交订单
+    public static final String ADDINQUIRY = INQUIRY + "/addInquiry.do";
+
+
+    //显示界面
+    public static final String GETINQUIRY = INQUIRY + "/getInquiryAndUser.do";
+
+    //获取对应信息
+    public static final String GETINQUIRYBYID =INQUIRY+ "/getInquiryAndUserByInquiryId"; //5
 }
