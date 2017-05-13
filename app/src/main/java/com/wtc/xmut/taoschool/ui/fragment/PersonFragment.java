@@ -74,10 +74,8 @@ public class PersonFragment extends Fragment implements View.OnClickListener {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.i(TAG, "PersonFragment: oncreateView");
         this.mContext = getActivity();
         usernumber = PrefUtils.getString(getActivity(), PrefUtils.USER_NUMBER, "");
-        Log.i(TAG, "PersonFragment: oncreateView"+usernumber);
         view = inflater.inflate(R.layout.fragment_person, container, false);
         init();
         return view;
@@ -187,6 +185,11 @@ public class PersonFragment extends Fragment implements View.OnClickListener {
                     mTv_like_count.setText("0");
                 }else {
                     mTv_like_count.setText(user.getLikecount()+"");
+                }
+                if (user.getInquirycount().equals("0")){
+                    mTv_sale_count.setText("0");
+                }else {
+                    mTv_sale_count.setText(user.getInquirycount()+"");
                 }
                 Uri uri = Uri.parse(ServerApi.SHOWPIC+user.getIconpath());
                 mSdv_user_icon.setImageURI(uri);

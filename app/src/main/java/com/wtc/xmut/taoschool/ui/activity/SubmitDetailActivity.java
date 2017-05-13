@@ -287,6 +287,9 @@ public class SubmitDetailActivity extends AppCompatActivity implements View.OnCl
         return format.format(date);
     }
 
-
-
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        initDate();
+    }
 }

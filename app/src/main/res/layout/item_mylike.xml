@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/gray_bg"
+    xmlns:fresco="http://schemas.android.com/tools"
+    app:cardCornerRadius="2dp"
+    android:stateListAnimator="@animator/touch_raise"
+    app:cardElevation="1dp"
+    app:layout_collapseParallaxMultiplier="0.5"
+    app:layout_scrollFlags="scroll"
+    android:id="@+id/card_view"
+    >
+    <LinearLayout
+        android:gravity="right"
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/tv_shoptime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="加载中..."
+            android:textSize="9sp" />
+
+        <View
+            android:background="#f1f1f1"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_marginTop="2dp"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="289dp"
+        android:layout_marginTop="20dp"
+        android:padding="8dp">
+
+        <com.wtc.xmut.taoschool.view.CircleImageView
+            android:id="@+id/sld_usericon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:src="@color/colorAccent"
+            fresco:placeholderImage="@drawable/usericon" />
+        <!--
+            com.facebook.drawee.view.SimpleDraweeView
+            -->
+        <ImageView
+            android:id="@+id/sld_shoppic"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="fitXY"
+            android:layout_alignEnd="@+id/tv_money"
+            android:layout_alignStart="@+id/sld_usericon"
+            android:layout_below="@+id/sld_usericon"
+            android:layout_marginTop="8dp"
+
+            android:src="@drawable/loadding" />
+
+        <TextView
+
+            android:id="@+id/tv_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tv_user_name"
+            android:layout_alignBottom="@+id/tv_user_name"
+            android:layout_alignParentEnd="true"
+            android:fontFamily="sans-serif"
+            android:text="加载中..."
+            android:textAllCaps="false"
+            android:textColor="@android:color/holo_red_light"
+            android:textSize="16sp"
+            android:textStyle="normal|bold"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/tv_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/sld_usericon"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/sld_usericon"
+            android:text="加载中..."
+            android:textColor="@color/btn_alert" />
+
+        <TextView
+            android:id="@+id/tv_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/sld_shoppic"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:background="#85999999"
+            android:maxLines="1"
+            android:padding="8dp"
+            android:text="详情加载中..."
+            android:textColor="#fff" />
+
+        <TextView
+            android:id="@+id/tv_fromwhere"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="加载中..."
+            android:textColor="@color/bb_tabletRightBorderDark"
+            android:layout_above="@+id/sld_shoppic"
+            android:layout_alignStart="@+id/tv_user_name" />
+
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

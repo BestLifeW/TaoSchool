@@ -8,8 +8,8 @@ package com.wtc.xmut.taoschool.api;
 public class ServerApi {
 
     // private static final String Host = "http://123.56.223.17:8080"; //服务器地址
-    private static final String Host = "http://10.0.2.2:8080"; //手机测试地址
-    // private static final String Host = "http://192.168.1.106:8080";
+    //private static final String Host = "http://10.0.2.2:8080"; //手机测试地址
+     private static final String Host = "http://100.84.125.19:8080";
     //private static final String Host = "http://127.0.0.1:8080";  //Junit测试专用地址
     private static final String SERVERHOST = Host + "/TaoSchool";
 
@@ -47,19 +47,25 @@ public class ServerApi {
     public static final String GETSHOPBYID = SHOPHOST + "/getShopByShopID/";
 
     //根据商品id和用户姓名获取 提交时的显示信息
-    public static final String GETSUBMITDETAIL =SHOPHOST + "/getSubmit";
+    public static final String GETSUBMITDETAIL = SHOPHOST + "/getSubmit";
 
     //根据用户名查询该用户的所有商品
-    public static final String GETSHOPBYUSERNAME = SHOPHOST + "/getShopByUserName/" ;
+    public static final String GETSHOPBYUSERNAME = SHOPHOST + "/getShopByUserName/";
 
     //判断网络连接
     public static final String ISCONNECT = SERVERHOST + "/getConnect/getNet.do";
 
     //根据id删除商品
-    public static final  String DELSHOPBYID = SHOPHOST + "/deleteShopById/"; //1
+    public static final String DELSHOPBYID = SHOPHOST + "/deleteShopById/"; //1
 
     //根据商品种类获取商品信息
-    public static final String GETSHOPBYCATEGORY =SHOPHOST + "/getShopsByCategory/"; //数码
+    public static final String GETSHOPBYCATEGORY = SHOPHOST + "/getShopsByCategory/"; //数码
+
+    //根据用户的点赞信息获取商品信息
+    public static final String GETSHOPBYLIKENAME = SHOPHOST + "/getShopsByLikeUsername/";
+
+    //获得买到和卖出去的数据
+    public static final String GETSHOPBYSALLORBUYER = SHOPHOST + "/getOrdersByBuyerOrSaller/"; //1表示买家，2表示卖家
 
     //-----点赞的API
     public static final String USERLIKE = SERVERHOST + "/UserLike";
@@ -74,52 +80,49 @@ public class ServerApi {
 
 
     //判断有几个赞
-    public  static final String COUNTLOVEBYUSERNAME = USERLIKE + "/countUserLove/";   //UserLike/countUserLove/lovec 调用格式
-
+    public static final String COUNTLOVEBYUSERNAME = USERLIKE + "/countUserLove/";   //UserLike/countUserLove/lovec 调用格式
 
 
     //-----评论的API
-      static  final  String COMMENT = SERVERHOST + "/Comment";
+    static final String COMMENT = SERVERHOST + "/Comment";
 
     //评论的方法 通过 shopId 获取
-    public  static final  String GETCOMMENT = COMMENT +"/getComment/"; //同过/getComment/1 获得商品的评论
+    public static final String GETCOMMENT = COMMENT + "/getComment/"; //同过/getComment/1 获得商品的评论
 
     //评论的方法 通过POST表单提交
-    public  static  final  String ADDCOMMENT = COMMENT +"/addComment.do";
-
+    public static final String ADDCOMMENT = COMMENT + "/addComment.do";
 
 
     //-----订单的API
-    static final String ORDER =SERVERHOST +"/Order";
+    static final String ORDER = SERVERHOST + "/Order";
 
     //提交订单的
-    public static final String  ADDORDER = ORDER +"/addOrder.do";
+    public static final String ADDORDER = ORDER + "/addOrder.do";
 
     //根据商品id获取是否拍下
-    public  static final String ISORDER = ORDER + "/getOrderByShopid/";   //9
+    public static final String ISORDER = ORDER + "/getOrderByShopid/";   //9
 
     //根据用户姓名获取 商品订单
 
-    public static final String GETORDERBYUSERNAME =ORDER+"/getOrdersByUsername/"; //lovec
+    public static final String GETORDERBYUSERNAME = ORDER + "/getOrdersByUsername/"; //lovec
 
     //根据订单ID修改订单信息
-    public static  final  String UPDATEORDERBYID = ORDER + "/updateOrderById.do";//修改信息
+    public static final String UPDATEORDERBYID = ORDER + "/updateOrderById.do";//修改信息
 
     //根据商品id获取订单信息
-    public  static final  String GETORDERBYSHOPID = ORDER + "/getOrdersByShopid/"; //9
+    public static final String GETORDERBYSHOPID = ORDER + "/getOrdersByShopid/"; //9
 
     //根据id删除订单
-    public static final  String DELORDERBYID = ORDER + "/delOrderById/";//1
+    public static final String DELORDERBYID = ORDER + "/delOrderById/";//1
 
 
     //根据买家姓名获取订单
-    public static final String GETORDERBYBUYERNAME = ORDER +"/getOrdersBybuyer/"; //\
-
+    public static final String GETORDERBYBUYERNAME = ORDER + "/getOrdersBybuyer/"; //\
 
 
     //添加求购商品
 
-    static final String INQUIRY = SERVERHOST +"/Inquiry";
+    static final String INQUIRY = SERVERHOST + "/Inquiry";
 
     //提交订单
     public static final String ADDINQUIRY = INQUIRY + "/addInquiry.do";
@@ -129,16 +132,17 @@ public class ServerApi {
     public static final String GETINQUIRY = INQUIRY + "/getInquiryAndUser.do";
 
     //获取对应信息
-    public static final String GETINQUIRYBYID =INQUIRY+ "/getInquiryAndUserByInquiryId/"; //5
+    public static final String GETINQUIRYBYID = INQUIRY + "/getInquiryAndUserByInquiryId/"; //5
 
 
-
-    public static final String INQUIRYCOMMENT =SERVERHOST+"/InquiryComment";
+    public static final String INQUIRYCOMMENT = SERVERHOST + "/InquiryComment";
 
     //获取求购商品留言的Api
     public static final String GETCOMMENTBYINQUIRYID = INQUIRYCOMMENT + "/getComment/"; //1
 
     //添加求购商品留言 addComment.do
-    public static final String ADDINQUIRYCONMENT = INQUIRYCOMMENT +"/addComment.do";
+    public static final String ADDINQUIRYCONMENT = INQUIRYCOMMENT + "/addComment.do";
+
+
 
 }

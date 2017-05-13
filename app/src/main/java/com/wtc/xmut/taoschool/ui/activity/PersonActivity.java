@@ -81,7 +81,9 @@ public class PersonActivity extends AppCompatActivity implements View.OnClickLis
     private User user;
     private RelativeLayout rl_setting_address;
     private ArrayAdapter<String> adapter;
-    private String collage  = "";
+    private String collage = "";
+    private TextView etdormitory;
+    private TextView etfloor;
 
     public String getCollage() {
         return collage;
@@ -125,7 +127,7 @@ public class PersonActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     @OnClick(R.id.rl_setting_address)
-    void choose(){
+    void choose() {
         //第一步：添加一个下拉列表项的list，这里添加的项就是下拉列表的菜单项
         final View view = View.inflate(getApplicationContext(), R.layout.item_setting, null);
         final Spinner sp_college = (Spinner) view.findViewById(R.id.sp_college);
@@ -151,6 +153,7 @@ public class PersonActivity extends AppCompatActivity implements View.OnClickLis
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //第四步：将适配器添加到下拉列表上
         sp_college.setAdapter(adapter);
+        sp_college.setSelection(list.lastIndexOf(user.getCollege()));
         sp_college.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
@@ -170,33 +173,48 @@ public class PersonActivity extends AppCompatActivity implements View.OnClickLis
         view.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String floor = ((TextView) view.findViewById(R.id.et_floor)).getText().toString();
-                String dormitory = ((TextView) view.findViewById(R.id.et_dormitory)).getText().toString();
-                Toasty.success(getApplicationContext(),getCollage(),Toast.LENGTH_LONG).show();
+                etfloor = (TextView) view.findViewById(R.id.et_floor);
+                etfloor.setText(user.getFloor());
+                String floor = etfloor.getText().toString();
+                etdormitory = (TextView) view.findViewById(R.id.et_dormitory);
+                etdormitory.setText(user.getDormitory());
+                String dormitory = etdormitory.getText().toString();
+                Toasty.success(getApplicationContext(), getCollage(), Toast.LENGTH_LONG).show();
 
-                HashMap<String,String> map  = new HashMap<String, String>();
-                map.put("id",null);
-                map.put("username",username);
-                map.put("college",getCollage());
-                map.put("floor",floor);
-                map.put("dormitory",dormitory);
+                HashMap<String, String> map = new HashMap<String, String>();
+                map.put("id", null);
+                map.put("username", username);
+                map.put("college", getCollage());
+                map.put("floor", floor);
+                map.put("dormitory", dormitory);
 
-                if (!(TextUtils.isEmpty(getCollage())||TextUtils.isEmpty(floor)||TextUtils.isEmpty(dormitory))){
-                    utils.post(ServerApi.USERHEAD, map, new XutilsUtils.XCallBack() {
+                if (!(TextUtils.isEmpty(getCollage()) || TextUtils.isEmpty(floor) || TextUtils.isEmpty(dormitory))) {
+                    utils.post(ServerApi.UPDATEUSER, map, new XutilsUtils.XCallBack() {
                         @Override
                         public void onResponse(String result) {
-                            Toasty.success(getApplicationContext(),"更新成功",Toast.LENGTH_LONG).show();
+                            if (result.contains("成功")) {
+                                Toasty.success(getApplicationContext(), "更新成功", Toast.LENGTH_LONG).show();
+                                onRestart();
+                            }
                         }
 
                         @Override
                         public void onResponseFail() {
-
+                            Toasty.error(getApplicationContext(), "更新失败", Toast.LENGTH_LONG).show();
+                            onRestart();
                         }
                     });
                 }
                 show.dismiss();
             }
         });
+        view.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                show.dismiss();
+            }
+        });
+
     }
 
 
@@ -456,6 +474,7 @@ public class PersonActivity extends AppCompatActivity implements View.OnClickLis
             return null;
         }
     }
+
     /**
      * 将Bitmap写入SD卡中的一个文件中,并返回写入文件的Uri
      *
@@ -491,7 +510,10 @@ public class PersonActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        initData();
+    }
 
-
-    //修改地址
 }

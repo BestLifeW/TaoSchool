@@ -169,10 +169,16 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
         String title = et_title.getText().toString().trim();
         String description = et_summary.getText().toString().trim();
         String classify = tv_classify.getText().toString().trim();
-        if (!(title.trim().equals("") || description.trim().equals("") || username.trim().equals("") || newmoney.trim().equals("") || oldmoney.trim().equals(""))) {
+
+        if (!(title.trim().equals("") || description.trim().equals("") || username.trim().equals(""))) {
+            if (newmoney==null||oldmoney==null){
+                newmoney="0";
+                oldmoney="0";
+            }
             Shop.put("shopname", title);
             Shop.put("description", description);
             Shop.put("username", username);
+
             Shop.put("price", newmoney);
             Shop.put("oldprice", oldmoney);
             //插入分类
@@ -181,8 +187,6 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
                     Shop.put("category", pinyin[i]);
                 }
             }
-
-
             Shop.put("shoptime", str);
         } else {
             SnackbarUtils.ShowSnackbar(getCurrentFocus(), "请输入完整信息");

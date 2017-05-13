@@ -31,7 +31,6 @@
             android:layout_below="@+id/textView"
             android:layout_weight="0.13"
             android:hint="请输入楼名"
-            android:inputType="phone"
             android:textColor="#3c3c3c"
             android:textColorHint="#3c3c3c"
             android:textSize="14sp" />
@@ -42,7 +41,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView"
             android:hint="请输入寝室号"
-            android:inputType="phone"
             android:textColor="#3c3c3c"
             android:textColorHint="#3c3c3c"
             android:textSize="14sp" />
