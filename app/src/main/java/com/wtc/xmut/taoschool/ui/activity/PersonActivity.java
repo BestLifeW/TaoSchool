@@ -9,9 +9,14 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -38,10 +43,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import es.dmoral.toasty.Toasty;
 
 import static org.xutils.common.util.DensityUtil.getScreenHeight;
 import static org.xutils.common.util.DensityUtil.getScreenWidth;
@@ -70,7 +77,19 @@ public class PersonActivity extends AppCompatActivity implements View.OnClickLis
     private static final String TAG = "PersonActivity";
     private XutilsUtils utils;
     private String username;
+    private List<String> list = new ArrayList<String>();
     private User user;
+    private RelativeLayout rl_setting_address;
+    private ArrayAdapter<String> adapter;
+    private String collage  = "";
+
+    public String getCollage() {
+        return collage;
+    }
+
+    public void setCollage(String collage) {
+        this.collage = collage;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +99,8 @@ public class PersonActivity extends AppCompatActivity implements View.OnClickLis
         rl_chooseusericon.setOnClickListener(this);
         utils = XutilsUtils.getInstance();
         username = PrefUtils.getString(getApplicationContext(), PrefUtils.USER_NUMBER, "");
+        rl_setting_address = (RelativeLayout) findViewById(R.id.rl_setting_address);
+
         initData();
     }
 
@@ -103,8 +124,85 @@ public class PersonActivity extends AppCompatActivity implements View.OnClickLis
         });
     }
 
+    @OnClick(R.id.rl_setting_address)
+    void choose(){
+        //第一步：添加一个下拉列表项的list，这里添加的项就是下拉列表的菜单项
+        final View view = View.inflate(getApplicationContext(), R.layout.item_setting, null);
+        final Spinner sp_college = (Spinner) view.findViewById(R.id.sp_college);
+        list.add("软件学院");
+        list.add("机械工程学院");
+        list.add("建筑工程学院");
+        list.add("电子电气学院");
+        list.add("计科学院");
+        list.add("环境工程学院");
+        list.add("数理学院");
+        list.add("商学院");
+        list.add("管理科学学院");
+        list.add("文化传播学院");
+        list.add("设计艺术学院");
+        list.add("人文科学学院");
+        list.add("空信科学学院");
+        list.add("继续教育学院");
+        list.add("其他学院");
+
+        //第二步：为下拉列表定义一个适配器，这里就用到里前面定义的list。
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, list);
+        //第三步：为适配器设置下拉列表下拉时的菜单样式。
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //第四步：将适配器添加到下拉列表上
+        sp_college.setAdapter(adapter);
+        sp_college.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int pos, long id) {
+                setCollage(list.get(pos));
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Another interface callback
+            }
+        });
+
+        final Dialog show = DialogUIUtils.showCustomAlert(this, view).show();
+        view.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String floor = ((TextView) view.findViewById(R.id.et_floor)).getText().toString();
+                String dormitory = ((TextView) view.findViewById(R.id.et_dormitory)).getText().toString();
+                Toasty.success(getApplicationContext(),getCollage(),Toast.LENGTH_LONG).show();
+
+                HashMap<String,String> map  = new HashMap<String, String>();
+                map.put("id",null);
+                map.put("username",username);
+                map.put("college",getCollage());
+                map.put("floor",floor);
+                map.put("dormitory",dormitory);
+
+                if (!(TextUtils.isEmpty(getCollage())||TextUtils.isEmpty(floor)||TextUtils.isEmpty(dormitory))){
+                    utils.post(ServerApi.USERHEAD, map, new XutilsUtils.XCallBack() {
+                        @Override
+                        public void onResponse(String result) {
+                            Toasty.success(getApplicationContext(),"更新成功",Toast.LENGTH_LONG).show();
+                        }
+
+                        @Override
+                        public void onResponseFail() {
+
+                        }
+                    });
+                }
+                show.dismiss();
+            }
+        });
+    }
+
+
     @OnClick(R.id.rl_account_password)
     void setPassWord() {
+
         DialogUIUtils.showAlert(this, null, "修改密码", "旧密码", "新密码", "确定", "取消", false, false, false, new DialogUIListener() {
             @Override
             public void onPositive() {
@@ -358,7 +456,6 @@ public class PersonActivity extends AppCompatActivity implements View.OnClickLis
             return null;
         }
     }
-
     /**
      * 将Bitmap写入SD卡中的一个文件中,并返回写入文件的Uri
      *
@@ -393,4 +490,8 @@ public class PersonActivity extends AppCompatActivity implements View.OnClickLis
             return null;
         }
     }
+
+
+
+    //修改地址
 }

@@ -48,66 +48,7 @@ public class MyPublishAdapter extends RecyclerView.Adapter<MyPublishAdapter.MyVi
         utils = XutilsUtils.getInstance();
         this.datas = datas;
     }
-/*
-    @Override
-    protected void convert(ViewHolder holder, final ShopExt shopExt, final int position) {
 
-        ImageView draweeView = holder.getView(R.id.sld_shoppic);
-        ImageView user_icon = holder.getView(R.id.sld_usericon);
-        CardView view = holder.getView(R.id.card_view);
-        view.setCardBackgroundColor(Color.WHITE);
-        Glide.with(mcontext).load(shopuri).placeholder(R.drawable.loadding).into(draweeView);
-        Glide.with(mcontext).load(UserIconUri).placeholder(R.drawable.usericon).into(user_icon);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mcontext, PublishActivity.class);
-                intent.putExtra("msg", "display");
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mcontext.startActivity(intent);
-            }
-        });
-
-        holder.getView(R.id.tv_del).setOnClickListener(
-                new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               DialogUIUtils.showMdAlert(activity, "是否删除?", null, new DialogUIListener() {
-                    @Override
-                    public void onPositive() {
-                        utils.get(ServerApi.DELSHOPBYID + shopExt.getId(), null, new XutilsUtils.XCallBack() {
-                            @Override
-                            public void onResponse(String result) {
-                                if (result.contains("删除成功")) {
-
-                                    notifyItemRemoved(position);
-                                    notifyDataSetChanged();
-                                    Toasty.success(mcontext, "删除成功", Toast.LENGTH_LONG).show();
-                                }
-                            }
-
-                            @Override
-                            public void onResponseFail() {
-                                Toasty.error(mcontext, "删除失败", Toast.LENGTH_LONG).show();
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onNegative() {
-
-                    }
-                }).show();
-
-
-            }
-        });
-        holder.setText(R.id.tv_money, "￥" + shopExt.getPrice());
-        holder.setText(R.id.tv_description, shopExt.getDescription());
-        holder.setText(R.id.tv_user_name, shopExt.getName());
-        holder.setText(R.id.tv_fromwhere, "來自" + shopExt.getCollege());
-        holder.setText(R.id.tv_shoptime, shopExt.getShoptime());
-    }*/
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -130,6 +71,11 @@ public class MyPublishAdapter extends RecyclerView.Adapter<MyPublishAdapter.MyVi
                 ShowDelDialog(position);
             }
         });
+        holder.tv_description.setText(datas.get(position).getDescription());
+        holder.tv_money.setText(datas.get(position).getPrice());
+        holder.tv_user_name.setText(datas.get(position).getUsername());
+        holder.tv_fromwhere.setText(datas.get(position).getCollege());
+        holder.tv_shoptime.setText(datas.get(position).getShoptime());
     }
 
     @Override

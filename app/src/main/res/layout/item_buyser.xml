@@ -9,6 +9,7 @@
     android:layout_height="100dp">
 
     <RelativeLayout
+        android:id="@+id/rl_buy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical">
@@ -60,6 +61,7 @@
             android:text="等待卖家同意" />
 
         <ImageView
+            android:scaleType="center"
             android:id="@+id/iv_shoppic"
             android:layout_width="69dp"
             android:layout_height="81dp"

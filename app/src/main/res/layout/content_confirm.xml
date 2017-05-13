@@ -23,7 +23,7 @@
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/list_bg"
+                android:background="@drawable/orderbg"
                 android:orientation="vertical"
                 tools:layout_editor_absoluteX="8dp"
                 tools:layout_editor_absoluteY="8dp">
@@ -49,7 +49,7 @@
                     android:gravity="center_vertical"
                     android:paddingLeft="8dp"
                     android:paddingTop="4dp"
-                    android:text="王田朝" />
+                    android:text="加载中..." />
 
                 <TextView
                     android:id="@+id/tv_buyerphone"
@@ -58,7 +58,7 @@
                     android:gravity="center_vertical"
                     android:paddingBottom="4dp"
                     android:paddingLeft="8dp"
-                    android:text="15606929310" />
+                    android:text="加载中..." />
 
                 <View
                     android:layout_width="match_parent"
@@ -85,7 +85,7 @@
                     android:gravity="center_vertical"
                     android:paddingLeft="8dp"
                     android:paddingTop="4dp"
-                    android:text="厦门理工学院" />
+                    android:text="加载中..." />
 
                 <TextView
                     android:id="@+id/tv_buysushe"
@@ -94,7 +94,7 @@
                     android:gravity="center_vertical"
                     android:paddingBottom="4dp"
                     android:paddingLeft="8dp"
-                    android:text="D栋宿舍 128室" />
+                    android:text="加载中..." />
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -119,7 +119,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:padding="8dp"
-                    android:text="5/17/23:12" />
+                    android:text="加载中..." />
             </LinearLayout>
 
             <LinearLayout
@@ -192,7 +192,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_toEndOf="@+id/textView12"
-                        android:text="￥2600" />
+                        android:text="加载中..." />
                 </RelativeLayout>
 
                 <View

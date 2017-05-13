@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.wtc.xmut.taoschool.R;
 import com.wtc.xmut.taoschool.api.ServerApi;
 import com.wtc.xmut.taoschool.domain.ShopExt;
@@ -38,13 +41,28 @@ public class PublishAdapter extends CommonAdapter<ShopExt> {
         Uri shopuri = Uri.parse(ServerApi.SHOWPIC + shopExt.getPicture());
         Uri UserIconUri = Uri.parse(ServerApi.SHOWPIC + shopExt.getIconpath());
 
-        ImageView draweeView = holder.getView(R.id.sld_shoppic);
-        ImageView user_icon = holder.getView(R.id.sld_usericon);
-        Glide.with(mcontext).load(UserIconUri).placeholder(R.drawable.usericon).into(user_icon);
-
+        final ImageView draweeView = holder.getView(R.id.sld_shoppic);
+        final ImageView user_icon = holder.getView(R.id.sld_usericon);
+        Glide.with(mcontext).load(UserIconUri).placeholder(R.drawable.usericon).into(new SimpleTarget<GlideDrawable>() {
+            @Override
+            public void onResourceReady(GlideDrawable resource,
+                                        GlideAnimation<? super GlideDrawable> glideAnimation) {
+                user_icon.setImageDrawable(resource);
+            }
+        });
+        ImageView view1 = holder.getView(R.id.imageView2); //卖掉的图片显示
+        if (shopExt.getState()==1){
+            view1.setVisibility(View.VISIBLE);
+        }
         CardView view = holder.getView(R.id.card_view);
         view.setBackgroundColor(Color.WHITE);
-        Glide.with(mcontext).load(shopuri).placeholder(R.drawable.loadding).into(draweeView);
+        Glide.with(mcontext).load(shopuri).placeholder(R.drawable.loadding).into(new SimpleTarget<GlideDrawable>() {
+            @Override
+            public void onResourceReady(GlideDrawable resource,
+                                        GlideAnimation<? super GlideDrawable> glideAnimation) {
+                draweeView.setImageDrawable(resource);
+            }
+        });
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

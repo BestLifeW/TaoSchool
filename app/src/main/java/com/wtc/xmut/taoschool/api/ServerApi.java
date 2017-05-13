@@ -8,8 +8,8 @@ package com.wtc.xmut.taoschool.api;
 public class ServerApi {
 
     // private static final String Host = "http://123.56.223.17:8080"; //服务器地址
-   // private static final String Host = "http://10.0.2.2:8080"; //手机测试地址
-     private static final String Host = "http://192.168.1.106:8080";
+    private static final String Host = "http://10.0.2.2:8080"; //手机测试地址
+    // private static final String Host = "http://192.168.1.106:8080";
     //private static final String Host = "http://127.0.0.1:8080";  //Junit测试专用地址
     private static final String SERVERHOST = Host + "/TaoSchool";
 
@@ -117,7 +117,6 @@ public class ServerApi {
 
 
 
-
     //添加求购商品
 
     static final String INQUIRY = SERVERHOST +"/Inquiry";
@@ -130,5 +129,16 @@ public class ServerApi {
     public static final String GETINQUIRY = INQUIRY + "/getInquiryAndUser.do";
 
     //获取对应信息
-    public static final String GETINQUIRYBYID =INQUIRY+ "/getInquiryAndUserByInquiryId"; //5
+    public static final String GETINQUIRYBYID =INQUIRY+ "/getInquiryAndUserByInquiryId/"; //5
+
+
+
+    public static final String INQUIRYCOMMENT =SERVERHOST+"/InquiryComment";
+
+    //获取求购商品留言的Api
+    public static final String GETCOMMENTBYINQUIRYID = INQUIRYCOMMENT + "/getComment/"; //1
+
+    //添加求购商品留言 addComment.do
+    public static final String ADDINQUIRYCONMENT = INQUIRYCOMMENT +"/addComment.do";
+
 }

@@ -58,6 +58,8 @@ public class messageSaller extends Fragment {
         username = PrefUtils.getString(getActivity(), PrefUtils.USER_NUMBER, "");
         recycler_view = (RecyclerViewEmptySupport)view.findViewById(R.id.recycler_view);
         recycler_view.setLayoutManager(new LinearLayoutManager(getActivity()));
+        SpacesItemDecoration decoration = new SpacesItemDecoration(20);
+        recycler_view.addItemDecoration(decoration);
         mSwipeRefreshWidget = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_widget);
         initData();
         refresh();
@@ -93,6 +95,7 @@ public class messageSaller extends Fragment {
         }
         adapter = new OrderSallerAdapter(getActivity(), shoplist);
         recycler_view.setEmptyView(view.findViewById(R.id.fail));
+
         recycler_view.setAdapter(adapter);
 
 
@@ -106,12 +109,19 @@ public class messageSaller extends Fragment {
         return fragment;
     }
 
-    class MyItemDecoration extends RecyclerView.ItemDecoration {
-
+    private class SpacesItemDecoration extends RecyclerView.ItemDecoration {
+        private int space;
+        SpacesItemDecoration(int space) {
+            this.space = space;
+        }
         @Override
         public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-            //设定底部边距为1px
-            outRect.set(0, 0, 0, 1);
+            outRect.left = space;
+            outRect.right = space;
+            outRect.bottom = space;
+            if (parent.getChildAdapterPosition(view) == 0) {
+                outRect.top = space;
+            }
         }
     }
 
@@ -131,11 +141,10 @@ public class messageSaller extends Fragment {
                     @Override
                     public void run() {
                         initData();
-
                         mSwipeRefreshWidget.setRefreshing(false);
 
                     }
-                }, 3000);
+                }, 1000);
             }
         });
     }

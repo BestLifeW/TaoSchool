@@ -122,5 +122,6 @@
         <item>公共体育学院</item>
         <item>其他学院</item>
     </string-array>
+    <string name="title_activity_inquiry_detail">求购详情</string>
 
 </resources>

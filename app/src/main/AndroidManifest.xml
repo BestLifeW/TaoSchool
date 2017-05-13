@@ -83,7 +83,11 @@
             android:name=".ui.activity.CategoryDetailActivity"
             android:label="分类详情"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.activity.InquiryActivity"></activity>
+        <activity android:name=".ui.activity.InquiryActivity" />
+        <activity
+            android:name=".ui.activity.InquiryDetailActivity"
+            android:label="@string/title_activity_inquiry_detail"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

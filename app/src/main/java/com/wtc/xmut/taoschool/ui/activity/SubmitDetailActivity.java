@@ -2,6 +2,7 @@ package com.wtc.xmut.taoschool.ui.activity;
 
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -66,6 +67,8 @@ public class SubmitDetailActivity extends AppCompatActivity implements View.OnCl
     @BindView(R.id.tv_buytime)
     TextView tvbuytime;
 
+
+
     private int shopId;
     private String username;
     private XutilsUtils utils;
@@ -77,6 +80,7 @@ public class SubmitDetailActivity extends AppCompatActivity implements View.OnCl
     private Dialog show;
     private Dialog submitDialog;
     private String time;
+    private LinearLayout ll_address;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,7 +108,9 @@ public class SubmitDetailActivity extends AppCompatActivity implements View.OnCl
         btn_ok = (Button) findViewById(R.id.btn_ok);
 
         ll_buytime = (LinearLayout) findViewById(R.id.ll_buytime);
+        ll_address = (LinearLayout) findViewById(R.id.ll_address);
         ll_buytime.setOnClickListener(this);
+        ll_address.setOnClickListener(this);
     }
 
     /**
@@ -142,6 +148,8 @@ public class SubmitDetailActivity extends AppCompatActivity implements View.OnCl
             tvShopname.setText(submitDetail.getShopname() + "");
             tvBuymoney.setText("￥" + submitDetail.getPrice() + "");
             tvShopmenoy.setText("￥" + submitDetail.getPrice() + "");
+            tvUsername.setText(submitDetail.getName()+"|"+submitDetail.getTelephone());
+            tvAddress.setText("学院:"+submitDetail.getCollege()+"、楼号:"+submitDetail.getFloor()+"、寝号:"+submitDetail.getDormitory());
             Uri UserIconUri = Uri.parse(ServerApi.SHOWPIC + submitDetail.getPicture());
             Glide.with(getApplication()).load(UserIconUri).placeholder(R.drawable.loadding).into(ivShop);
         }
@@ -166,10 +174,28 @@ public class SubmitDetailActivity extends AppCompatActivity implements View.OnCl
             case R.id.ll_buytime:
                 choseTime();
                 break;
+            case R.id.ll_address:
+                choseAddress();
+                break;
             default:
                 break;
         }
 
+    }
+
+    private void choseAddress() {
+        DialogUIUtils.showMdAlert(SubmitDetailActivity.this, "是否切换选择新地址？", null, true, false, new DialogUIListener() {
+            @Override
+            public void onPositive() {
+                Intent intent = new Intent(getApplicationContext(),PersonActivity.class);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onNegative() {
+
+            }
+        }).show();
     }
 
     private void choseTime() {
@@ -261,29 +287,6 @@ public class SubmitDetailActivity extends AppCompatActivity implements View.OnCl
         return format.format(date);
     }
 
-    @Override
-    protected void onResume() {
-        Log.i(TAG, "onResume: ");
-        initDate();
-        super.onResume();
-    }
 
-    @Override
-    protected void onRestart() {
-        Log.i(TAG, "onRestart: ");
-        super.onRestart();
-    }
-
-    @Override
-    protected void onResumeFragments() {
-        Log.i(TAG, "onResumeFragments: ");
-        super.onResumeFragments();
-    }
-
-    @Override
-    protected void onPostResume() {
-        Log.i(TAG, "onPostResume: ");
-        super.onPostResume();
-    }
 
 }

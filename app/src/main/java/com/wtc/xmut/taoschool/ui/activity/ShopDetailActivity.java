@@ -18,10 +18,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.dou361.dialogui.DialogUIUtils;
 import com.dou361.dialogui.listener.DialogUIListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.wang.avi.AVLoadingIndicatorView;
 import com.wtc.xmut.taoschool.R;
 import com.wtc.xmut.taoschool.adpater.CommentAdapter;
 import com.wtc.xmut.taoschool.api.ServerApi;
@@ -65,6 +69,7 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
     private CommentAdapter adapter;
     private int shopId;
     private RelativeLayout rl_shopdetail;
+    private AVLoadingIndicatorView avi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,13 +177,21 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
     private void initDate() {
         if (shopExt != null) {
             mTv_user_name.setText(shopExt.getName());
+            mTv_fromwhere.setText("来自"+shopExt.getCollege());
             mTv_money.setText("￥" + shopExt.getPrice() + "");
             mTv_shop_summary.setText(shopExt.getDescription());
             Uri shopuri = Uri.parse(ServerApi.SHOWPIC + shopExt.getPicture());
             Uri UserIconUri = Uri.parse(ServerApi.SHOWPIC + shopExt.getIconpath());
             Glide.with(getApplication()).load(shopuri).placeholder(R.drawable.loadding).into(mSdv_shop_pic);
-            Glide.with(getApplication()).load(UserIconUri).placeholder(R.drawable.usericon).into(mSld_usericon);
+            Glide.with(getApplication()).load(UserIconUri).placeholder(R.drawable.usericon).into(new SimpleTarget<GlideDrawable>() {
+                @Override
+                public void onResourceReady(GlideDrawable resource,
+                                            GlideAnimation<? super GlideDrawable> glideAnimation) {
+                    mSld_usericon.setImageDrawable(resource);
+                }
+            });
             mTv_CommentCount.setText(comments.size() + "");
+            avi.hide();
         }
     }
 
@@ -198,6 +211,7 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
         mBtnLove = (ImageView) findViewById(R.id.iv_love);
         mBtnLove.setOnClickListener(this);
         rl_shopdetail = (RelativeLayout) findViewById(R.id.rl_shopdetail);
+        avi = (AVLoadingIndicatorView) findViewById(R.id.avi);
     }
 
 
