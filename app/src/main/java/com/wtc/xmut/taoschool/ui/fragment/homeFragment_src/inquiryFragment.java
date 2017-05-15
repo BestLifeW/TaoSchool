@@ -120,4 +120,10 @@ public class inquiryFragment extends Fragment {
             }
         }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initDate();
+    }
 }

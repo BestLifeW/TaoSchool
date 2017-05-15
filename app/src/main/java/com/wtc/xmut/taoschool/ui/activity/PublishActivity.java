@@ -171,9 +171,9 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
         String classify = tv_classify.getText().toString().trim();
 
         if (!(title.trim().equals("") || description.trim().equals("") || username.trim().equals(""))) {
-            if (newmoney==null||oldmoney==null){
-                newmoney="0";
-                oldmoney="0";
+            if (newmoney == null || oldmoney == null) {
+                newmoney = "0";
+                oldmoney = "0";
             }
             Shop.put("shopname", title);
             Shop.put("description", description);
@@ -183,7 +183,7 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
             Shop.put("oldprice", oldmoney);
             //插入分类
             for (int i = 0; i < words2.length; i++) {
-                if (classify==words2[i]){
+                if (classify == words2[i]) {
                     Shop.put("category", pinyin[i]);
                 }
             }
@@ -321,18 +321,22 @@ public class PublishActivity extends AppCompatActivity implements View.OnClickLi
             case CROP_FROM_CAMERA:   //拍照裁剪
             case CROP_FROM_PHOTO:    //相册裁剪
                 //裁剪之后显示照片
-
-                Uri uri = UCrop.getOutput(data);
+                if (data == null) {
+                    return;
+                } else {
+                    Uri uri = UCrop.getOutput(data);
 //                    Uri uri = Uri.fromFile(new File(fileName));
-                Bitmap bitmap = BitmapFactory.decodeFile(uri.getPath());
-                iv_addpic.setImageBitmap(bitmap);
-                if (requestCode == CROP_FROM_CAMERA) {  //如果是拍照,则删除原图，只保存裁剪后的图片
-                    File oldFile = new File(fileName);
-                    if (oldFile.exists()) {
-                        oldFile.delete();   //删除原图
+                    Bitmap bitmap = BitmapFactory.decodeFile(uri.getPath());
+                    iv_addpic.setImageBitmap(bitmap);
+                    if (requestCode == CROP_FROM_CAMERA) {  //如果是拍照,则删除原图，只保存裁剪后的图片
+                        File oldFile = new File(fileName);
+                        if (oldFile.exists()) {
+                            oldFile.delete();   //删除原图
+                        }
                     }
+                    realFilePath = FileUtil.getRealFilePath(getApplication(), uri);
                 }
-                realFilePath = FileUtil.getRealFilePath(getApplication(), uri);
+
                 break;
             default:
                 break;

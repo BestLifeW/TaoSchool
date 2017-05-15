@@ -78,7 +78,6 @@ public class PublishFragment extends Fragment {
 
     private void initDate() throws IOException {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecyclerView.setEmptyView(view.findViewById(R.id.fail));
         SpacesItemDecoration decoration = new SpacesItemDecoration(20);
         mRecyclerView.addItemDecoration(decoration);
         getConnectData();
@@ -107,6 +106,7 @@ public class PublishFragment extends Fragment {
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
         shopList = gson.fromJson(result, new TypeToken<ArrayList<ShopExt>>() {
         }.getType());
+
         setAdapter();
     }
 
@@ -116,6 +116,7 @@ public class PublishFragment extends Fragment {
     private void setAdapter() {
         adapter = new PublishAdapter(getActivity(),
                 R.layout.item_main, shopList);
+        mRecyclerView.setEmptyView(view.findViewById(R.id.fail));
         mRecyclerView.setAdapter(adapter);
     }
 

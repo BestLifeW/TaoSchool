@@ -5,8 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ProgressBar
+        android:layout_gravity="center"
+        android:id="@+id/progressBar3"
+        android:visibility="invisible"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <android.support.v4.widget.NestedScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/activity_login"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -129,7 +136,6 @@
                     android:layout_below="@+id/textView"
                     android:layout_weight="0.5"
                     android:hint="请输入楼名"
-                    android:inputType="phone"
                     android:textSize="14sp" />
 
                 <EditText
@@ -139,7 +145,6 @@
                     android:layout_below="@+id/textView"
                     android:layout_weight="0.5"
                     android:hint="请输入寝室号"
-                    android:inputType="phone"
                     android:textSize="14sp" />
 
             </LinearLayout>
@@ -166,12 +171,4 @@
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
-
-    <ProgressBar
-        android:layout_gravity="center"
-        android:id="@+id/progressBar3"
-        android:visibility="invisible"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 </FrameLayout>

@@ -8,8 +8,8 @@ package com.wtc.xmut.taoschool.api;
 public class ServerApi {
 
     // private static final String Host = "http://123.56.223.17:8080"; //服务器地址
-    //private static final String Host = "http://10.0.2.2:8080"; //手机测试地址
-     private static final String Host = "http://100.84.125.19:8080";
+    private static final String Host = "http://10.0.2.2:8080"; //手机测试地址
+    // private static final String Host = "http://100.84.125.19:8080";
     //private static final String Host = "http://127.0.0.1:8080";  //Junit测试专用地址
     private static final String SERVERHOST = Host + "/TaoSchool";
 
@@ -64,8 +64,7 @@ public class ServerApi {
     //根据用户的点赞信息获取商品信息
     public static final String GETSHOPBYLIKENAME = SHOPHOST + "/getShopsByLikeUsername/";
 
-    //获得买到和卖出去的数据
-    public static final String GETSHOPBYSALLORBUYER = SHOPHOST + "/getOrdersByBuyerOrSaller/"; //1表示买家，2表示卖家
+
 
     //-----点赞的API
     public static final String USERLIKE = SERVERHOST + "/UserLike";
@@ -119,6 +118,8 @@ public class ServerApi {
     //根据买家姓名获取订单
     public static final String GETORDERBYBUYERNAME = ORDER + "/getOrdersBybuyer/"; //\
 
+    //获得买到和卖出去的数据
+    public static final String GETSHOPBYSALLORBUYER = ORDER + "/getOrdersByBuyerOrSaller/"; //1表示买家，2表示卖家
 
     //添加求购商品
 

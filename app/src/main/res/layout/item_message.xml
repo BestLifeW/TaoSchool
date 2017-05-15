@@ -4,8 +4,6 @@
     android:padding="8dp"
     android:id="@+id/cv_order"
     android:layout_height="60dp"
-
-
     android:weightSum="1">
     <LinearLayout
         android:layout_gravity="center_vertical"
